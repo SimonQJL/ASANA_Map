@@ -34,10 +34,11 @@ $(function () {
                 data: { t: new Date() },
                 dataType: "json",
                 success: function (data) {
-                    setTimeout(getPoint, 2000);
-                    setTimeout(reload(data), 2000);//两秒刷新一次地图
+                    setTimeout(getPoint, 500);
+                    setTimeout(reload(data), 500);//两秒刷新一次地图
+                    console.log(data);
                 }, error: function () {
-                    alert("系统繁忙，请稍再试");
+                    alert("智石返回空數據，無法繪點");
                 }
             });
         }
@@ -65,7 +66,7 @@ $(function () {
                 //获取当前房间名字
                 var xy = { "x": obj[i].x, "y": obj[i].y };
                 var shop = map.getShop(xy);
-                alert(shop.name);
+                console.log(shop.name);
             }
 
         }
