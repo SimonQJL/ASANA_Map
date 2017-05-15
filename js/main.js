@@ -2,8 +2,8 @@
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-var ServerUrl ="http://innosrc.cn:8889/";
-//var ServerUrl="http://localhost:80";
+//var ServerUrl ="http://innosrc.cn:8889/";
+var ServerUrl="http://localhost:80";
 
 function loadmap () {
     //绘制地图
