@@ -1,10 +1,10 @@
 ﻿var Point_Img = [];//保存座標數據
 var Point_Lable = [];
-var Point_Icon = [];//保存顯示類型
-var isShowAllIcon=true;//是否全部顯示
-//var ServerUrl ="http://innosrc.cn:8889/";//接收JSON數據的URL
+var Point_Icon = [];
+var isShowAllIcon=true;
+//var ServerUrl ="http://innosrc.cn:8889/";
 var ServerUrl="http://localhost:80";
-//var ServerUrl="http://10.0.0.188/";
+
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
