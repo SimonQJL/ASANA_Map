@@ -7,8 +7,9 @@ var ServerUrl="http://localhost:80";
 $(document).ready(function(){
    $('#mapContainer').css("background-color","#fff")
    setTimeout(loadmap,3000);
-
+  
 });
+
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
