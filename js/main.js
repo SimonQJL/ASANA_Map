@@ -1,10 +1,10 @@
-﻿var Point_Img = [];
+﻿var Point_Img = [];//保存座標數據
 var Point_Lable = [];
-var Point_Icon = [];
-var isShowAllIcon=true;
-var ServerUrl ="http://innosrc.cn:8889/";
-//var ServerUrl="http://localhost:80";
-
+var Point_Icon = [];//保存顯示類型
+var isShowAllIcon=true;//是否全部顯示
+//var ServerUrl ="http://innosrc.cn:8889/";//接收JSON數據的URL
+var ServerUrl="http://localhost:80";
+//var ServerUrl="http://10.0.0.188/";
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
@@ -32,8 +32,8 @@ function loadmap () {
 
     //由于地图数据使用了异步加载，为避免出错请把所有的逻辑放在 mapready 事件内
     map.on("mapready", function (e) {
-		setTimeout(reloadmessageRecived, 100);
-		setTimeout(getGuestList, 500);
+		reloadmessageRecived();//接收通知消息
+		getGuestList();//獲取座標數據
 		function getGuestList() {
             $.ajax({
                 type: "Get",
@@ -103,7 +103,7 @@ function loadmap () {
                 }
                 if (b) {
 				  if(point[i].x!=null&&point[i].y!=null&&point[i].x!=0.0&&point[i].y!=0.0&&point[i].beacon_id!=""){
-                    var Icon_class = "";
+                    var Icon_class = "";//Icon ClassNmae
                     switch (point[i].kind) {
                         case "Guest": Icon_class = "fa fa-circle fa-fw";
                             break;
@@ -161,27 +161,23 @@ function loadmap () {
                     var image = new BRTSymbol.divIcon([point[i].x,point[i].y],{
                                 html:'<i style="width:30px;height:30px;" class="'+Icon_class+'"></i>',
                                 className:'divIcon',
-                                }).addTo(map);
-                    Point_Img.push(image);
-                    Point_Img[Point_Img.length - 1].id = point[i].beacon_id;
-					Point_Img[Point_Img.length - 1].kind = point[i].kind;
-                    Point_Img[Point_Img.length - 1].x = point[i].x;
-                    Point_Img[Point_Img.length - 1].y = point[i].y;					
-                    //获取当前房间名字
-                    var xy = { "x": Point_Img[Point_Img.length - 1]._point.x, "y": Point_Img[Point_Img.length - 1]._point.y };
-                    var shop = map.getShop(xy);
-					
-					//循環綁定click事件，
-                    $(Point_Img[Point_Img.length - 1].domNode).on('click', { coustomerid: point[i].id, roomname: shop.name }, GetCustomerInfomation);							
-                    var myLabel = new BRTSymbol.divIcon([point[i].x, point[i].y], {
+                                }).addTo(map);	
+								
+					var myLabel = new BRTSymbol.divIcon([point[i].x, point[i].y], {
                         html: point[i].name,
                         className: 'User',
                         fonsSize: 12,
                         offsetY: 20,
                         color: "#FF3300",
-                    }).addTo(map);
-									
-                    Point_Lable.push(myLabel);//將對象加入Point_Img數組
+                    }).addTo(map);								
+					Point_Lable.push(myLabel);//將對象加入Point_Img數組
+                    Point_Img.push(image);
+                    Point_Img[Point_Img.length - 1].id = point[i].beacon_id;
+					Point_Img[Point_Img.length - 1].kind = point[i].kind;
+                    Point_Img[Point_Img.length - 1].x = point[i].x;
+                    Point_Img[Point_Img.length - 1].y = point[i].y;						 
+					//循環綁定click事件，
+                    $(Point_Img[Point_Img.length - 1].domNode).on('click', { coustomerid: point[i].id }, GetCustomerInfomation);			
 					}					
 
                 }
@@ -224,11 +220,10 @@ function loadmap () {
 					}
                     Point_Img[i].setPoint([point[o].x, point[o].y]);//重設座標
                     Point_Lable[i].setPoint([point[o].x, point[o].y]);
-          					// Point_Img[i].type=point[i].type;//需要重新改變類型，就要重新繪點
-                    var xy = { "x": point[o].x, "y": point[o].y };
-                    var shop = map.getShop(xy);
+                    // var xy = { "x": point[o].x, "y": point[o].y };
+                    // var shop = map.getShop(xy);
                     $(Point_Img[i].domNode).off('click');//解除舊的绑定事件
-                    $(Point_Img[i].domNode).on('click', { coustomerid: point[o].id, roomname: shop.name }, GetCustomerInfomation);//循環綁定click事件，	
+                    $(Point_Img[i].domNode).on('click', { coustomerid: point[o].id }, GetCustomerInfomation);//循環綁定click事件，	
                  break;
 				}
 				
@@ -311,13 +306,13 @@ function loadmap () {
 	     var time_length =(nowtime-jsonobj[o].create_time)/1000;//計算時間差
 		 var time_str ="";
          if(time_length>60&&time_length<3600){
-			 time_str = (time_length/60).toFixed(0)+"m"
+			 time_str = (time_length/60).toFixed(0)+"m"//分
 		 }	
          else if(time_length>3600){
-			 time_str = (time_length/3660).toFixed(1)+"h"
+			 time_str = (time_length/3660).toFixed(1)+"h"//小時
 		 }	
          else{
-             time_str = (time_length).toFixed(0)+"s"
+             time_str = (time_length).toFixed(0)+"s"//秒
 		 }			 	 
 		$('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">MAID: HAPPY CHAN<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');						     
 	 }	    
@@ -327,18 +322,9 @@ function loadmap () {
 	 lastnowtime =nowtime;
    }
    
-   
-   
-   	//用戶信息彈窗
-    function showCustomerInfomation() {
-        $('.CoverModal').show();
-	    $('.alert-enquiries').show();
-		$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});
-    }
-   
    //獲取客戶信息
-   function GetCustomerInfomation(event){
-       $.ajax({
+   function GetCustomerInfomation(event){									
+        $.ajax({
                 type: "Get",
                 url: ServerUrl+"guest/list",
                 dataType: "json",
@@ -347,7 +333,7 @@ function loadmap () {
                      for(var i in data){
 					    if(data[i].id==event.data.coustomerid)
 						{
-							$('#CustomerName').html(data[i].name+"(002266888)");
+						 $('#CustomerName').html(data[i].name+"(002266888)");
 						}
 					 }
                      showCustomerInfomation();						 
@@ -357,6 +343,14 @@ function loadmap () {
             });
 			return false;
    }
+   
+   	//用戶信息彈窗
+    function showCustomerInfomation() {
+        $('.CoverModal').show();
+	    $('.alert-enquiries').show();
+		$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});
+    }
+   
    
     //綁定手環
    function RegisterCustomerInfomation(){
