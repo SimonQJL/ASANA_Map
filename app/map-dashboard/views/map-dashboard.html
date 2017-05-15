@@ -1,0 +1,446 @@
+<!-- MAIN CONTENT -->
+<div class="map-dashboard" id="content" ng-controller="mapDashboardCtrl">
+    <!-- row -->
+    <div class="row">
+        <div class="col-sm-12 col-md-2 col-lg-2 left-side-bar">
+            <div class="action">
+                <header>
+                    <h2><i class="fa fa-flag"></i> Action</h2>
+                </header>
+                <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#register-guest"><i class="fa fa-chain-broken"></i> Register Guest</a>
+                <br>
+                <br>
+                <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#check-out"><i class="fa fa-sign-out"></i> Check-out Guest</a>
+                <br>
+                <br>
+                <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#booking-enquires"><i class="fa fa-search"></i> Booking Enquiries</a>
+            </div>
+            <div class="date">
+                <header>
+                    <h2><i class="fa fa-calendar"></i> Date</h2>
+                </header>
+                <div id="datepicker"></div>
+                <h2><i class="fa fa-calendar-check-o"></i> Confirmed Booking 30</h2>
+                <h2><i class="fa fa-heart-o"></i> Available Therapist 15</h2>
+            </div>
+            <div class="Notification">
+                <header>
+                    <h2><i class="fa fa-bell"></i> Notification</h2>
+                </header>
+                <div class="chat-body no-padding profile-message">
+                    <ul id='message-box' class="Notification_Box">
+					</ul>
+				 </div>
+            </div>
+        </div>
+        <!-- Map filters -->
+        <article class="col-sm-12 col-md-10 col-lg-10">
+            <div class="map-filter">
+                <header>
+                    <h2><i class="fa fa-map-marker"></i> Display MAP by</h2>
+                </header>
+                <div class="map-filter-container">
+                    <div class="map-date">
+                        <ul>
+                            <li>Date</li>
+                            <li id="date-picker">{{pickeddate | date : "d MMMM y" }}</li>
+                            <!--<li>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" data-smart-clockpicker type="text" placeholder="From" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" data-smart-clockpicker type="text" placeholder="To" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                    </div>
+                                </div>
+                            </li>-->
+                        </ul>
+                    </div>
+                    <div class="map-room-status">
+                        <ul>
+                            <li>Room Status</li>
+                            <li><i class="fa fa-ban fa-fw txt-color-red"></i><a href-void onclick='showIcon(this)' class="btn btn-normal ">Occupied</a></li>
+                            <li><i class="fa fa-paint-brush fa-fw"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Ready for Clean</a></li>
+                            <li><i class="fa fa-star fa-fw"></i><a href-void  onclick='showIcon(this)' class="btn btn-normal">Available</a></li>
+                        </ul>
+                    </div>
+                    <div class="map-guest-status">
+                        <ul>
+                            <li>Guest Status</li>
+                            <li><i class="fa fa-circle fa-fw txt-color-magenta"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">VVIP</a></li>
+                            <li><i class="fa fa-circle fa-fw txt-color-red"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">VIP</a></li>
+                            <li><i class="fa fa-circle fa-fw"></i><a href-void onclick='showIcon(this)' class="btn btn-normal ">Guest</a></li>
+                        </ul>
+                    </div>
+                    <div class="map-staff-status">
+                        <ul>
+                            <li>Staff Status</li>
+                            <li><i class="fa fa-bookmark fa-fw"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Escort</a></li>
+                            <li><i class="fa fa-shopping-basket fa-fw"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Maid</a></li>
+                            <li><i class="fa fa-heart-o fa-fw"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Therapist</a></li>
+                        </ul>
+                    </div>
+                    <div class="map-machine-status">
+                        <ul>
+                            <li>Machine Status</li>
+                            <li><i class="fa fa-cog fa-fw"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Treatment Machines</a></li>
+                            <li><i class="fa fa-cog fa-fw txt-color-red"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Theraphy Machines</a></li>
+                            <li><i class="fa fa-cog fa-fw txt-color-green"></i><a href-void onclick='showIcon(this)' class="btn btn-normal">Cleaning Machines</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <!--End map filters-->
+        <!-- Beeacon map -->
+        <article class="col-sm-12 col-md-12 col-lg-10 map">
+            <header>
+                <h2><i class="fa fa-map-marker"></i> Map</h2>
+            </header>
+            <div id="mapContainer"></div>
+        </article>
+        <!--end beacon map-->
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="register-guest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Register Guest</h4>
+                </div>
+                <div class="modal-body">
+                    <!--Collapsible group-->
+                    <div class="panel-group smart-accordion-default" id="register-guest-accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#register-guest-accordion" href="#check-in"><span>1</span> Check-in</a></h4>
+                            </div>
+                            <div id="check-in" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <form class="smart-form">
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                <label class="label">Customer Name</label>
+                                                <label class="input"> <i class="icon-append fa fa-search"></i>
+                                                    <input type="text" name="name">
+                                                </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <label class="label">Member ID</label>
+                                                <label class="input"> <i class="icon-append fa fa-search"></i>
+                                                    <input type="text" name="member-id">
+                                                </label>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                <label class="label">Mobile No.</label>
+                                                <label class="input"> <i class="icon-append fa fa-search"></i>
+                                                    <input type="tel" name="mobile">
+                                                </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <button type="submit" name="search" class="btn btn-normal">
+                                                    Search
+                                                </button>
+                                            </section>
+                                        </div>
+                                    </form>
+                                    <div class="searching-result">
+                                        <h4>Today's Booking Records</h4>
+                                        <booking-records></booking-records>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#register-guest-accordion" class="collapsed"><span>2</span> Pair Handband & Locker</a></h4>
+                            </div>
+                            <div id="pairing" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="selected-record-placeholder" ng-if="!enableSelectedRecords">
+                                        <p>Please search and select a booking record from Check-in</p>
+                                    </div>
+                                    <selected-records ng-if="enableSelectedRecords"></selected-records>
+                                    <div class="handband-and-locker-info">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="select-hb">HandBand ID</label>
+                                                    <select class="form-control" id="select-hb" ng-model="selectedItem" ng-options="item.handBandId for item in handBandLocker">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 locker-no">
+                                                <h4>Locker No.</h4>
+                                                <div id="matched-locker">{{selectedItem.lockerId}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End collapsible group-->
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_SendGuestInfomation" type="button" class="btn btn-normal" ng-disabled="selectedItem.handBandId === 'Please Select'">
+                        Done
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="check-out" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Check-out Guest</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="handband-and-locker-info action-outer">
+                        <div class="action-inner">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select-hb-co">HandBand ID</label>
+                                        <select class="form-control" id="select-hb-co" ng-model="selectedItemCO" ng-options="itemCO.handBandId for itemCO in handBandLocker">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 locker-no">
+                                    <h4>Locker No.</h4>
+                                    <div id="matched-locker">{{selectedItemCO.lockerId}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!(selectedItemCO.handBandId === 'Please Select')">
+                        <div class="booking-number">
+                            <div class="table-cell">BK00001</div>
+                            <div class="table-cell"></div>
+                            <div class="table-cell"></div>
+                            <div class="table-cell"></div>
+                        </div>
+                        <div class="customer-record">
+                            <div class="table-cell">
+                                <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
+                            </div>
+                            <div class="table-cell customer-profile">
+                                <div class="customer-name">MRS Johnson</div>
+                                <div class="member-id"><i class="fa fa-id-card-o"></i> 0036688</div>
+                                <div class="mobile"><i class="fa fa-mobile-phone"></i> 12345678</div>
+                                <div class="member-tier"><i class="fa fa-trophy"></i></div>
+                            </div>
+                            <div class="table-cell booking-info">
+                                <div class="booking-time">1:00pm - 2:30pm (1.5 hr)</div>
+                                <div class="booking-treatment">Treatment A</div>
+                                <div class="booking-therapist">Therapist: <span class="booking-therapist-name">THER-LILY LEE</span></div>
+                                <div class="booking-room">Room 18</div>
+                            </div>
+                            <div class="table-cell">
+                                <div id="confirmed">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_Check-out" type="button" class="btn btn-normal" ng-disabled="selectedItemCO.handBandId === 'Please Select'">
+                        Done
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="booking-enquires" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Booking Enquiries</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="action-outer">
+                        <div class="action-inner">
+                            <h4>Search by</h4>
+                            <form class="smart-form">
+                                <div class="row">
+                                    <section class="col col-5">
+                                        <label class="label">Guest Name</label>
+                                        <label class="input"> <i class="icon-append fa fa-search"></i>
+                                            <input type="text" name="name">
+                                        </label>
+                                    </section>
+                                    <section class="col col-5">
+                                        <label class="label">Member ID</label>
+                                        <label class="input"> <i class="icon-append fa fa-search"></i>
+                                            <input type="text" name="member-id">
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-4">
+                                        <label class="label">From</label>
+                                        <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                            <input type="text" name="startdate" id="startdate" data-smart-datepicker data-min-restrict="#finishdate" placeholder="Expected start date">
+                                        </label>
+                                    </section>
+                                    <section class="col col-4">
+                                        <label class="label">To</label>
+                                        <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                            <input type="text" name="finishdate" id="finishdate" data-smart-datepicker data-max-restrict="#startdate" placeholder="Expected finish date">
+                                        </label>
+                                    </section>
+                                    <section class="col col-2">
+                                        <label class="label">Room No.</label>
+                                        <label class="input"> <i class="icon-append fa fa-search"></i>
+                                            <input type="text" name="member-id">
+                                        </label>
+                                    </section>
+                                    <section class="col col-2">
+                                        <button type="submit" name="search" class="btn btn-normal">
+                                            Search
+                                        </button>
+                                    </section>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+ <!-- 弹框 -->
+
+       <div class="alert-room-detail col-lg-12">
+            <div class="detail-title col-lg-10" >                
+               <p id="RoomName-detail" class="col-lg-12" >Room Details:VIP Room 1</p>
+               <span class="col-lg-12" >Status:  Ready for Clean</span>
+            </div>
+            <i  class="btn_Close col-lg-1 pull-right glyphicon glyphicon-remove"></i>
+            <div class="detail-box col-lg-12">
+               <span class="col-lg-12">Upcoming:</span>
+               <div class="event col-lg-12">
+                   <div class="col-lg-3">
+                       <span class="col-lg-12">1:00pm</span>
+                       <span class="col-lg-12">2:30pm</span>
+                       <span class="time-his col-lg-12">20mins later</span>
+                   </div>
+                   <div class="col-lg-6">
+                       <span class="col-lg-12">Treatment A</span>
+                       <span class="col-lg-12">Therapist: THER-LILY LEE</span>
+                       <span class="col-lg-12">Machine:Trearment Machine</span>
+                   </div>
+                   <i class="col-lg-1 fa fa-trophy" aria-hidden="true"></i>
+                   <div class="col-lg-2">
+                       <span class="col-lg-12">Ms Lau</span>
+                       <span class="col-lg-12">0036688</span>
+                   </div>
+               </div>
+               <div class="event col-lg-12">
+                   <div class="col-lg-3">
+                       <span class="col-lg-12">1:00pm</span>
+                       <span class="col-lg-12">2:30pm</span>
+                       <span class="time-his col-lg-12">20mins later</span>
+                   </div>
+                   <div class="col-lg-6">
+                       <span class="col-lg-12">Treatment A</span>
+                       <span class="col-lg-12">Therapist: THER-LILY LEE</span>
+                       <span class="col-lg-12">Machine:Trearment Machine</span>
+                   </div>
+                   <i style="color: transparent;" class="col-lg-1 fa fa-trophy" aria-hidden="true"></i>
+                   <div class="col-lg-2">
+                       <span class="col-lg-12">Ms Lau</span>
+                       <span class="col-lg-12">0036688</span>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+
+
+        <div class="alert-enquiries row">
+            <i class="btn_Close col-lg-1 pull-right glyphicon glyphicon-remove""> </i>
+            <div class="enquiries-header col-lg-12">
+                <div class="user-img col-lg-2 "></div>
+                <div class="user-info col-lg-8">
+                    <span class="col-lg-12 tir "><span class="yuandian"></span><span> Member tir</span></span>
+                    <span id="CustomerName" class="user-name  col-lg-12 ">Mr.Wong(002266888)</span>
+                    <span class="col-lg-12 ">Status: Waiting for Treatment</span>
+                </div>
+            </div>
+            <div class=" col-lg-12 booking-box">
+                <div class=" booking-title col-lg-12">Booking</div>
+                <div class="cur-bgc h80 col-lg-12">
+                    <div class="col-lg-3">
+                        <span class="time-day  col-lg-12">Today</span>
+                        <span id="RoomName" class="user-level col-lg-12">VVIP Rm2</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="col-lg-12">1:00pm</span>
+                        <span class="col-lg-12">2:30pm</span>
+                    </div>
+                    <div class="col-lg-6">
+                        <span class="col-lg-12">Treatment A</span>
+                        <span class="col-lg-12">Therapist: THER-LILY LEE</span>
+                        <span class="col-lg-12">Machine:Trearment Machine</span>
+                    </div>
+                </div>
+
+                <div class="default col-lg-12 h80 defautl">
+                    <div class="col-lg-3 pt30">
+                        <span class="col-lg-12">TOMORROW</span>
+                        <span class=" col-lg-12">17 April 2017</span>
+                    </div>
+                    <div class="col-lg-3 pt30">
+                        <span class="col-lg-12">1:00pm</span>
+                        <span class="col-lg-12">2:30pm</span>
+                    </div>
+                    <div class="col-lg-6">
+                        <span class="col-lg-12">Treatment A</span>
+                        <span class="col-lg-12">Therapist: THER-LILY LEE</span>
+                        <span class="col-lg-12">Machine:Trearment Machine</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div class="CoverModal"></div>
+
+
+
+    <!-- 弹框end -->
+</div>
+<script src="/js/BRTMap.js"></script>
+<script src='/js/main.js'></script>
+<script src='/js/layer/layer.js'></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/styles/css/map-dashboard.css">

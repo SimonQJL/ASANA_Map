@@ -1,0 +1,30 @@
+[
+    {
+        "booking": "BK00001",
+        "customer": {
+            "pic": "styles/img/avatars/5.png",
+            "name": "MRS Johnson",
+            "mobile": "12345678",
+            "id": "591303bc6d56283764ff7d42",
+            "tier": "3"
+        },
+        "treatment": [
+            {
+                "start_time": "1:00pm",
+                "end_time": "2:30pm",
+                "duration": "1.5 hr",
+                "treatment": "treatment a",
+                "therapist": "ther-lily lee",
+                "room": "room 18"
+            },
+            {
+                "start_time": "1:00pm",
+                "end_time": "2:30pm",
+                "duration": "1.5 hr",
+                "treatment": "treatment a",
+                "therapist": "ther-lily lee",
+                "room": "room 18"
+            }
+        ]
+    }
+]

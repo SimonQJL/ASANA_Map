@@ -1,0 +1,56 @@
+<!-- MAIN CONTENT -->
+<div class="data-source" id="content">
+    <div class="row">
+        <big-breadcrumbs items="['Data Source View & Alias']" icon="database" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>
+        <div class="col-xs-12 col-sm-5 col-md-3 col-lg-4 pull-right">
+            <input class="form-control" placeholder="Search">
+        </div>
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" widget-grid>
+        <!-- row -->
+        <div class="row" ng-controller="dataSourceCtrl">
+            <div class="col-sm-12 col-md-12 col-lg-2">
+                <div class="well well-lg">
+                    <a href="#tab-r{{$index + 1}}" data-toggle="tab" ng-repeat="data in dataSource">
+                        <div class="data-source-outer" ng-class="dataClass(data)">
+                            <div class="data-source-inner">
+                                <h2><i class="fa fa-user"></i><br>{{data.table}}</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <article class="col-sm-12 col-md-12 col-lg-10">
+                <div class="well well-lg">
+                    <div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="tab-r{{$index + 1}}" ng-repeat="data in dataSource" ng-class="{active : (data.table == 'Customer')}">
+                            <header class="data-source-customer">
+                                <h3><i class="fa fa-user"></i> {{data.table}}</h3></header>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Attributes</th>
+                                            <th>Ailas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="tableRow in data.attributes">
+                                            <td>{{$index + 1}}</td>
+                                            <td><div class="tr-inner">{{tableRow.name}}</div></td>
+                                            <td><div class="tr-inner">{{tableRow.alias}}</div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,100 @@
+
+.CoverModal{display:none}
+.roomInfomationModal{display:none}
+.customerInfomationModal{display:none}
+
+.icon_menu li a:hover{background-color:#812990;color:#fff;}
+
+.icon_menu li a:active{background-color:#812990;color:#fff;}
+
+.CoverModal{z-index:9999;position:absolute;top:0%;left:0%;width:100%;height:100%;background-color:black;opacity:0.5;display:none;}
+
+.roomInfomationModal{z-index:10000; position:fixed;left:0;right:0;top:0;bottom:0;margin:auto;width:30%;height:25%;border-radius:10px; background-color:#fff;box-shadow:4px 4px 10px rgba(0,0,0,0.5);display:none;}
+
+.roomInfomationModal .RoomName{height: 100px;line-height:100px; margin-left:4%; font-size:22px; color:#812990;font-weight:bold;}
+
+.customerInfomationModal{display: none; position:fixed;width: 1114px; height: 720px; top: 50%; left: 50%;margin-left: -487px; margin-top: -337px;z-index:10000;border-radius:10px; background-color:#fff;box-shadow:4px 4px 10px rgba(0,0,0,0.5);box-sizing: border-box;}
+
+.customerInfomationModal .RoomName{height: 100px;line-height:100px; margin-left:4%; font-size:22px; color:#812990;font-weight:bold;}
+
+.btn_Close{ height: 100px;line-height: 100px;font-size:35px; font-weight:bold; text-align: center;color:#812990;cursor:pointer;}
+
+.guest-info{height: 594px;margin-left: 5%;border: 1px solid #ccc; border-top: 2px solid #812990;padding: 0;}
+.part-title{height: 70px; font-size:22px; color:#812990;font-weight:bold;background-color: #F6F6F6;}
+.part-title>*{font-style: normal;margin-top: 0;text-align: center;line-height: 70px;}
+
+
+.part-one{height: 430px;margin-top: 20px;}
+.part-two{display: none;height: 430px;margin-top: 20px;}
+.part-title{cursor: pointer;}
+.left{width: 90px;height: 90px; line-height: 90px;background-color:  #812990;font-size: 26px; color: #fff;text-align: center;border-radius: 45px;}
+.right{margin-left: 3%;}
+.info-searchbox{height: 100px;}
+.info-searchbox span{display: block;height: 50px; line-height: 50px;font-size: 20px;color:#812990;font-weight: bold; }
+.info-searchbox .search{height: 50px;line-height: 50px;font-size: 14px;color:#812990; background-color: #F6F6F6;border: 1px solid #ccc;border-radius: 6px;}
+.info-searchbox input{height: 50px;line-height: 50px;font-size: 14px;color:#812990;background-color: transparent; box-shadow: 0 transparent;border: 0;}
+.info-searchbox i{display: block;padding: 0;height: 50px;line-height: 50px;font-size: 22px;font-weight: bold;color:#812990; text-align: center;}
+
+
+.booking-record{height: 118px;background-color: #F2E9F3; padding-top: 6px;}
+.booking-record i{text-align: center;}
+.book-title{height: 68px;line-height: 68px;font-size: 24px;color:#812990;}
+.booking-info{font-size: 14px;color:#812990;font-weight: bold;}
+.name{font-size:20px;}
+.book-left i{width: 26px; height: 32px; line-height: 32px;font-size: 24px;color: #F0342C;}
+.arrow-right {width: 56px; height: 56px;line-height: 56px; font-size: 56px; transform: rotate(90deg);padding: 0;margin-top: 3%;	}
+.book-left,.book-right span{height: 26px;line-height:26px;}
+
+
+.alert-room-detail{ display: none;position: fixed;top: 50%; left: 50%; margin-top: -174px; margin-left: -245px;width: 490px; height: 348px;padding:0 24px; color: #812990;font-weight: bold;background-color: #fff; border-radius: 6px; border: 1px solid #812990; z-index: 111111111;box-shadow:4px 4px 10px rgba(0,0,0,0.5);box-sizing: border-box;}
+.alert-room-detail{ display: none;position: fixed;top: 50%; left: 50%; margin-top: -174px; margin-left: -245px;width: 490px; height: 348px;padding:0 24px; color: #812990;font-weight: bold;background-color: #fff; border-radius: 6px; border: 1px solid #812990; z-index: 111111111;}
+.alert-room-detail div,span,p,i{margin: 0;padding: 0;}
+.alert-room-detail div,span,p,i{margin: 0;padding: 0;}
+
+
+.detail-title p,span{margin: 0;padding: 0;}
+.detail-title p{height: 48px;line-height: 48px;font-size: 22px;font-weight: bold;}
+.detail-title span{height: 24px;line-height: 24px; }
+.detail-box{border: 1px solid #ccc;border-top: 2px solid #812990;}
+.detail-box>span{height: 38px;line-height: 38px;font-size: 16px; }
+.event span{height: 30px; line-height: 30px;font-size: 14px;margin: 0; padding: 0;}
+.event{height: 90px;}
+div.event:nth-of-type(1){background-color: #F2E9F3;}
+.event span.time-his{font-size: 10px; color: #F01307;}
+.detail-box div.col-lg-3{text-align: center;}
+.detail-box div.col-lg-2{text-align: center;}
+.detail-box div.col-lg-2 span{height: 45px; line-height: 45px;}
+.detail-box div.col-lg-6{padding-left: 10px;}
+.detail-box i{height: 90px;line-height: 90px;font-size: 36px;padding: 0;color: #F01307;}
+
+
+.alert-enquiries{display: none;position: fixed; top: 50%; left: 50%; margin-left: -250px;margin-top: -157px;width: 500px; height: 324px;padding:0 24px; color: #812990;font-weight: bold;background-color: #fff; border-radius: 6px; border: 1px solid #812990; z-index: 111111111;z-index: 99999;box-shadow:4px 4px 10px rgba(0,0,0,0.5);box-sizing: border-box;}
+
+.user-img{width: 80px; height: 80px;background-color: #ccc;border-radius: 6px;}
+.enquiries-header{height: 100px;padding-top: 10px;}
+.alert-enquiries>i{line-height: 40px;position: absolute;right: 20px; top: 20px;}
+.btn_Close {padding: 0;}
+.tir span{float: left;}
+.yuandian{display: inline-block;width: 24px; height: 24px; background-color: #333ECF; border-radius: 50%; margin-right: 10px;}
+.user-info{height: 26px; line-height: 26px;}
+.user-name {height: 36px; line-height: 36px; font-size: 22px;}
+.booking-box{height: 203px;border: 1px solid #ccc; padding:0; border-top: 2px solid #812990;}
+.booking-box span{padding: 0;}
+.booking-title{height: 40px; line-height: 40px; font-size: 24px	; }
+.booking-box div.h80{height: 80px;padding-top: 4px;}
+.cur-bgc{background-color: #F2E9F3;}
+.booking-box .cur-bgc .col-lg-6 span{height: 24px;line-height: 24px;}
+.booking-box .cur-bgc .col-lg-3 span{height: 36px;line-height: 36px;font-size: 16px;	}
+.time-day {height: 32px; line-height: 32px;color: #F0342C;font-weight: bold;}
+.user-level{height: 36px;line-height: 36px;background-color: #812990;color: #fff;text-align: center;}
+
+.default > *{color: #000 ; }
+.default > .col-lg-3{padding: 0;padding-top: 16px;}
+.default > .col-lg-3 span{height: 24px;line-height: 24px; font-size: 16px; font-weight: bold;text-align: center;}
+.default > .col-lg-6 span{height: 24px;line-height: 24px;}
+.Notification_Box{ overflow:auto; height:460px;}
+#mapContainer{height:850px;margin-bottom:30px;}
+.btn_Close{ z-index:99999}
+
+
+

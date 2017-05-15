@@ -1,0 +1,42 @@
+[  
+   {  
+      "table":"Customer",
+      "attributes":[  
+         {  
+            "name":"profile.name",
+            "alias":"Customer Name"
+         },
+         {  
+            "name":"profile.memberid",
+            "alias":"Member ID"
+         }
+      ]
+   },
+   {  
+      "table":"Location",
+      "attributes":[
+        {
+            "name" : "escort.location",
+            "alias" : "Escort's Location"
+        }
+      ]
+   },
+   {  
+      "table":"Staff",
+      "attributes":[  
+
+      ]
+   },
+   {  
+      "table":"Room",
+      "attributes":[  
+
+      ]
+   },
+   {  
+      "table":"Booking",
+      "attributes":[  
+
+      ]
+   }
+]

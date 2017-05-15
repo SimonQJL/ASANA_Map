@@ -1,0 +1,9 @@
+{
+  "items": [
+        {
+        "title":"Map Dashboard",
+        "sref": "app.mapDashboard",
+        "icon":"home"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+<div id="today-bookings" ng-repeat="record in booking">
+    <div class="booking-number">
+        <div class="table-cell">
+            {{record.booking}}
+        </div>
+        <div class="table-cell"></div>
+        <div class="table-cell"></div>
+        <div class="table-cell"></div>
+    </div>
+    <div class="customer-record">
+        <div class="table-cell">
+            <img id="customer-pic" ng-src="{{record.customer.pic}}" alt="avatar">
+        </div>
+        <div class="table-cell customer-profile">
+            <div class="customer-name">{{record.customer.name}}</div>
+            <div class="member-id"><i class="fa fa-id-card-o"></i> {{record.customer.id}}</div>
+            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{record.customer.mobile}}</div>
+            <div class="member-tier"><i ng-class="tierClass(record)"></i></div>
+        </div>
+        <div class="table-cell booking-info">
+            <div ng-repeat="info in record.treatment">
+            <div class="booking-time">{{info.start_time}} - {{info.end_time}} ({{info.duration}})</div>
+            <div class="booking-treatment">{{info.treatment}}</div>
+            <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.therapist}}</span></div>
+            <div class="booking-room">{{info.room}}</div>
+            <br>
+            </div>
+        </div>
+        <div class="table-cell">
+            <div id="next">
+                <a href="#pairing" data-toggle="collapse" data-parent="#register-guest-accordion" ng-click="selectRecord($index)"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
