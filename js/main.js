@@ -1,10 +1,15 @@
-﻿var Point_Img = [];//保存座標數據
+﻿﻿var Point_Img = [];//保存座標數據
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
+var MessageList =[{"id":-1}];
+var lastScrollHeight;//最後一次Scroll位置
+var nowtime = new Date().getTime();//當前时间
+var lastnowtime =new Date().getTime();//查詢前半小時
+var halfofhour =1;//查詢N個前半小時
 //var ServerUrl ="http://innosrc.cn:8889/";
-var ServerUrl="http://localhost:80";
-
+//var ServerUrl="http://10.0.0.188/";
+var ServerUrl="http://localhost:80/";
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
@@ -36,6 +41,7 @@ function loadmap () {
 		getGuestList();//獲取座標數據
 		function getGuestList() {
             $.ajax({
+				
                 type: "Get",
                 url:ServerUrl+"base/all",
                 data: { t: new Date() },
@@ -273,54 +279,119 @@ function loadmap () {
 		
 	//解除綁定
 	    $('#btn_Check-out').on('click',function(){CheckOutBeacon()});
-     
+     //加載更多消息
+	   $('#message-box').scroll(function(){ 
+	   if($('#message-box')[0].scrollHeight-$('#message-box').height()-$('#message-box').scrollTop()==0){
+		   halfofhour=halfofhour+1;
+		   $('#div_loading').addClass('layui-layer-content layui-layer-loading1');
+		  lastScrollHeight =$('#message-box')[0].scrollHeight;
+		   setTimeout(function(){$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')},1500);
+		   setTimeout(reloadMoreMessageRecived,1500);
+	    }
+	  });
 }
 
 	
 	//消息通知
-	var nowtime = new Date().getTime();//當前时间
-	var lastnowtime =new Date().getTime()-1800000;//上次的當前時間
    function reloadmessageRecived(){
 		 $.ajax({
                 type: "Get",
-                url: ServerUrl+"notification/byTime",
+                url: ServerUrl+"notification/byTimeQuantum",
                 dataType: "json",
-				data:{time:lastnowtime},
+				data:{from:lastnowtime-600000,to:lastnowtime},
                 success: function (data) {
                   msgShow(data);
-                  setTimeout(reloadmessageRecived,15000);				  
+                  setTimeout(reloadmessageRecived,10000);				  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
             });
     }
-   
-   function msgShow(data){
+	
+	function msgShow(data){
      var obj = eval(data);
-	 $('#message-box li').remove();	
-	 for(var i in obj){
-		 
-		 var jsonobj = obj[i];
-		 nowtime =obj.server_time;
-		 for(var o in jsonobj) {
-	     var time_length =(nowtime-jsonobj[o].create_time)/1000;//計算時間差
-		 var time_str ="";
-         if(time_length>60&&time_length<3600){
-			 time_str = (time_length/60).toFixed(0)+"m"//分
-		 }	
-         else if(time_length>3600){
-			 time_str = (time_length/3660).toFixed(1)+"h"//小時
-		 }	
-         else{
-             time_str = (time_length).toFixed(0)+"s"//秒
-		 }			 	 
-		$('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">MAID: HAPPY CHAN<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');						     
-	 }	    
-	}	
+	   for(var i in obj){	 
+		  var jsonobj = obj[i];	
+		  for(var o in jsonobj) {	 		
+		   var b = true;
+		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
+		     for(var j in MessageList){
+                 if(MessageList.length>0){  			
+			        if(MessageList[j].id==jsonobj[o].id){	
+				        b = false;
+				        break;
+			        }
+			        if(MessageList[0].id==	-1){MessageList.splice(0, 1);}
+			     }
+			   }
+              if(b){     
+				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
+				  var time_str =changTimetype(time_length);//轉換時間格式
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">MAID: HAPPY CHAN<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+		       }							
+			 	
+		 }
+	   }
+          lastnowtime =obj.server_time;
+          reloadTime(obj.server_time);		  
    }
-   function reloadtime(){
-	 lastnowtime =nowtime;
+   
+	   function reloadMoreMessageRecived(){
+		 $.ajax({
+                type: "Get",
+                url: ServerUrl+"notification/byTimeQuantum",
+                dataType: "json",
+				data:{from:lastnowtime-600000*halfofhour,to:lastnowtime-600000*(halfofhour-1)},
+                success: function (data) {
+                  if(data.data.length==0){
+				    layer.alert("have no mroe notification");
+				  }
+				  msgMoreShow(data);
+                  $('#message-box').scrollTop(lastScrollHeight-100);				  
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+    }
+	
+   	function msgMoreShow(data){
+     var obj = eval(data);
+	   for(var i in obj){	 
+		  var jsonobj = obj[i];	
+		  for(var o=jsonobj.length-1;o>=0;o--) {	 		
+		   var b = true;
+		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
+		     for(var j in MessageList){
+                 if(MessageList.length>0){  			
+			        if(MessageList[j].id==jsonobj[o].id){	
+				        b = false;
+				        break;
+			        }
+			        if(MessageList[0].id==	-1){MessageList.splice(0, 1);}
+			     }
+			   }
+              if(b){     
+				  MessageList.splice(0,0,{"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
+				  var time_str =changTimetype(time_length);//轉換時間格式
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">MAID: HAPPY CHAN<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+		       }							
+			 	
+		 }
+	   }
+          lastnowtime =obj.server_time;
+          reloadTime(obj.server_time);		  
    }
+   
+   
+    //刷新時間
+    function reloadTime(server_time){
+	   for(var i in MessageList){
+		MessageList[i].time_length =(server_time-MessageList[i].create_time)/1000;//更新數組時間
+        var time_str =changTimetype(MessageList[i].time_length);//轉換時間格式	
+        var index=MessageList.length-i;		
+	    $('#message-box li a small:eq('+index+')').html(time_str);										 			
+	   }   
+	}
    
    //獲取客戶信息
    function GetCustomerInfomation(event){									
@@ -397,7 +468,19 @@ function loadmap () {
                 }
             });
 	}
-   
+   //轉換時間格式
+   function changTimetype(time_length){
+	      if(time_length>60&&time_length<3600){
+			 time_str = (time_length/60).toFixed(0)+"m"//分
+		 }	
+         else if(time_length>3600){
+			 time_str = (time_length/3660).toFixed(1)+"h"//小時
+		 }	
+         else{
+             time_str = (time_length).toFixed(0)+"s"//秒
+		 }
+		 return time_str;
+   }
    
    
    
