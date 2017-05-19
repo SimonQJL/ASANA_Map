@@ -7,10 +7,9 @@ var lastScrollHeight;//最後一次Scroll位置
 var nowtime = new Date().getTime();//當前时间
 var lastnowtime =new Date().getTime();//查詢前半小時
 var halfofhour =1;//查詢N個前半小時
-
 //var ServerUrl ="http://innosrc.cn:8889/";
-//var ServerUrl="http://10.0.0.188/";
-var ServerUrl="http://localhost:80/";
+var ServerUrl="http://10.0.0.188/";
+//var ServerUrl="http://localhost:80/";
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
@@ -286,7 +285,6 @@ function loadmap () {
 		   halfofhour=halfofhour+1;
 		   $('#div_loading').addClass('layui-layer-content layui-layer-loading1');
 		  lastScrollHeight =$('#message-box')[0].scrollHeight;
-		   setTimeout(function(){$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')},1500);
 		   setTimeout(reloadMoreMessageRecived,1500);
 	    }
 	  });
@@ -302,7 +300,7 @@ function loadmap () {
 				data:{from:lastnowtime-600000,to:lastnowtime},
                 success: function (data) {
                   msgShow(data);
-                  setTimeout(reloadmessageRecived,10000);				  
+                  setTimeout(reloadmessageRecived,5000);				  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -322,7 +320,7 @@ function loadmap () {
 				        b = false;
 				        break;
 			        }
-			        if(MessageList[0].id==	-1){MessageList.splice(0, 1);}
+			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
 			     }
 			   }
               if(b){     
@@ -347,7 +345,10 @@ function loadmap () {
                   if(data.data.length==0){
 				    layer.alert("have no mroe notification");
 				  }
+				  else{
+				  $('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
 				  msgMoreShow(data);
+				  }
                   $('#message-box').scrollTop(lastScrollHeight-100);				  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
@@ -368,7 +369,7 @@ function loadmap () {
 				        b = false;
 				        break;
 			        }
-			        if(MessageList[0].id==	-1){MessageList.splice(0, 1);}
+			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
 			     }
 			   }
               if(b){     
@@ -389,7 +390,7 @@ function loadmap () {
 	   for(var i in MessageList){
 		MessageList[i].time_length =(server_time-MessageList[i].create_time)/1000;//更新數組時間
         var time_str =changTimetype(MessageList[i].time_length);//轉換時間格式	
-        var index=MessageList.length-i;		
+        var index=MessageList.length-1-i;		
 	    $('#message-box li a small:eq('+index+')').html(time_str);										 			
 	   }   
 	}
@@ -430,8 +431,8 @@ function loadmap () {
                 type: "Post",
                 url: ServerUrl+"beacon/association",
                 dataType: "json",
-				data:{cbID:'FFD1E8A36720',UID:'5913c34a6d56282f882acb0b',target_type:1},
-                success: function (data) {
+				data:{cbID:'FFD1E8A36720',UID:'5913c34a6d56282f882acb0b',target_type:1},//$('#select-hb option:selected').html()-----需要綁定的手環ID,
+                success: function (data) {                                              //$('#member_id').attr("o-data-id")-----選中的客戶id 
 					 $('.close').click();
 					 layer.msg('Bind successfully');
                 }, error: function () {
@@ -460,7 +461,7 @@ function loadmap () {
                 type: "Post",
                 url: ServerUrl+"beacon/unbind",
                 dataType: "json",
-				data:{cbID:'FFD1E8A36720'},
+				data:{cbID:'FFD1E8A36720'},//$('#select-hb-co option:selected').html()----------需要解除綁定的手環ID
                 success: function (data) {
 					 $('.close').click();
 					  layer.msg('Check out successfully');
@@ -475,7 +476,7 @@ function loadmap () {
 			 time_str = (time_length/60).toFixed(0)+"m"//分
 		 }	
          else if(time_length>3600){
-			 time_str = (time_length/3660).toFixed(1)+"h"//小時
+			 time_str = (time_length/3600).toFixed(1)+"h"//小時
 		 }	
          else{
              time_str = (time_length).toFixed(0)+"s"//秒

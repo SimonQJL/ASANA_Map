@@ -13,7 +13,7 @@
         </div>
         <div class="table-cell customer-profile">
             <div class="customer-name">{{currentIdx.customer.name}}</div>
-            <div class="member-id"><i class="fa fa-id-card-o"></i> {{currentIdx.customer.id}}</div>
+            <div class="member-id" id="member_id" o-data-id='{{currentIdx.customer.id}}'><i class="fa fa-id-card-o"></i> {{currentIdx.customer.id}}</div>
             <div class="mobile"><i class="fa fa-mobile-phone"></i> {{currentIdx.customer.mobile}}</div>
             <div class="member-tier"><i ng-class="tierClass(currentIdx)"></i></div>
         </div>

@@ -1,49 +1,28 @@
 [
-    {
-        "booking": "BK00001",
-        "customer": {
+	{
+		
+        "handBandId": "Please Select",
+        "lockerId": ""
+    }, 
+	{
+            "handBandId": "BBtest1",
+            "lockerId": "01",
+		    "booking": "BK00001",
+            "customer": {
             "pic": "styles/img/avatars/5.png",
             "name": "MRS Johnson",
             "mobile": "12345678",
             "id": "591303bc6d56283764ff7d41",
-            "tier": "Guest"
-        },
-        "treatment": [
-            {
-                "start_time": "1:00pm",
-                "end_time": "2:30pm",
-                "duration": "1.5 hr",
-                "treatment": "treatment a",
-                "therapist": "ther-lily lee",
-                "room": "room 18"
-            },
-            {
-                "start_time": "1:00pm",
-                "end_time": "2:30pm",
-                "duration": "1.5 hr",
-                "treatment": "treatment a",
-                "therapist": "ther-lily lee",
-                "room": "room 18"
-            }
-        ]
-    }
-	,{
-        "booking": "BK00002",
-        "customer": {
-            "pic": "styles/img/avatars/5.png",
-            "name": "MRS Allen",
-            "mobile": "12345678",
-            "id": "591303bc6d56283764ff7d42",
             "tier": "3"
         },
         "treatment": [
             {
-                "start_time": "5:00pm",
-                "end_time": "7:30pm",
+                "start_time": "1:00pm",
+                "end_time": "2:30pm",
                 "duration": "1.5 hr",
                 "treatment": "treatment a",
-                "therapist": "ther-lily liu",
-                "room": "room 19"
+                "therapist": "ther-lily lee",
+                "room": "room 18"
             },
             {
                 "start_time": "1:00pm",
@@ -53,7 +32,36 @@
                 "therapist": "ther-lily lee",
                 "room": "room 18"
             }
+         ]
+    },
+	{
+            "handBandId": "BBtest2",
+            "lockerId": "02",
+		    "booking": "BK00002",
+            "customer": {
+            "pic": "styles/img/avatars/5.png",
+            "name": "MRS Simon",
+            "mobile": "88888888",
+            "id": "591303bc6d56283764ff7d41",
+            "tier": "2"
+        },
+        "treatment": 
+		[
+            {
+                "start_time": "5:00pm",
+                "end_time": "7:30pm",
+                "duration": "2.5 hr",
+                "treatment": "treatment b",
+                "therapist": "ther-lily liu",
+                "room": "room 1"
+            },
+            {
+                "start_time": "5:00pm",
+                "end_time": "7:30pm",
+                "duration": "2.5 hr",
+                "treatment": "treatment a",
+                "therapist": "ther-lily liu",
+                "room": "room 18"
+            }
         ]
-    }
-		
-]
+    }]

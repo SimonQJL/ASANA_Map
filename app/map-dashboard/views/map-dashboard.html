@@ -7,7 +7,7 @@
                 <header>
                     <h2><i class="fa fa-flag"></i> Action</h2>
                 </header>
-                <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#register-guest"><i class="fa fa-chain-broken"></i> Register Guest</a>
+                <a id="btn_RegisterGuest" class="btn btn-action txt-color-white" data-toggle="modal" data-target="#register-guest"><i class="fa fa-chain-broken"></i> Register Guest</a>
                 <br>
                 <br>
                 <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#check-out"><i class="fa fa-sign-out"></i> Check-out Guest</a>
@@ -30,7 +30,7 @@
                 <div   class="chat-body no-padding profile-message">
                     <ul id='message-box' class="Notification_Box">
 					</ul>
-					<div style="position:absolute;top:300px;left:120px; width:40px;height:40px;" id="div_loading"></div>
+					<div style="position:absolute;top:70%;left:45%; width:40px;height:40px;" id="div_loading"></div>
 				 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
                                             <section class="col col-4">
                                                 <label class="label">Customer Name</label>
                                                 <label class="input"> <i class="icon-append fa fa-search"></i>
-                                                    <input type="text" name="name">
+                                                    <input type="text"  name="name">
                                                 </label>
                                             </section>
                                             <section class="col col-4">
@@ -233,36 +233,8 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="!(selectedItemCO.handBandId === 'Please Select')">
-                        <div class="booking-number">
-                            <div class="table-cell">BK00001</div>
-                            <div class="table-cell"></div>
-                            <div class="table-cell"></div>
-                            <div class="table-cell"></div>
-                        </div>
-                        <div class="customer-record">
-                            <div class="table-cell">
-                                <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
-                            </div>
-                            <div class="table-cell customer-profile">
-                                <div class="customer-name">MRS Johnson</div>
-                                <div class="member-id"><i class="fa fa-id-card-o"></i> 0036688</div>
-                                <div class="mobile"><i class="fa fa-mobile-phone"></i> 12345678</div>
-                                <div class="member-tier"><i class="fa fa-trophy"></i></div>
-                            </div>
-                            <div class="table-cell booking-info">
-                                <div class="booking-time">1:00pm - 2:30pm (1.5 hr)</div>
-                                <div class="booking-treatment">Treatment A</div>
-                                <div class="booking-therapist">Therapist: <span class="booking-therapist-name">THER-LILY LEE</span></div>
-                                <div class="booking-room">Room 18</div>
-                            </div>
-                            <div class="table-cell">
-                                <div id="confirmed">
-                                    <i class="fa fa-check-circle"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<div class="selectedItemCO">
+					</div>
                 </div>
                 <div class="modal-footer">
                     <button id="btn_Check-out" type="button" class="btn btn-normal" ng-disabled="selectedItemCO.handBandId === 'Please Select'">
@@ -320,7 +292,7 @@
                                     <section class="col col-2">
                                         <label class="label">Room No.</label>
                                         <label class="input"> <i class="icon-append fa fa-search"></i>
-                                            <input type="text" name="member-id">
+                                            <input type="text" name="	-id">
                                         </label>
                                     </section>
                                     <section class="col col-2">

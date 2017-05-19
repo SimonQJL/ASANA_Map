@@ -1,7 +1,7 @@
 <div id="today-bookings" ng-repeat="record in booking">
     <div class="booking-number">
         <div class="table-cell">
-            {{record.booking}}
+            {{record.bk_no}}
         </div>
         <div class="table-cell"></div>
         <div class="table-cell"></div>
@@ -9,20 +9,21 @@
     </div>
     <div class="customer-record">
         <div class="table-cell">
-            <img id="customer-pic" ng-src="{{record.customer.pic}}" alt="avatar">
+		 <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
+            <!-- <img id="customer-pic" ng-src="{{record.customer.pic}}" alt="avatar"> -->
         </div>
         <div class="table-cell customer-profile">
-            <div class="customer-name">{{record.customer.name}}</div>
-            <div class="member-id"><i class="fa fa-id-card-o"></i> {{record.customer.id}}</div>
-            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{record.customer.mobile}}</div>
-            <div class="member-tier"><i ng-class="tierClass(record)"></i></div>
+            <div class="customer-name">{{record.mbr_name}}</div>
+            <div class="member-id"><i class="fa fa-id-card-o"></i> {{record.mbr_code}}</div>
+            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{record.mbr_phone}}</div>
+             <div class="member-tier"><i ng-class="tierClass(record)"></i></div> 
         </div>
         <div class="table-cell booking-info">
-            <div ng-repeat="info in record.treatment">
-            <div class="booking-time">{{info.start_time}} - {{info.end_time}} ({{info.duration}})</div>
-            <div class="booking-treatment">{{info.treatment}}</div>
-            <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.therapist}}</span></div>
-            <div class="booking-room">{{info.room}}</div>
+            <div ng-repeat="info in record.items">
+            <div class="booking-time">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>
+            <div class="booking-treatment">{{info.item_name}}</div>
+            <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.staff_name}}</span></div>
+            <div class="booking-room">{{info.room_name}}</div>
             <br>
             </div>
         </div>
