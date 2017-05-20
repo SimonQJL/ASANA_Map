@@ -292,7 +292,7 @@ function loadmap () {
                 type: "Get",
                 url: ServerUrl+"notification/byTimeQuantum",
                 dataType: "json",
-				data:{from:lastnowtime-60000000,to:lastnowtime},
+				data:{from:lastnowtime-600000,to:lastnowtime},
                 success: function (data) {
                   msgShow(data);
                   setTimeout(reloadmessageRecived,5000);				  
