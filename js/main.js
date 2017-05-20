@@ -8,8 +8,8 @@ var nowtime = new Date().getTime();//當前时间
 var lastnowtime =new Date().getTime();//查詢前半小時
 var halfofhour =1;//查詢N個前半小時
 //var ServerUrl ="http://innosrc.cn:8889/";
-var ServerUrl="http://10.0.0.188/";
-//var ServerUrl="http://localhost:80/";
+//var ServerUrl="http://10.0.0.188/";
+var ServerUrl="http://localhost:80/";
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
