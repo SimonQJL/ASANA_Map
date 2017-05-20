@@ -1754,17 +1754,17 @@ angular.module('app.chat', ['ngSanitize'])
 (function(){
     "use strict";
 
-    angular.module('SmartAdmin.Forms', []);
-})();
-(function(){
-    "use strict";
-
     angular.module('SmartAdmin.Layout', []);
 })();
 (function(){
     "use strict";
 
     angular.module('SmartAdmin.UI', []);
+})();
+(function(){
+    "use strict";
+
+    angular.module('SmartAdmin.Forms', []);
 })();
 'use strict';
 
@@ -2389,34 +2389,12 @@ angular.module('app.auth').directive('loginInfo', function(User){
     }
 })
 
-"use strict";
-
-angular.module('app.auth').controller('LoginCtrl', function ($scope, $state, GooglePlus, User, ezfb) {
-
-    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
-        if (authResult.status.method == 'PROMPT') {
-            GooglePlus.getUser().then(function (user) {
-                User.username = user.name;
-                User.picture = user.picture;
-                $state.go('app.dashboard');
-            });
-        }
-    });
-
-    $scope.$on('event:facebook-signin-success', function (event, authResult) {
-        ezfb.api('/me', function (res) {
-            User.username = res.name;
-            User.picture = 'https://graph.facebook.com/' + res.id + '/picture';
-            $state.go('app.dashboard');
-        });
-    });
-})
-
 angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("app/dashboard/live-feeds.tpl.html","<div jarvis-widget id=\"live-feeds-widget\" data-widget-togglebutton=\"false\" data-widget-editbutton=\"false\"\r\n     data-widget-fullscreenbutton=\"false\" data-widget-colorbutton=\"false\" data-widget-deletebutton=\"false\">\r\n<!-- widget options:\r\nusage: <div class=\"jarviswidget\" id=\"wid-id-0\" data-widget-editbutton=\"false\">\r\n\r\ndata-widget-colorbutton=\"false\"\r\ndata-widget-editbutton=\"false\"\r\ndata-widget-togglebutton=\"false\"\r\ndata-widget-deletebutton=\"false\"\r\ndata-widget-fullscreenbutton=\"false\"\r\ndata-widget-custombutton=\"false\"\r\ndata-widget-collapsed=\"true\"\r\ndata-widget-sortable=\"false\"\r\n\r\n-->\r\n<header>\r\n    <span class=\"widget-icon\"> <i class=\"glyphicon glyphicon-stats txt-color-darken\"></i> </span>\r\n\r\n    <h2>Live Feeds </h2>\r\n\r\n    <ul class=\"nav nav-tabs pull-right in\" id=\"myTab\">\r\n        <li class=\"active\">\r\n            <a data-toggle=\"tab\" href=\"#s1\"><i class=\"fa fa-clock-o\"></i> <span class=\"hidden-mobile hidden-tablet\">Live Stats</span></a>\r\n        </li>\r\n\r\n        <li>\r\n            <a data-toggle=\"tab\" href=\"#s2\"><i class=\"fa fa-facebook\"></i> <span class=\"hidden-mobile hidden-tablet\">Social Network</span></a>\r\n        </li>\r\n\r\n        <li>\r\n            <a data-toggle=\"tab\" href=\"#s3\"><i class=\"fa fa-dollar\"></i> <span class=\"hidden-mobile hidden-tablet\">Revenue</span></a>\r\n        </li>\r\n    </ul>\r\n\r\n</header>\r\n\r\n<!-- widget div-->\r\n<div class=\"no-padding\">\r\n\r\n    <div class=\"widget-body\">\r\n        <!-- content -->\r\n        <div id=\"myTabContent\" class=\"tab-content\">\r\n            <div class=\"tab-pane fade active in padding-10 no-padding-bottom\" id=\"s1\">\r\n                <div class=\"row no-space\">\r\n                    <div class=\"col-xs-12 col-sm-12 col-md-8 col-lg-8\">\r\n														<span class=\"demo-liveupdate-1\"> <span\r\n                                                                class=\"onoffswitch-title\">Live switch</span> <span\r\n                                                                class=\"onoffswitch\">\r\n																<input type=\"checkbox\" name=\"start_interval\" ng-model=\"autoUpdate\"\r\n                                                                       class=\"onoffswitch-checkbox\" id=\"start_interval\">\r\n																<label class=\"onoffswitch-label\" for=\"start_interval\">\r\n                                                                    <span class=\"onoffswitch-inner\"\r\n                                                                          data-swchon-text=\"ON\"\r\n                                                                          data-swchoff-text=\"OFF\"></span>\r\n                                                                    <span class=\"onoffswitch-switch\"></span>\r\n                                                                </label> </span> </span>\r\n\r\n                        <div id=\"updating-chart\" class=\"chart-large txt-color-blue\" flot-basic flot-data=\"liveStats\" flot-options=\"liveStatsOptions\"></div>\r\n\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats\">\r\n\r\n                        <div class=\"row\">\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> My Tasks <span\r\n                                    class=\"pull-right\">130/200</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-blueDark\" style=\"width: 65%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> Transfered <span\r\n                                    class=\"pull-right\">440 GB</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-blue\" style=\"width: 34%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> Bugs Squashed<span\r\n                                    class=\"pull-right\">77%</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-blue\" style=\"width: 77%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-xs-6 col-sm-6 col-md-12 col-lg-12\"><span class=\"text\"> User Testing <span\r\n                                    class=\"pull-right\">7 Days</span> </span>\r\n\r\n                                <div class=\"progress\">\r\n                                    <div class=\"progress-bar bg-color-greenLight\" style=\"width: 84%;\"></div>\r\n                                </div>\r\n                            </div>\r\n\r\n                            <span class=\"show-stat-buttons\"> <span class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"> <a\r\n                                    href-void class=\"btn btn-default btn-block hidden-xs\">Generate PDF</a> </span> <span\r\n                                    class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"> <a href-void\r\n                                                                                     class=\"btn btn-default btn-block hidden-xs\">Report\r\n                                a bug</a> </span> </span>\r\n\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"show-stat-microcharts\" data-sparkline-container data-easy-pie-chart-container>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n\r\n                        <div class=\"easy-pie-chart txt-color-orangeDark\" data-percent=\"33\" data-pie-size=\"50\">\r\n                            <span class=\"percent percent-sign\">35</span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Server Load <i class=\"fa fa-caret-up icon-color-bad\"></i> </span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-greenLight\"><i class=\"fa fa-caret-up\"></i> 97%</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blueLight\"><i class=\"fa fa-caret-down\"></i> 44%</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-greenLight hidden-sm hidden-md pull-right\"\r\n                             data-sparkline-type=\"line\" data-sparkline-height=\"33px\" data-sparkline-width=\"70px\"\r\n                             data-fill-color=\"transparent\">\r\n                            130, 187, 250, 257, 200, 210, 300, 270, 363, 247, 270, 363, 247\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n                        <div class=\"easy-pie-chart txt-color-greenLight\" data-percent=\"78.9\" data-pie-size=\"50\">\r\n                            <span class=\"percent percent-sign\">78.9 </span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Disk Space <i class=\"fa fa-caret-down icon-color-good\"></i></span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-blueDark\"><i class=\"fa fa-caret-up\"></i> 76%</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blue\"><i class=\"fa fa-caret-down\"></i> 3%</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-blue hidden-sm hidden-md pull-right\" data-sparkline-type=\"line\"\r\n                             data-sparkline-height=\"33px\" data-sparkline-width=\"70px\" data-fill-color=\"transparent\">\r\n                            257, 200, 210, 300, 270, 363, 130, 187, 250, 247, 270, 363, 247\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n                        <div class=\"easy-pie-chart txt-color-blue\" data-percent=\"23\" data-pie-size=\"50\">\r\n                            <span class=\"percent percent-sign\">23 </span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Transfered <i class=\"fa fa-caret-up icon-color-good\"></i></span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-darken\">10GB</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blueDark\"><i class=\"fa fa-caret-up\"></i> 10%</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-darken hidden-sm hidden-md pull-right\"\r\n                             data-sparkline-type=\"line\" data-sparkline-height=\"33px\" data-sparkline-width=\"70px\"\r\n                             data-fill-color=\"transparent\">\r\n                            200, 210, 363, 247, 300, 270, 130, 187, 250, 257, 363, 247, 270\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-xs-12 col-sm-3 col-md-3 col-lg-3\">\r\n                        <div class=\"easy-pie-chart txt-color-darken\" data-percent=\"36\" data-pie-size=\"50\">\r\n                            <span class=\"percent degree-sign\">36 <i class=\"fa fa-caret-up\"></i></span>\r\n                        </div>\r\n                        <span class=\"easy-pie-title\"> Temperature <i\r\n                                class=\"fa fa-caret-down icon-color-good\"></i></span>\r\n                        <ul class=\"smaller-stat hidden-sm pull-right\">\r\n                            <li>\r\n                                <span class=\"label bg-color-red\"><i class=\"fa fa-caret-up\"></i> 124</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"label bg-color-blue\"><i class=\"fa fa-caret-down\"></i> 40 F</span>\r\n                            </li>\r\n                        </ul>\r\n                        <div class=\"sparkline txt-color-red hidden-sm hidden-md pull-right\" data-sparkline-type=\"line\"\r\n                             data-sparkline-height=\"33px\" data-sparkline-width=\"70px\" data-fill-color=\"transparent\">\r\n                            2700, 3631, 2471, 2700, 3631, 2471, 1300, 1877, 2500, 2577, 2000, 2100, 3000\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n            <!-- end s1 tab pane -->\r\n\r\n            <div class=\"tab-pane fade\" id=\"s2\">\r\n                <div class=\"widget-body-toolbar bg-color-white\">\r\n\r\n                    <form class=\"form-inline\" role=\"form\">\r\n\r\n                        <div class=\"form-group\">\r\n                            <label class=\"sr-only\" for=\"s123\">Show From</label>\r\n                            <input type=\"email\" class=\"form-control input-sm\" id=\"s123\" placeholder=\"Show From\">\r\n                        </div>\r\n                        <div class=\"form-group\">\r\n                            <input type=\"email\" class=\"form-control input-sm\" id=\"s124\" placeholder=\"To\">\r\n                        </div>\r\n\r\n                        <div class=\"btn-group hidden-phone pull-right\">\r\n                            <a class=\"btn dropdown-toggle btn-xs btn-default\" data-toggle=\"dropdown\"><i\r\n                                    class=\"fa fa-cog\"></i> More <span class=\"caret\"> </span> </a>\r\n                            <ul class=\"dropdown-menu pull-right\">\r\n                                <li>\r\n                                    <a href-void><i class=\"fa fa-file-text-alt\"></i> Export to PDF</a>\r\n                                </li>\r\n                                <li>\r\n                                    <a href-void><i class=\"fa fa-question-sign\"></i> Help</a>\r\n                                </li>\r\n                            </ul>\r\n                        </div>\r\n\r\n                    </form>\r\n\r\n                </div>\r\n                <div class=\"padding-10\">\r\n                    <div id=\"statsChart\" class=\"chart-large has-legend-unique\" flot-basic flot-data=\"statsData\" flot-options=\"statsDisplayOptions\"></div>\r\n                </div>\r\n\r\n            </div>\r\n            <!-- end s2 tab pane -->\r\n\r\n            <div class=\"tab-pane fade\" id=\"s3\">\r\n\r\n                <div class=\"widget-body-toolbar bg-color-white smart-form\" id=\"rev-toggles\">\r\n\r\n                    <div class=\"inline-group\">\r\n\r\n                        <label for=\"gra-0\" class=\"checkbox\">\r\n                            <input type=\"checkbox\" id=\"gra-0\" ng-model=\"targetsShow\">\r\n                            <i></i> Target </label>\r\n                        <label for=\"gra-1\" class=\"checkbox\">\r\n                            <input type=\"checkbox\" id=\"gra-1\" ng-model=\"actualsShow\">\r\n                            <i></i> Actual </label>\r\n                        <label for=\"gra-2\" class=\"checkbox\">\r\n                            <input type=\"checkbox\" id=\"gra-2\" ng-model=\"signupsShow\">\r\n                            <i></i> Signups </label>\r\n                    </div>\r\n\r\n                    <div class=\"btn-group hidden-phone pull-right\">\r\n                        <a class=\"btn dropdown-toggle btn-xs btn-default\" data-toggle=\"dropdown\"><i\r\n                                class=\"fa fa-cog\"></i> More <span class=\"caret\"> </span> </a>\r\n                        <ul class=\"dropdown-menu pull-right\">\r\n                            <li>\r\n                                <a href-void><i class=\"fa fa-file-text-alt\"></i> Export to PDF</a>\r\n                            </li>\r\n                            <li>\r\n                                <a href-void><i class=\"fa fa-question-sign\"></i> Help</a>\r\n                            </li>\r\n                        </ul>\r\n                    </div>\r\n\r\n                </div>\r\n\r\n                <div class=\"padding-10\">\r\n                    <div id=\"flotcontainer\" class=\"chart-large has-legend-unique\" flot-basic flot-data=\"revenewData\" flot-options=\"revenewDisplayOptions\" ></div>\r\n                </div>\r\n            </div>\r\n            <!-- end s3 tab pane -->\r\n        </div>\r\n\r\n        <!-- end content -->\r\n    </div>\r\n\r\n</div>\r\n<!-- end widget div -->\r\n</div>\r\n");
 $templateCache.put("app/layout/layout.tpl.html","<!-- HEADER -->\r\n<div data-smart-include=\"app/layout/partials/header.tpl.html\" class=\"placeholder-header\"></div>\r\n<!-- END HEADER -->\r\n\r\n\r\n<!-- Left panel : Navigation area -->\r\n<!-- Note: This width of the aside area can be adjusted through LESS variables -->\r\n<div data-smart-include=\"app/layout/partials/navigation.tpl.html\" class=\"placeholder-left-panel\"></div>\r\n\r\n<!-- END NAVIGATION -->\r\n\r\n<!-- MAIN PANEL -->\r\n<div id=\"main\" role=\"main\">\r\n\r\n    <!-- RIBBON -->\r\n    <div id=\"ribbon\">\r\n\r\n        <!-- breadcrumb -->\r\n        <state-breadcrumbs></state-breadcrumbs>\r\n        <!-- end breadcrumb -->\r\n\r\n\r\n    </div>\r\n    <!-- END RIBBON -->\r\n\r\n\r\n    <div data-smart-router-animation-wrap=\"content content@app\" data-wrap-for=\"#content\">\r\n        <div data-ui-view=\"content\" data-autoscroll=\"false\"></div>\r\n    </div>\r\n\r\n</div>\r\n<!-- END MAIN PANEL -->\r\n\r\n<!-- PAGE FOOTER -->\r\n<!--<div data-smart-include=\"app/layout/partials/footer.tpl.html\"></div>-->\r\n\r\n<div data-smart-include=\"app/layout/shortcut/shortcut.tpl.html\"></div>\r\n\r\n<!-- END PAGE FOOTER -->\r\n\r\n\r\n");
 $templateCache.put("app/auth/directives/login-info.tpl.html","<div class=\"login-info ng-cloak\">\r\n    <span> <!-- User image size is adjusted inside CSS, it should stay as it -->\r\n        <a  href=\"\" toggle-shortcut>\r\n            <img ng-src=\"{{user.picture}}\" alt=\"me\" class=\"online\">\r\n                <span>{{user.username}}\r\n                </span>\r\n            <i class=\"fa fa-angle-down\"></i>\r\n        </a>\r\n     </span>\r\n</div>");
-$templateCache.put("app/calendar/views/calendar.tpl.html","<!-- MAIN CONTENT -->\r\n<div id=\"content\">\r\n\r\n    <div class=\"row\">\r\n        <big-breadcrumbs items=\"[\'Home\', \'Calendar\']\" class=\"col-xs-12 col-sm-7 col-md-7 col-lg-4\"></big-breadcrumbs>\r\n        <div smart-include=\"app/layout/partials/sub-header.tpl.html\"></div>\r\n    </div>\r\n    <!-- widget grid -->\r\n    <section id=\"widget-grid\" widget-grid>\r\n        <!-- row -->\r\n        <div class=\"row\" ng-controller=\"CalendarCtrl\" >\r\n\r\n\r\n            <div class=\"col-sm-12 col-md-12 col-lg-3\">\r\n                <!-- new widget -->\r\n                <div class=\"jarviswidget jarviswidget-color-blueDark\">\r\n                    <header>\r\n                        <h2> Add Events </h2>\r\n                    </header>\r\n\r\n                    <!-- widget div-->\r\n                    <div>\r\n\r\n                        <div class=\"widget-body\">\r\n                            <!-- content goes here -->\r\n\r\n                            <form id=\"add-event-form\">\r\n                                <fieldset>\r\n\r\n                                    <div class=\"form-group\">\r\n                                        <label>Select Event Icon</label>\r\n                                        <div class=\"btn-group btn-group-sm btn-group-justified\" data-toggle=\"buttons\" > <!--  -->\r\n                                            <label class=\"btn btn-default active\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-1\" value=\"fa-info\" radio-toggle ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-info text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-2\" value=\"fa-warning\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-warning text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-3\" value=\"fa-check\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-check text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-4\" value=\"fa-user\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-user text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-5\" value=\"fa-lock\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-lock text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-6\" value=\"fa-clock-o\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-clock-o text-muted\"></i> </label>\r\n                                        </div>\r\n                                    </div>\r\n\r\n                                    <div class=\"form-group\">\r\n                                        <label>Event Title</label>\r\n                                        <input ng-model=\"newEvent.title\" class=\"form-control\"  id=\"title\" name=\"title\" maxlength=\"40\" type=\"text\" placeholder=\"Event Title\">\r\n                                    </div>\r\n                                    <div class=\"form-group\">\r\n                                        <label>Event Description</label>\r\n                                        <textarea  ng-model=\"newEvent.description\" class=\"form-control\" placeholder=\"Please be brief\" rows=\"3\" maxlength=\"40\" id=\"description\"></textarea>\r\n                                        <p class=\"note\">Maxlength is set to 40 characters</p>\r\n                                    </div>\r\n\r\n                                    <div class=\"form-group\">\r\n                                        <label>Select Event Color</label>\r\n                                        <div class=\"btn-group btn-group-justified btn-select-tick\" data-toggle=\"buttons\" >\r\n                                            <label class=\"btn bg-color-darken active\">\r\n                                                <input   ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option1\" value=\"bg-color-darken txt-color-white\" >\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-blue\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option2\" value=\"bg-color-blue txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-orange\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option3\" value=\"bg-color-orange txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-greenLight\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option4\" value=\"bg-color-greenLight txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-blueLight\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option5\" value=\"bg-color-blueLight txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-red\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option6\" value=\"bg-color-red txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                        </div>\r\n                                    </div>\r\n\r\n                                </fieldset>\r\n                                <div class=\"form-actions\">\r\n                                    <div class=\"row\">\r\n                                        <div class=\"col-md-12\">\r\n                                            <button class=\"btn btn-default\" type=\"button\" id=\"add-event\" ng-click=\"addEvent()\" >\r\n                                                Add Event\r\n                                            </button>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                            </form>\r\n\r\n                            <!-- end content -->\r\n                        </div>\r\n\r\n                    </div>\r\n                    <!-- end widget div -->\r\n                </div>\r\n                <!-- end widget -->\r\n\r\n                <div class=\"well well-sm\" id=\"event-container\">\r\n                    <form>\r\n                        <legend>\r\n                            Draggable Events\r\n                        </legend>\r\n                        <ul id=\'external-events\' class=\"list-unstyled\">\r\n\r\n                            <li ng-repeat=\"event in eventsExternal\" dragable-event>\r\n                                <span class=\"{{event.className}}\" \r\n                                    data-description=\"{{event.description}}\"\r\n                                    data-icon=\"{{event.icon}}\"\r\n                                >\r\n                                {{event.title}}</span>\r\n                            </li>\r\n                            \r\n                        </ul>\r\n\r\n                        <!-- <ul id=\'external-events\' class=\"list-unstyled\">\r\n                            <li>\r\n                                <span class=\"bg-color-darken txt-color-white\" data-description=\"Currently busy\" data-icon=\"fa-time\">Office Meeting</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"bg-color-blue txt-color-white\" data-description=\"No Description\" data-icon=\"fa-pie\">Lunch Break</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"bg-color-red txt-color-white\" data-description=\"Urgent Tasks\" data-icon=\"fa-alert\">URGENT</span>\r\n                            </li>\r\n                        </ul> -->\r\n\r\n                        <div class=\"checkbox\">\r\n                            <label>\r\n                                <input type=\"checkbox\" id=\"drop-remove\" class=\"checkbox style-0\" checked=\"checked\">\r\n                                <span>remove after drop</span> </label>\r\n\r\n                        </div>\r\n                    </form>\r\n\r\n                </div>\r\n            </div>\r\n\r\n\r\n            <article class=\"col-sm-12 col-md-12 col-lg-9\">\r\n                <full-calendar id=\"main-calendar-widget\" data-events=\"events\"></full-calendar>\r\n            </article>\r\n        </div>\r\n    </section>\r\n</div>");
 $templateCache.put("app/calendar/directives/full-calendar.tpl.html","<div jarvis-widget data-widget-color=\"blueDark\">\r\n    <header>\r\n        <span class=\"widget-icon\"> <i class=\"fa fa-calendar\"></i> </span>\r\n\r\n        <h2> My Events </h2>\r\n\r\n        <div class=\"widget-toolbar\">\r\n            <!-- add: non-hidden - to disable auto hide -->\r\n            <div class=\"btn-group dropdown\" dropdown >\r\n                <button class=\"btn dropdown-toggle btn-xs btn-default\" data-toggle=\"dropdown\">\r\n                    Showing <i class=\"fa fa-caret-down\"></i>\r\n                </button>\r\n                <ul class=\"dropdown-menu js-status-update pull-right\">\r\n                    <li>\r\n                        <a ng-click=\"changeView(\'month\')\">Month</a>\r\n                    </li>\r\n                    <li>\r\n                        <a ng-click=\"changeView(\'agendaWeek\')\">Agenda</a>\r\n                    </li>\r\n                    <li>\r\n                        <a ng-click=\"changeView(\'agendaDay\')\">Today</a>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <!-- widget div-->\r\n    <div>\r\n        <div class=\"widget-body no-padding\">\r\n            <!-- content goes here -->\r\n            <div class=\"widget-body-toolbar\">\r\n\r\n                <div id=\"calendar-buttons\">\r\n\r\n                    <div class=\"btn-group\">\r\n                        <a ng-click=\"prev()\" class=\"btn btn-default btn-xs\"><i\r\n                                class=\"fa fa-chevron-left\"></i></a>\r\n                        <a ng-click=\"next()\" class=\"btn btn-default btn-xs\"><i\r\n                                class=\"fa fa-chevron-right\"></i></a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <div id=\"calendar\"></div>\r\n\r\n            <!-- end content -->\r\n        </div>\r\n\r\n    </div>\r\n    <!-- end widget div -->\r\n</div>\r\n");
+$templateCache.put("app/calendar/views/calendar.tpl.html","<!-- MAIN CONTENT -->\r\n<div id=\"content\">\r\n\r\n    <div class=\"row\">\r\n        <big-breadcrumbs items=\"[\'Home\', \'Calendar\']\" class=\"col-xs-12 col-sm-7 col-md-7 col-lg-4\"></big-breadcrumbs>\r\n        <div smart-include=\"app/layout/partials/sub-header.tpl.html\"></div>\r\n    </div>\r\n    <!-- widget grid -->\r\n    <section id=\"widget-grid\" widget-grid>\r\n        <!-- row -->\r\n        <div class=\"row\" ng-controller=\"CalendarCtrl\" >\r\n\r\n\r\n            <div class=\"col-sm-12 col-md-12 col-lg-3\">\r\n                <!-- new widget -->\r\n                <div class=\"jarviswidget jarviswidget-color-blueDark\">\r\n                    <header>\r\n                        <h2> Add Events </h2>\r\n                    </header>\r\n\r\n                    <!-- widget div-->\r\n                    <div>\r\n\r\n                        <div class=\"widget-body\">\r\n                            <!-- content goes here -->\r\n\r\n                            <form id=\"add-event-form\">\r\n                                <fieldset>\r\n\r\n                                    <div class=\"form-group\">\r\n                                        <label>Select Event Icon</label>\r\n                                        <div class=\"btn-group btn-group-sm btn-group-justified\" data-toggle=\"buttons\" > <!--  -->\r\n                                            <label class=\"btn btn-default active\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-1\" value=\"fa-info\" radio-toggle ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-info text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-2\" value=\"fa-warning\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-warning text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-3\" value=\"fa-check\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-check text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-4\" value=\"fa-user\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-user text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-5\" value=\"fa-lock\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-lock text-muted\"></i> </label>\r\n                                            <label class=\"btn btn-default\">\r\n                                                <input type=\"radio\" name=\"iconselect\" id=\"icon-6\" value=\"fa-clock-o\" radio-toggle  ng-model=\"newEvent.icon\">\r\n                                                <i class=\"fa fa-clock-o text-muted\"></i> </label>\r\n                                        </div>\r\n                                    </div>\r\n\r\n                                    <div class=\"form-group\">\r\n                                        <label>Event Title</label>\r\n                                        <input ng-model=\"newEvent.title\" class=\"form-control\"  id=\"title\" name=\"title\" maxlength=\"40\" type=\"text\" placeholder=\"Event Title\">\r\n                                    </div>\r\n                                    <div class=\"form-group\">\r\n                                        <label>Event Description</label>\r\n                                        <textarea  ng-model=\"newEvent.description\" class=\"form-control\" placeholder=\"Please be brief\" rows=\"3\" maxlength=\"40\" id=\"description\"></textarea>\r\n                                        <p class=\"note\">Maxlength is set to 40 characters</p>\r\n                                    </div>\r\n\r\n                                    <div class=\"form-group\">\r\n                                        <label>Select Event Color</label>\r\n                                        <div class=\"btn-group btn-group-justified btn-select-tick\" data-toggle=\"buttons\" >\r\n                                            <label class=\"btn bg-color-darken active\">\r\n                                                <input   ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option1\" value=\"bg-color-darken txt-color-white\" >\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-blue\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option2\" value=\"bg-color-blue txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-orange\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option3\" value=\"bg-color-orange txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-greenLight\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option4\" value=\"bg-color-greenLight txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-blueLight\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option5\" value=\"bg-color-blueLight txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                            <label class=\"btn bg-color-red\">\r\n                                                <input  ng-model=\"newEvent.className\" radio-toggle   type=\"radio\" name=\"priority\" id=\"option6\" value=\"bg-color-red txt-color-white\">\r\n                                                <i class=\"fa fa-check txt-color-white\"></i> </label>\r\n                                        </div>\r\n                                    </div>\r\n\r\n                                </fieldset>\r\n                                <div class=\"form-actions\">\r\n                                    <div class=\"row\">\r\n                                        <div class=\"col-md-12\">\r\n                                            <button class=\"btn btn-default\" type=\"button\" id=\"add-event\" ng-click=\"addEvent()\" >\r\n                                                Add Event\r\n                                            </button>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                            </form>\r\n\r\n                            <!-- end content -->\r\n                        </div>\r\n\r\n                    </div>\r\n                    <!-- end widget div -->\r\n                </div>\r\n                <!-- end widget -->\r\n\r\n                <div class=\"well well-sm\" id=\"event-container\">\r\n                    <form>\r\n                        <legend>\r\n                            Draggable Events\r\n                        </legend>\r\n                        <ul id=\'external-events\' class=\"list-unstyled\">\r\n\r\n                            <li ng-repeat=\"event in eventsExternal\" dragable-event>\r\n                                <span class=\"{{event.className}}\" \r\n                                    data-description=\"{{event.description}}\"\r\n                                    data-icon=\"{{event.icon}}\"\r\n                                >\r\n                                {{event.title}}</span>\r\n                            </li>\r\n                            \r\n                        </ul>\r\n\r\n                        <!-- <ul id=\'external-events\' class=\"list-unstyled\">\r\n                            <li>\r\n                                <span class=\"bg-color-darken txt-color-white\" data-description=\"Currently busy\" data-icon=\"fa-time\">Office Meeting</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"bg-color-blue txt-color-white\" data-description=\"No Description\" data-icon=\"fa-pie\">Lunch Break</span>\r\n                            </li>\r\n                            <li>\r\n                                <span class=\"bg-color-red txt-color-white\" data-description=\"Urgent Tasks\" data-icon=\"fa-alert\">URGENT</span>\r\n                            </li>\r\n                        </ul> -->\r\n\r\n                        <div class=\"checkbox\">\r\n                            <label>\r\n                                <input type=\"checkbox\" id=\"drop-remove\" class=\"checkbox style-0\" checked=\"checked\">\r\n                                <span>remove after drop</span> </label>\r\n\r\n                        </div>\r\n                    </form>\r\n\r\n                </div>\r\n            </div>\r\n\r\n\r\n            <article class=\"col-sm-12 col-md-12 col-lg-9\">\r\n                <full-calendar id=\"main-calendar-widget\" data-events=\"events\"></full-calendar>\r\n            </article>\r\n        </div>\r\n    </section>\r\n</div>");
+$templateCache.put("app/dashboard/projects/recent-projects.tpl.html","<div class=\"project-context hidden-xs dropdown\" dropdown>\r\n\r\n    <span class=\"label\">{{getWord(\'Projects\')}}:</span>\r\n    <span class=\"project-selector dropdown-toggle\" data-toggle=\"dropdown\">{{getWord(\'Recent projects\')}} <i ng-if=\"projects.length\"\r\n            class=\"fa fa-angle-down\"></i></span>\r\n\r\n    <ul class=\"dropdown-menu\" ng-if=\"projects.length\">\r\n        <li ng-repeat=\"project in projects\">\r\n            <a href=\"{{project.href}}\">{{project.title}}</a>\r\n        </li>\r\n        <li class=\"divider\"></li>\r\n        <li>\r\n            <a ng-click=\"clearProjects()\"><i class=\"fa fa-power-off\"></i> Clear</a>\r\n        </li>\r\n    </ul>\r\n\r\n</div>");
 $templateCache.put("app/dashboard/todo/todo-widget.tpl.html","<div id=\"todo-widget\" jarvis-widget data-widget-editbutton=\"false\" data-widget-color=\"blue\"\r\n     ng-controller=\"TodoCtrl\">\r\n    <header>\r\n        <span class=\"widget-icon\"> <i class=\"fa fa-check txt-color-white\"></i> </span>\r\n\r\n        <h2> ToDo\'s </h2>\r\n\r\n        <div class=\"widget-toolbar\">\r\n            <!-- add: non-hidden - to disable auto hide -->\r\n            <button class=\"btn btn-xs btn-default\" ng-class=\"{active: newTodo}\" ng-click=\"toggleAdd()\"><i ng-class=\"{ \'fa fa-plus\': !newTodo, \'fa fa-times\': newTodo}\"></i> Add</button>\r\n\r\n        </div>\r\n    </header>\r\n    <!-- widget div-->\r\n    <div>\r\n        <div class=\"widget-body no-padding smart-form\">\r\n            <!-- content goes here -->\r\n            <div ng-show=\"newTodo\">\r\n                <h5 class=\"todo-group-title\"><i class=\"fa fa-plus-circle\"></i> New Todo</h5>\r\n\r\n                <form name=\"newTodoForm\" class=\"smart-form\">\r\n                    <fieldset>\r\n                        <section>\r\n                            <label class=\"input\">\r\n                                <input type=\"text\" required class=\"input-lg\" ng-model=\"newTodo.title\"\r\n                                       placeholder=\"What needs to be done?\">\r\n                            </label>\r\n                        </section>\r\n                        <section>\r\n                            <div class=\"col-xs-6\">\r\n                                <label class=\"select\">\r\n                                    <select class=\"input-sm\" ng-model=\"newTodo.state\"\r\n                                            ng-options=\"state as state for state in states\"></select> <i></i> </label>\r\n                            </div>\r\n                        </section>\r\n                    </fieldset>\r\n                    <footer>\r\n                        <button ng-disabled=\"newTodoForm.$invalid\" type=\"button\" class=\"btn btn-primary\"\r\n                                ng-click=\"createTodo()\">\r\n                            Add\r\n                        </button>\r\n                        <button type=\"button\" class=\"btn btn-default\" ng-click=\"toggleAdd()\">\r\n                            Cancel\r\n                        </button>\r\n                    </footer>\r\n                </form>\r\n            </div>\r\n\r\n            <todo-list state=\"Critical\"  title=\"Critical Tasks\" icon=\"warning\" todos=\"todos\"></todo-list>\r\n\r\n            <todo-list state=\"Important\" title=\"Important Tasks\" icon=\"exclamation\" todos=\"todos\"></todo-list>\r\n\r\n            <todo-list state=\"Completed\" title=\"Completed Tasks\" icon=\"check\" todos=\"todos\"></todo-list>\r\n\r\n            <!-- end content -->\r\n        </div>\r\n\r\n    </div>\r\n    <!-- end widget div -->\r\n</div>");
 $templateCache.put("app/layout/language/language-selector.tpl.html","<ul class=\"header-dropdown-list hidden-xs ng-cloak\" ng-controller=\"LanguagesCtrl\">\r\n    <li class=\"dropdown\" dropdown>\r\n        <a class=\"dropdown-toggle\"  data-toggle=\"dropdown\" href> <img src=\"styles/img/blank.gif\" class=\"flag flag-{{currentLanguage.key}}\" alt=\"{{currentLanguage.alt}}\"> <span> {{currentLanguage.title}} </span>\r\n            <i class=\"fa fa-angle-down\"></i> </a>\r\n        <ul class=\"dropdown-menu pull-right\">\r\n            <li ng-class=\"{active: language==currentLanguage}\" ng-repeat=\"language in languages\">\r\n                <a ng-click=\"selectLanguage(language)\" ><img src=\"styles/img/blank.gif\" class=\"flag flag-{{language.key}}\"\r\n                                                   alt=\"{{language.alt}}\"> {{language.title}}</a>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ul>");
 $templateCache.put("app/layout/partials/footer.tpl.html","<div class=\"page-footer\">\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-sm-6\">\r\n            <span class=\"txt-color-white\">SmartAdmin WebApp © 2013-2016</span>\r\n        </div>\r\n\r\n        <div class=\"col-xs-6 col-sm-6 text-right hidden-xs\">\r\n            <div class=\"txt-color-white inline-block\">\r\n                <i class=\"txt-color-blueLight hidden-mobile\">Last account activity <i class=\"fa fa-clock-o\"></i>\r\n                    <strong>52 mins ago &nbsp;</strong> </i>\r\n\r\n                <div class=\"btn-group dropup\">\r\n                    <button class=\"btn btn-xs dropdown-toggle bg-color-blue txt-color-white\" data-toggle=\"dropdown\">\r\n                        <i class=\"fa fa-link\"></i> <span class=\"caret\"></span>\r\n                    </button>\r\n                    <ul class=\"dropdown-menu pull-right text-left\">\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <p class=\"txt-color-darken font-sm no-margin\">Download Progress</p>\r\n\r\n                                <div class=\"progress progress-micro no-margin\">\r\n                                    <div class=\"progress-bar progress-bar-success\" style=\"width: 50%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"divider\"></li>\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <p class=\"txt-color-darken font-sm no-margin\">Server Load</p>\r\n\r\n                                <div class=\"progress progress-micro no-margin\">\r\n                                    <div class=\"progress-bar progress-bar-success\" style=\"width: 20%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"divider\"></li>\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <p class=\"txt-color-darken font-sm no-margin\">Memory Load <span class=\"text-danger\">*critical*</span>\r\n                                </p>\r\n\r\n                                <div class=\"progress progress-micro no-margin\">\r\n                                    <div class=\"progress-bar progress-bar-danger\" style=\"width: 70%;\"></div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"divider\"></li>\r\n                        <li>\r\n                            <div class=\"padding-5\">\r\n                                <button class=\"btn btn-block btn-default\">refresh</button>\r\n                            </div>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
@@ -2426,9 +2404,8 @@ $templateCache.put("app/layout/partials/sub-header.tpl.html","<div class=\"col-x
 $templateCache.put("app/layout/partials/voice-commands.tpl.html","<!-- TRIGGER BUTTON:\r\n<a href=\"/my-ajax-page.html\" data-toggle=\"modal\" data-target=\"#remoteModal\" class=\"btn btn-default\">Open Modal</a>  -->\r\n\r\n<!-- MODAL PLACE HOLDER\r\n<div class=\"modal fade\" id=\"remoteModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"remoteModalLabel\" aria-hidden=\"true\">\r\n<div class=\"modal-dialog\">\r\n<div class=\"modal-content\"></div>\r\n</div>\r\n</div>   -->\r\n<!--////////////////////////////////////-->\r\n\r\n<!--<div class=\"modal-header\">\r\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">\r\n&times;\r\n</button>\r\n<h4 class=\"modal-title\" id=\"myModalLabel\">Command List</h4>\r\n</div>-->\r\n<div class=\"modal-body\">\r\n\r\n	<h1><i class=\"fa fa-microphone text-muted\"></i>&nbsp;&nbsp; SmartAdmin Voice Command</h1>\r\n	<hr class=\"simple\">\r\n	<h5>Instruction</h5>\r\n\r\n	Click <span class=\"text-success\">\"Allow\"</span> to access your microphone and activate Voice Command.\r\n	You will notice a <span class=\"text-primary\"><strong>BLUE</strong> Flash</span> on the microphone icon indicating activation.\r\n	The icon will appear <span class=\"text-danger\"><strong>RED</strong></span> <span class=\"label label-danger\"><i class=\"fa fa-microphone fa-lg\"></i></span> if you <span class=\"text-danger\">\"Deny\"</span> access or don\'t have any microphone installed.\r\n	<br>\r\n	<br>\r\n	As a security precaution, your browser will disconnect the microphone every 60 to 120 seconds (sooner if not being used). In which case Voice Command will prompt you again to <span class=\"text-success\">\"Allow\"</span> or <span class=\"text-danger\">\"Deny\"</span> access to your microphone.\r\n	<br>\r\n	<br>\r\n	If you host your page over <strong>http<span class=\"text-success\">s</span></strong> (secure socket layer) protocol you can wave this security measure and have an unintrupted Voice Command.\r\n	<br>\r\n	<br>\r\n	<h5>Commands</h5>\r\n	<ul>\r\n		<li>\r\n			<strong>\'show\' </strong> then say the <strong>*page*</strong> you want to go to. For example <strong>\"show inbox\"</strong> or <strong>\"show calendar\"</strong>\r\n		</li>\r\n		<li>\r\n			<strong>\'mute\' </strong> - mutes all sound effects for the theme.\r\n		</li>\r\n		<li>\r\n			<strong>\'sound on\'</strong> - unmutes all sound effects for the theme.\r\n		</li>\r\n		<li>\r\n			<span class=\"text-danger\"><strong>\'stop\'</strong></span> - deactivates voice command.\r\n		</li>\r\n		<li>\r\n			<span class=\"text-primary\"><strong>\'help\'</strong></span> - brings up the command list\r\n		</li>\r\n		<li>\r\n			<span class=\"text-danger\"><strong>\'got it\'</strong></span> - closes help modal\r\n		</li>\r\n		<li>\r\n			<strong>\'hide navigation\'</strong> - toggle navigation collapse\r\n		</li>\r\n		<li>\r\n			<strong>\'show navigation\'</strong> - toggle navigation to open (can be used again to close)\r\n		</li>\r\n		<li>\r\n			<strong>\'scroll up\'</strong> - scrolls to the top of the page\r\n		</li>\r\n		<li>\r\n			<strong>\'scroll down\'</strong> - scrollts to the bottom of the page\r\n		</li>\r\n		<li>\r\n			<strong>\'go back\' </strong> - goes back in history (history -1 click)\r\n		</li>\r\n		<li>\r\n			<strong>\'logout\'</strong> - logs you out\r\n		</li>\r\n	</ul>\r\n	<br>\r\n	<h5>Adding your own commands</h5>\r\n	Voice Command supports up to 80 languages. Adding your own commands is extreamly easy. All commands are stored inside <strong>app.config.js</strong> file under the <code>var commands = {...}</code>. \r\n\r\n	<hr class=\"simple\">\r\n	<div class=\"text-right\">\r\n		<button type=\"button\" class=\"btn btn-success btn-lg\" data-dismiss=\"modal\">\r\n			Got it!\r\n		</button>\r\n	</div>\r\n\r\n</div>\r\n<!--<div class=\"modal-footer\">\r\n<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Got it!</button>\r\n</div> -->");
 $templateCache.put("app/layout/shortcut/shortcut.tpl.html","<div id=\"shortcut\">\r\n	<ul>\r\n		<li>\r\n			<a href=\"#/inbox/\" class=\"jarvismetro-tile big-cubes bg-color-blue\"> <span class=\"iconbox\"> <i class=\"fa fa-envelope fa-4x\"></i> <span>Mail <span class=\"label pull-right bg-color-darken\">14</span></span> </span> </a>\r\n		</li>\r\n		<li>\r\n			<a href=\"#/calendar\" class=\"jarvismetro-tile big-cubes bg-color-orangeDark\"> <span class=\"iconbox\"> <i class=\"fa fa-calendar fa-4x\"></i> <span>Calendar</span> </span> </a>\r\n		</li>\r\n		<li>\r\n			<a href=\"#/maps\" class=\"jarvismetro-tile big-cubes bg-color-purple\"> <span class=\"iconbox\"> <i class=\"fa fa-map-marker fa-4x\"></i> <span>Maps</span> </span> </a>\r\n		</li>\r\n		<li>\r\n			<a href=\"#/invoice\" class=\"jarvismetro-tile big-cubes bg-color-blueDark\"> <span class=\"iconbox\"> <i class=\"fa fa-book fa-4x\"></i> <span>Invoice <span class=\"label pull-right bg-color-darken\">99</span></span> </span> </a>\r\n		</li>\r\n		<li>\r\n			<a href=\"#/gallery\" class=\"jarvismetro-tile big-cubes bg-color-greenLight\"> <span class=\"iconbox\"> <i class=\"fa fa-picture-o fa-4x\"></i> <span>Gallery </span> </span> </a>\r\n		</li>\r\n		<li>\r\n			<a href=\"#/profile\" class=\"jarvismetro-tile big-cubes selected bg-color-pinkDark\"> <span class=\"iconbox\"> <i class=\"fa fa-user fa-4x\"></i> <span>My Profile </span> </span> </a>\r\n		</li>\r\n	</ul>\r\n</div>");
 $templateCache.put("app/map-dashboard/views/booking-records.tpl.html","<div id=\"today-bookings\" ng-repeat=\"record in booking\">\r\n    <div class=\"booking-number\">\r\n        <div class=\"table-cell\">\r\n            {{record.bk_no}}\r\n        </div>\r\n        <div class=\"table-cell\"></div>\r\n        <div class=\"table-cell\"></div>\r\n        <div class=\"table-cell\"></div>\r\n    </div>\r\n    <div class=\"customer-record\">\r\n        <div class=\"table-cell\">\r\n		 <img id=\"customer-pic\" src=\"styles/img/avatars/5.png\" alt=\"avatar\">\r\n            <!-- <img id=\"customer-pic\" ng-src=\"{{record.customer.pic}}\" alt=\"avatar\"> -->\r\n        </div>\r\n        <div class=\"table-cell customer-profile\">\r\n            <div class=\"customer-name\">{{record.mbr_name}}</div>\r\n            <div class=\"member-id\"><i class=\"fa fa-id-card-o\"></i> {{record.mbr_code}}</div>\r\n            <div class=\"mobile\"><i class=\"fa fa-mobile-phone\"></i> {{record.mbr_phone}}</div>\r\n             <div class=\"member-tier\"><i ng-class=\"tierClass(record)\"></i></div> \r\n        </div>\r\n        <div class=\"table-cell booking-info\">\r\n            <div ng-repeat=\"info in record.items\">\r\n            <div class=\"booking-time\">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>\r\n            <div class=\"booking-treatment\">{{info.item_name}}</div>\r\n            <div class=\"booking-therapist\">Therapist: <span class=\"booking-therapist-name\">{{info.staff_name}}</span></div>\r\n            <div class=\"booking-room\">{{info.room_name}}</div>\r\n            <br>\r\n            </div>\r\n        </div>\r\n        <div class=\"table-cell\">\r\n            <div id=\"next\">\r\n                <a href=\"#pairing\" data-toggle=\"collapse\" data-parent=\"#register-guest-accordion\" ng-click=\"selectRecord($index)\"><i class=\"fa fa-arrow-circle-o-right\"></i></a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
-$templateCache.put("app/map-dashboard/views/selected-record.tpl.html","<div id=\"today-bookings\">\r\n    <div class=\"booking-number\">\r\n        <div class=\"table-cell\">\r\n            {{currentIdx.booking}}\r\n        </div>\r\n        <div class=\"table-cell\"></div>\r\n        <div class=\"table-cell\"></div>\r\n        <div class=\"table-cell\"></div>\r\n    </div>\r\n    <div class=\"customer-record\">\r\n        <div class=\"table-cell\">\r\n            <img id=\"customer-pic\" ng-src=\"{{currentIdx.customer.pic}}\" alt=\"avatar\">\r\n        </div>\r\n        <div class=\"table-cell customer-profile\">\r\n            <div class=\"customer-name\">{{currentIdx.customer.name}}</div>\r\n            <div class=\"member-id\" id=\"member_id\" o-data-id=\'{{currentIdx.customer.id}}\'><i class=\"fa fa-id-card-o\"></i> {{currentIdx.customer.id}}</div>\r\n            <div class=\"mobile\"><i class=\"fa fa-mobile-phone\"></i> {{currentIdx.customer.mobile}}</div>\r\n            <div class=\"member-tier\"><i ng-class=\"tierClass(currentIdx)\"></i></div>\r\n        </div>\r\n        <div class=\"table-cell booking-info\">\r\n            <div ng-repeat=\"x in currentIdx.treatment\">\r\n                <div class=\"booking-time\">{{x.start_time}} - {{x.end_time}} ({{x.duration}})</div>\r\n                <div class=\"booking-treatment\">{{x.treatment}}</div>\r\n                <div class=\"booking-therapist\">Therapist: <span class=\"booking-therapist-name\">{{x.therapist}}</span></div>\r\n                <div class=\"booking-room\">{{x.room}}</div>\r\n                <br>\r\n            </div>\r\n        </div>\r\n        <div class=\"table-cell\">\r\n            <div id=\"confirmed\">\r\n                <i class=\"fa fa-check-circle\"></i>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
-$templateCache.put("app/map-dashboard/views/selectedItemCO.tpl.html"," <div ng-if=\"!(selectedItemCO.handBandId === \'Please Select\')\">\r\n                        <div class=\"booking-number\">\r\n                            <div class=\"table-cell\">{{selectedItemCO.booking}}</div>\r\n                            <div class=\"table-cell\"></div>\r\n                            <div class=\"table-cell\"></div>\r\n                            <div class=\"table-cell\"></div>\r\n                        </div>\r\n                        <div class=\"customer-record\">\r\n                            <div class=\"table-cell\">\r\n                                <img id=\"customer-pic\" src=\"styles/img/avatars/5.png\" alt=\"avatar\">\r\n                            </div>\r\n                            <div class=\"table-cell customer-profile\">\r\n                                <div class=\"customer-name\">{{selectedItemCO.customer.name}}</div>\r\n                                <div class=\"member-id\" o-data-id=\'{{selectedItemCO.customer.id}}\' ><i class=\"fa fa-id-card-o\"></i> {{selectedItemCO.customer.id}}</div>\r\n                                <div class=\"mobile\"><i class=\"fa fa-mobile-phone\"></i> {{selectedItemCO.customer.mobile}}</div>\r\n                                <div class=\"member-tier\"><i class=\"fa fa-trophy\"></i></div>\r\n                            </div>\r\n                            <div class=\"table-cell booking-info\">\r\n                                <div class=\"booking-time\">{{selectedItemCO.treatment[0].start_time}} - {{selectedItemCO.treatment[0].end_time}} ({{selectedItemCO.treatment[0].duration}})</div>\r\n                                <div class=\"booking-treatment\">{{selectedItemCO.treatment[0].treatment}}</div>\r\n                                <div class=\"booking-therapist\">Therapist: <span class=\"booking-therapist-name\">{{selectedItemCO.treatment[0].therapist}}</span></div>\r\n                                <div class=\"booking-room\">{{selectedItemCO.treatment[0].room}}</div>\r\n                            </div>\r\n                            <div class=\"table-cell\">\r\n                                <div id=\"confirmed\">\r\n                                    <i class=\"fa fa-check-circle\"></i>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>");
-$templateCache.put("app/dashboard/projects/recent-projects.tpl.html","<div class=\"project-context hidden-xs dropdown\" dropdown>\r\n\r\n    <span class=\"label\">{{getWord(\'Projects\')}}:</span>\r\n    <span class=\"project-selector dropdown-toggle\" data-toggle=\"dropdown\">{{getWord(\'Recent projects\')}} <i ng-if=\"projects.length\"\r\n            class=\"fa fa-angle-down\"></i></span>\r\n\r\n    <ul class=\"dropdown-menu\" ng-if=\"projects.length\">\r\n        <li ng-repeat=\"project in projects\">\r\n            <a href=\"{{project.href}}\">{{project.title}}</a>\r\n        </li>\r\n        <li class=\"divider\"></li>\r\n        <li>\r\n            <a ng-click=\"clearProjects()\"><i class=\"fa fa-power-off\"></i> Clear</a>\r\n        </li>\r\n    </ul>\r\n\r\n</div>");
+$templateCache.put("app/map-dashboard/views/selected-record.tpl.html","<div id=\"today-bookings\">\r\n    <div class=\"booking-number\">\r\n        <div id=\"booking_no\" o-data-id=\"{{currentIdx.bk_no}}\" class=\"table-cell\">\r\n            {{currentIdx.bk_no}}\r\n        </div>\r\n        <div class=\"table-cell\"></div>\r\n        <div class=\"table-cell\"></div>\r\n        <div class=\"table-cell\"></div>\r\n    </div>\r\n    <div class=\"customer-record\">\r\n        <div class=\"table-cell\">\r\n            <!-- <img id=\"customer-pic\" ng-src=\"{{currentIdx.customer.pic}}\" alt=\"avatar\"> -->\r\n			 <img id=\"customer-pic\" src=\"styles/img/avatars/5.png\" alt=\"avatar\">\r\n        </div>\r\n        <div class=\"table-cell customer-profile\">\r\n            <div class=\"customer-name\">{{currentIdx.mbr_name}}</div>\r\n            <div class=\"member-id\" id=\"member_id\" o-data-id=\'{{currentIdx.mbr_code}}\'><i class=\"fa fa-id-card-o\"></i> {{currentIdx.mbr_code}}</div>\r\n            <div class=\"mobile\"><i class=\"fa fa-mobile-phone\"></i> {{currentIdx.mbr_phone}}</div>\r\n            <div class=\"member-tier\"><i ng-class=\"tierClass(currentIdx)\"></i></div>\r\n        </div>\r\n        <div class=\"table-cell booking-info\">\r\n            <div ng-repeat=\"x in currentIdx.treatment\">\r\n                <div class=\"booking-time\">{{x.from_date}} - {{x.to_date}} ({{x.str_time_length}})</div>\r\n                <div class=\"booking-treatment\">{{x.item_name}}</div>\r\n                <div class=\"booking-therapist\">Therapist: <span class=\"booking-therapist-name\">{{x.staff_name}}</span></div>\r\n                <div class=\"booking-room\">{{x.room_name}}</div>\r\n                <br>\r\n            </div>\r\n        </div>\r\n        <div class=\"table-cell\">\r\n            <div id=\"confirmed\">\r\n                <i class=\"fa fa-check-circle\"></i>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
+$templateCache.put("app/map-dashboard/views/selectedItemCO.tpl.html","              <div ng-model=\'booking_BindCustomerInfomation\' ng-if=\"(booking_BindCustomerInfomation.bk_no)\">\r\n                        <div class=\"booking-number\">\r\n                            <div id=\'unbind_booking_no\' class=\"table-cell\" o-data-id=\'{{booking_BindCustomerInfomation.bk_no}}\'>{{booking_BindCustomerInfomation.bk_no}}</div>\r\n                            <div class=\"table-cell\"></div>\r\n                            <div class=\"table-cell\"></div>\r\n                            <div class=\"table-cell\"></div>\r\n                        </div>\r\n                        <div class=\"customer-record\">\r\n                            <div class=\"table-cell\">\r\n                                <img id=\"customer-pic\" src=\"styles/img/avatars/5.png\" alt=\"avatar\">\r\n                            </div>\r\n                            <div class=\"table-cell customer-profile\">\r\n                                <div class=\"customer-name\">{{booking_BindCustomerInfomation.mbr_name}}</div>\r\n                                <div  class=\"member-id\" ><i class=\"fa fa-id-card-o\"></i> {{booking_BindCustomerInfomation.mbr_code}}</div>\r\n                                <div class=\"mobile\"><i class=\"fa fa-mobile-phone\"></i> {{booking_BindCustomerInfomation.mbr_phone}}</div>\r\n                                <div class=\"member-tier\"><i class=\"fa fa-trophy\"></i></div>\r\n                            </div>\r\n                            <div class=\"table-cell booking-info\">\r\n							    <div ng-repeat=\"info in booking_BindCustomerInfomation.items\">\r\n                                <div class=\"booking-time\">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>\r\n                                <div class=\"booking-treatment\">{{info.item_name}}</div>\r\n                                <div class=\"booking-therapist\">Therapist: <span class=\"booking-therapist-name\">{{info.staff_name}}</span></div>\r\n                                <div class=\"booking-room\">{{info.room_name}}</div>\r\n                                </div>\r\n							</div>\r\n                            <div class=\"table-cell\">\r\n                                <div id=\"confirmed\">\r\n                                    <i class=\"fa fa-check-circle\"></i>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>");
 $templateCache.put("app/dashboard/chat/directives/aside-chat-widget.tpl.html","<ul>\r\n    <li>\r\n        <div class=\"display-users\">\r\n            <input class=\"form-control chat-user-filter\" placeholder=\"Filter\" type=\"text\">\r\n            <dl>\r\n                <dt>\r\n                    <a href=\"#\" class=\"usr\"\r\n                       data-chat-id=\"cha1\"\r\n                       data-chat-fname=\"Sadi\"\r\n                       data-chat-lname=\"Orlaf\"\r\n                       data-chat-status=\"busy\"\r\n                       data-chat-alertmsg=\"Sadi Orlaf is in a meeting. Please do not disturb!\"\r\n                       data-chat-alertshow=\"true\"\r\n                       popover-trigger=\"hover\"\r\n                       popover-placement=\"right\"\r\n                       smart-popover-html=\"\r\n										<div class=\'usr-card\'>\r\n											<img src=\'styles/img/avatars/5.png\' alt=\'Sadi Orlaf\'>\r\n											<div class=\'usr-card-content\'>\r\n												<h3>Sadi Orlaf</h3>\r\n												<p>Marketing Executive</p>\r\n											</div>\r\n										</div>\r\n									\">\r\n                        <i></i>Sadi Orlaf\r\n                    </a>\r\n                </dt>\r\n                <dt>\r\n                    <a href=\"#\" class=\"usr\"\r\n                       data-chat-id=\"cha2\"\r\n                       data-chat-fname=\"Jessica\"\r\n                       data-chat-lname=\"Dolof\"\r\n                       data-chat-status=\"online\"\r\n                       data-chat-alertmsg=\"\"\r\n                       data-chat-alertshow=\"false\"\r\n                       popover-trigger=\"hover\"\r\n                       popover-placement=\"right\"\r\n                       smart-popover-html=\"\r\n										<div class=\'usr-card\'>\r\n											<img src=\'styles/img/avatars/1.png\' alt=\'Jessica Dolof\'>\r\n											<div class=\'usr-card-content\'>\r\n												<h3>Jessica Dolof</h3>\r\n												<p>Sales Administrator</p>\r\n											</div>\r\n										</div>\r\n									\">\r\n                        <i></i>Jessica Dolof\r\n                    </a>\r\n                </dt>\r\n                <dt>\r\n                    <a href=\"#\" class=\"usr\"\r\n                       data-chat-id=\"cha3\"\r\n                       data-chat-fname=\"Zekarburg\"\r\n                       data-chat-lname=\"Almandalie\"\r\n                       data-chat-status=\"online\"\r\n                       popover-trigger=\"hover\"\r\n                       popover-placement=\"right\"\r\n                       smart-popover-html=\"\r\n										<div class=\'usr-card\'>\r\n											<img src=\'styles/img/avatars/3.png\' alt=\'Zekarburg Almandalie\'>\r\n											<div class=\'usr-card-content\'>\r\n												<h3>Zekarburg Almandalie</h3>\r\n												<p>Sales Admin</p>\r\n											</div>\r\n										</div>\r\n									\">\r\n                        <i></i>Zekarburg Almandalie\r\n                    </a>\r\n                </dt>\r\n                <dt>\r\n                    <a href=\"#\" class=\"usr\"\r\n                       data-chat-id=\"cha4\"\r\n                       data-chat-fname=\"Barley\"\r\n                       data-chat-lname=\"Krazurkth\"\r\n                       data-chat-status=\"away\"\r\n                       popover-trigger=\"hover\"\r\n                       popover-placement=\"right\"\r\n                       smart-popover-html=\"\r\n										<div class=\'usr-card\'>\r\n											<img src=\'styles/img/avatars/4.png\' alt=\'Barley Krazurkth\'>\r\n											<div class=\'usr-card-content\'>\r\n												<h3>Barley Krazurkth</h3>\r\n												<p>Sales Director</p>\r\n											</div>\r\n										</div>\r\n									\">\r\n                        <i></i>Barley Krazurkth\r\n                    </a>\r\n                </dt>\r\n                <dt>\r\n                    <a href=\"#\" class=\"usr offline\"\r\n                       data-chat-id=\"cha5\"\r\n                       data-chat-fname=\"Farhana\"\r\n                       data-chat-lname=\"Amrin\"\r\n                       data-chat-status=\"incognito\"\r\n                       popover-trigger=\"hover\"\r\n                       popover-placement=\"right\"\r\n                       smart-popover-html=\"\r\n										<div class=\'usr-card\'>\r\n											<img src=\'styles/img/avatars/female.png\' alt=\'Farhana Amrin\'>\r\n											<div class=\'usr-card-content\'>\r\n												<h3>Farhana Amrin</h3>\r\n												<p>Support Admin <small><i class=\'fa fa-music\'></i> Playing Beethoven Classics</small></p>\r\n											</div>\r\n										</div>\r\n									\">\r\n                        <i></i>Farhana Amrin (offline)\r\n                    </a>\r\n                </dt>\r\n                <dt>\r\n                    <a href=\"#\" class=\"usr offline\"\r\n                       data-chat-id=\"cha6\"\r\n                       data-chat-fname=\"Lezley\"\r\n                       data-chat-lname=\"Jacob\"\r\n                       data-chat-status=\"incognito\"\r\n                       popover-trigger=\"hover\"\r\n                       popover-placement=\"right\"\r\n                       smart-popover-html=\"\r\n										<div class=\'usr-card\'>\r\n											<img src=\'styles/img/avatars/male.png\' alt=\'Lezley Jacob\'>\r\n											<div class=\'usr-card-content\'>\r\n												<h3>Lezley Jacob</h3>\r\n												<p>Sales Director</p>\r\n											</div>\r\n										</div>\r\n									\">\r\n                        <i></i>Lezley Jacob (offline)\r\n                    </a>\r\n                </dt>\r\n            </dl>\r\n\r\n\r\n            <!--<a href=\"chat.html\" class=\"btn btn-xs btn-default btn-block sa-chat-learnmore-btn\">About the API</a>-->\r\n        </div>\r\n    </li>\r\n</ul>");
 $templateCache.put("app/dashboard/chat/directives/chat-users.tpl.html","<div id=\"chat-container\" ng-class=\"{open: open}\">\r\n    <span class=\"chat-list-open-close\" ng-click=\"openToggle()\"><i class=\"fa fa-user\"></i><b>!</b></span>\r\n\r\n    <div class=\"chat-list-body custom-scroll\">\r\n        <ul id=\"chat-users\">\r\n            <li ng-repeat=\"chatUser in chatUsers | filter: chatUserFilter\">\r\n                <a ng-click=\"messageTo(chatUser)\"><img ng-src=\"{{chatUser.picture}}\">{{chatUser.username}} <span\r\n                        class=\"badge badge-inverse\">{{chatUser.username.length}}</span><span class=\"state\"><i\r\n                        class=\"fa fa-circle txt-color-green pull-right\"></i></span></a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"chat-list-footer\">\r\n        <div class=\"control-group\">\r\n            <form class=\"smart-form\">\r\n                <section>\r\n                    <label class=\"input\" >\r\n                        <input type=\"text\" ng-model=\"chatUserFilter\" id=\"filter-chat-list\" placeholder=\"Filter\">\r\n                    </label>\r\n                </section>\r\n            </form>\r\n        </div>\r\n    </div>\r\n</div>");
 $templateCache.put("app/dashboard/chat/directives/chat-widget.tpl.html","<div id=\"chat-widget\" jarvis-widget data-widget-color=\"blueDark\" data-widget-editbutton=\"false\"\r\n     data-widget-fullscreenbutton=\"false\">\r\n\r\n\r\n    <header>\r\n        <span class=\"widget-icon\"> <i class=\"fa fa-comments txt-color-white\"></i> </span>\r\n\r\n        <h2> SmartMessage </h2>\r\n\r\n        <div class=\"widget-toolbar\">\r\n            <!-- add: non-hidden - to disable auto hide -->\r\n\r\n            <div class=\"btn-group\" data-dropdown>\r\n                <button class=\"btn dropdown-toggle btn-xs btn-success\" data-toggle=\"dropdown\">\r\n                    Status <i class=\"fa fa-caret-down\"></i>\r\n                </button>\r\n                <ul class=\"dropdown-menu pull-right js-status-update\">\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-circle txt-color-green\"></i> Online</a>\r\n                    </li>\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-circle txt-color-red\"></i> Busy</a>\r\n                    </li>\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-circle txt-color-orange\"></i> Away</a>\r\n                    </li>\r\n                    <li class=\"divider\"></li>\r\n                    <li>\r\n                        <a href-void><i class=\"fa fa-power-off\"></i> Log Off</a>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <!-- widget div-->\r\n    <div>\r\n        <div class=\"widget-body widget-hide-overflow no-padding\">\r\n            <!-- content goes here -->\r\n\r\n            <chat-users></chat-users>\r\n\r\n            <!-- CHAT BODY -->\r\n            <div id=\"chat-body\" class=\"chat-body custom-scroll\">\r\n                <ul>\r\n                    <li class=\"message\" ng-repeat=\"message in chatMessages\">\r\n                        <img class=\"message-picture online\" ng-src=\"{{message.user.picture}}\">\r\n\r\n                        <div class=\"message-text\">\r\n                            <time>\r\n                                {{message.date | date }}\r\n                            </time>\r\n                            <a ng-click=\"messageTo(message.user)\" class=\"username\">{{message.user.username}}</a>\r\n                            <div ng-bind-html=\"message.body\"></div>\r\n\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n\r\n            <!-- CHAT FOOTER -->\r\n            <div class=\"chat-footer\">\r\n\r\n                <!-- CHAT TEXTAREA -->\r\n                <div class=\"textarea-div\">\r\n\r\n                    <div class=\"typearea\">\r\n                        <textarea placeholder=\"Write a reply...\" id=\"textarea-expand\"\r\n                                  class=\"custom-scroll\" ng-model=\"newMessage\"></textarea>\r\n                    </div>\r\n\r\n                </div>\r\n\r\n                <!-- CHAT REPLY/SEND -->\r\n											<span class=\"textarea-controls\">\r\n												<button class=\"btn btn-sm btn-primary pull-right\" ng-click=\"sendMessage()\">\r\n                                                    Reply\r\n                                                </button> <span class=\"pull-right smart-form\"\r\n                                                                style=\"margin-top: 3px; margin-right: 10px;\"> <label\r\n                                                    class=\"checkbox pull-right\">\r\n                                                <input type=\"checkbox\" name=\"subscription\" id=\"subscription\">\r\n                                                <i></i>Press <strong> ENTER </strong> to send </label> </span> <a\r\n                                                    href-void class=\"pull-left\"><i\r\n                                                    class=\"fa fa-camera fa-fw fa-lg\"></i></a> </span>\r\n\r\n            </div>\r\n\r\n            <!-- end content -->\r\n        </div>\r\n\r\n    </div>\r\n    <!-- end widget div -->\r\n</div>");
@@ -2461,6 +2438,29 @@ angular.module('app.auth').factory('User', function ($http, $q, APP_CONFIG) {
 
     return UserModel;
 });
+
+"use strict";
+
+angular.module('app.auth').controller('LoginCtrl', function ($scope, $state, GooglePlus, User, ezfb) {
+
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+        if (authResult.status.method == 'PROMPT') {
+            GooglePlus.getUser().then(function (user) {
+                User.username = user.name;
+                User.picture = user.picture;
+                $state.go('app.dashboard');
+            });
+        }
+    });
+
+    $scope.$on('event:facebook-signin-success', function (event, authResult) {
+        ezfb.api('/me', function (res) {
+            User.username = res.name;
+            User.picture = 'https://graph.facebook.com/' + res.id + '/picture';
+            $state.go('app.dashboard');
+        });
+    });
+})
 
 'use strict';
 
@@ -2527,12 +2527,6 @@ angular.module('app.calendar').controller('CalendarCtrl', function ($scope, $log
 
 });
 
-
-"use strict";
-
-angular.module('app.calendar').factory('CalendarEvent', function($resource, APP_CONFIG){
-    return $resource( APP_CONFIG.apiRootUrl + '/events.json', {_id:'@id'})
-});
 "use strict";
 
 angular.module('app.calendar').directive('dragableEvent', function ($log) {
@@ -2691,48 +2685,12 @@ angular.module('app.calendar').directive('fullCalendar', function (CalendarEvent
         }
     }
 });
-'use strict';
 
-
-
-angular.module('app.data').controller('dataSourceCtrl', ['$scope', 'dataSource', function($scope, dataSource) {
-  dataSource.success(function(source) {
-    $scope.dataSource = source;
-  });
-  	$scope.dataClass = function(data) {
-        switch (data.table) {
-            case 'Customer':
-                return 'data-source-customer';
-                break;
-            case 'Location':
-                return 'data-source-location';
-                break;
-            case 'Staff':
-                return 'data-source-staff';
-                break;
-            case 'Room':
-                return 'data-source-room';
-                break;
-            case 'Booking':
-                return 'data-source-booking';
-                break;
-            default:
-                return 'data-source-customer';
-        }
-    };
-  
-}]);
 "use strict";
 
-angular.module('app.data').factory('dataSource', ['$http', function($http) {
-  return $http.get('http://localhost:8888/api/data-source.json')
-  .success(function(source) {
-    return source;
-  })
-  .error(function(err) {
-    return err;
-  });
-}]);
+angular.module('app.calendar').factory('CalendarEvent', function($resource, APP_CONFIG){
+    return $resource( APP_CONFIG.apiRootUrl + '/events.json', {_id:'@id'})
+});
 "use strict";	
 
 angular.module('app').controller("ActivitiesCtrl", function ActivitiesCtrl($scope, $log, activityService){
@@ -2855,26 +2813,30 @@ angular.module('app').factory('activityService', function($http, $log, APP_CONFI
 		}
 	}
 });
-'use strict';
+"use strict";
 
-angular.module('app.eCommerce').controller('OrdersDemoCtrl', function ($scope, orders) {
+angular.module('app').factory('Project', function($http, APP_CONFIG){
+    return {
+        list: $http.get(APP_CONFIG.apiRootUrl + '/projects.json')
+    }
+});
+"use strict";
 
-    $scope.orders = orders.data;
+angular.module('app').directive('recentProjects', function(Project){
+    return {
+        restrict: "EA",
+        replace: true,
+        templateUrl: "app/dashboard/projects/recent-projects.tpl.html",
+        scope: true,
+        link: function(scope, element){
 
-    $scope.tableOptions =  {
-        "data": orders.data.data,
-//            "bDestroy": true,
-        "iDisplayLength": 15,
-        columns: [
-            {data: "orderId"},
-            {data: "customerId"},
-            {data: "purchase"},
-            {data: "delivery"},
-            {data: "basePrice"},
-            {data: "postalZip"},
-            {data: "status"}
-        ],
-        "order": [[1, 'asc']]
+            Project.list.then(function(response){
+                scope.projects = response.data;
+            });
+            scope.clearProjects = function(){
+                scope.projects = [];
+            }
+        }
     }
 });
 "use strict";
@@ -2914,6 +2876,48 @@ angular.module('app').controller('TodoCtrl', function ($scope, $timeout, Todo) {
     };
 
 });
+'use strict';
+
+
+
+angular.module('app.data').controller('dataSourceCtrl', ['$scope', 'dataSource', function($scope, dataSource) {
+  dataSource.success(function(source) {
+    $scope.dataSource = source;
+  });
+  	$scope.dataClass = function(data) {
+        switch (data.table) {
+            case 'Customer':
+                return 'data-source-customer';
+                break;
+            case 'Location':
+                return 'data-source-location';
+                break;
+            case 'Staff':
+                return 'data-source-staff';
+                break;
+            case 'Room':
+                return 'data-source-room';
+                break;
+            case 'Booking':
+                return 'data-source-booking';
+                break;
+            default:
+                return 'data-source-customer';
+        }
+    };
+  
+}]);
+"use strict";
+
+angular.module('app.data').factory('dataSource', ['$http', function($http) {
+  return $http.get('http://localhost:8888/api/data-source.json')
+  .success(function(source) {
+    return source;
+  })
+  .error(function(err) {
+    return err;
+  });
+}]);
 
 "use strict";
 
@@ -3218,6 +3222,28 @@ angular.module('app.forms').controller('ImageEditorCtrl', function ($scope) {
 angular.module('app.forms').controller('ModalDemoCtrl', function($scope, $modalInstance){
     $scope.closeModal = function(){
         $modalInstance.dismiss('cancel');
+    }
+});
+'use strict';
+
+angular.module('app.eCommerce').controller('OrdersDemoCtrl', function ($scope, orders) {
+
+    $scope.orders = orders.data;
+
+    $scope.tableOptions =  {
+        "data": orders.data.data,
+//            "bDestroy": true,
+        "iDisplayLength": 15,
+        columns: [
+            {data: "orderId"},
+            {data: "customerId"},
+            {data: "purchase"},
+            {data: "delivery"},
+            {data: "basePrice"},
+            {data: "postalZip"},
+            {data: "status"}
+        ],
+        "order": [[1, 'asc']]
     }
 });
 "use strict";
@@ -3527,40 +3553,6 @@ angular.module('app.graphs').controller('FlotCtrl', function ($scope) {
 });
 "use strict";
 
-angular.module('app.inbox').directive('messageLabels', function (InboxConfig) {
-    return {
-        replace: true,
-        restrict: 'AE',
-        link: function (scope, element) {
-
-            if (scope.message.labels && scope.message.labels.length) {
-                InboxConfig.success(function (config) {
-                    var html = _.map(scope.message.labels, function (label) {
-                        return '<span class="label bg-color-'+config.labels[label].color +'">' + config.labels[label].name + '</span>';
-                    }).join('');
-                    element.replaceWith(html);
-                });
-
-            } else {
-                element.replaceWith('');
-            }
-        }
-    }
-});
-"use strict";
-
-angular.module('app.inbox').directive('unreadMessagesCount', function(InboxConfig){
-    return {
-        restrict: 'A',
-        link: function(scope, element){
-            InboxConfig.success(function(config){
-                element.html(_.find(config.folders, {key: 'inbox'}).unread);
-            })
-        }
-    }
-});
-"use strict";
-
 angular.module('app.inbox').factory('InboxConfig', function($http, APP_CONFIG){
     return $http.get(APP_CONFIG.apiRootUrl + '/inbox.json');
 })
@@ -3593,6 +3585,40 @@ angular.module('app.inbox').factory('InboxMessage', function($resource, APP_CONF
 
     return InboxMessage;
 
+});
+"use strict";
+
+angular.module('app.inbox').directive('messageLabels', function (InboxConfig) {
+    return {
+        replace: true,
+        restrict: 'AE',
+        link: function (scope, element) {
+
+            if (scope.message.labels && scope.message.labels.length) {
+                InboxConfig.success(function (config) {
+                    var html = _.map(scope.message.labels, function (label) {
+                        return '<span class="label bg-color-'+config.labels[label].color +'">' + config.labels[label].name + '</span>';
+                    }).join('');
+                    element.replaceWith(html);
+                });
+
+            } else {
+                element.replaceWith('');
+            }
+        }
+    }
+});
+"use strict";
+
+angular.module('app.inbox').directive('unreadMessagesCount', function(InboxConfig){
+    return {
+        restrict: 'A',
+        link: function(scope, element){
+            InboxConfig.success(function(config){
+                element.html(_.find(config.folders, {key: 'inbox'}).unread);
+            })
+        }
+    }
 });
 "use strict";
 
@@ -3750,16 +3776,51 @@ angular.module('app').directive('toggleShortcut', function($log,$timeout) {
 	}
 })
 'use strict';
-var bookList =[];
+
+angular.module('app.home').directive('bookingRecords', function() {
+  return {
+    restrict: 'E',//A 用于元素的 Attribute，这是默认值,E 用于元素的名称,C 用于 CSS 中的 class
+    templateUrl: 'app/map-dashboard/views/booking-records.tpl.html'
+  };
+});
+'use strict';
+
+angular.module('app.home').directive('selectedItemCO', function() {
+  return {
+    restrict: 'C',//A 用于元素的 Attribute，这是默认值,E 用于元素的名称,C 用于 CSS 中的 class
+    templateUrl: 'app/map-dashboard/views/selectedItemCO.tpl.html'
+  };
+});
+'use strict';
+
+angular.module('app.home').directive('selectedRecords', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'app/map-dashboard/views/selected-record.tpl.html'
+  };
+});
+'use strict';
+   var unbind_beacon_list=[];
+   var bind_beacon_list=[];
 angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedItemCORecord', function($scope,selectedItemCORecord) {
     //Change status button color in map filter
     $scope.selectStatus = function() {
+		
+		 //獲取所有beacon
+		 getBeaconList();
+		 //綁定手環
+	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
+		
+	     //解除綁定
+	    $('#btn_Check-out').on('click',function(){CheckOutBeacon();});
+		//获取綁定beacon客戶的信息
+		$('#select-hb-co').on('change',function(){GetBindCustomerInfomation();});
         jQuery('.btn-normal').click(function() {
             jQuery(this).toggleClass('btn-selected');
         });
     };
     $scope.selectStatus();
-
+     
     //Datepicker
     $scope.pickeddate = new Date();
     jQuery("#datepicker").datepicker({
@@ -3776,13 +3837,13 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
     $('#btn_RegisterGuest').click(function(){
 		$.ajax({
                 type: "Get",
-                url: ServerUrl+"base/list",
+                url: ServerUrl+"base/listByStatus",
                 dataType: "json",
-				data:{ t: new Date() },
+				data:{ t: new Date(),status:"M"},
                 success: function (records) {
 			     for(var i in records){
 				   getMember(records[i]);
-				   	}
+				   	} 
 				 $scope.booking = records;
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
@@ -3794,7 +3855,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
                 type: "Get",
                 url: ServerUrl+"guest/byID",
                 dataType: "json",
-				data:{ ID:record.mbr_code},
+				data:{t: new Date(), ID:record.mbr_code},
                 success: function (data) { 
 					   record.mbr_name=data.name;
 					   record.mbr_phone=data.mobile;
@@ -3813,7 +3874,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
 							  record.items[o].to_date=new Date(record.items[o].to_date).getHours()+":"+to_date_minutes;
 							  record.items[o].str_time_length=str_time_length;
 						  }
-						  bookList.push(record);
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -3840,19 +3900,145 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
         $scope.currentIdx = $scope.booking[i];
     };
 
-   //Hand Band ID and locker
-   selectedItemCORecord.success(function(selectrecords) {   
-     $scope.handBandLocker =selectrecords;
-	 $scope.selectedItem = $scope.handBandLocker[0];
-    $scope.selectedItemCO = $scope.handBandLocker[0];
-   });
+   	//查詢已經完成的訂單
+	
+	$('#btn_CheckoutGuest').click(function(){
+		$.ajax({
+                type: "Get",
+                url: ServerUrl+"base/listByStatus",
+                dataType: "json",
+				data:{ t: new Date(),status:"S"},
+                success: function (data) {
+			     for(var i in data){
+				   getMember(data[i]);
+				   	}   
+				 $scope.booking_finish =data;
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+    });
+   // selectedItemCORecord.success(function(selectrecords) {   
+     // $scope.handBandLocker =selectrecords;
+	 // $scope.selectedItem = $scope.handBandLocker[0];
+    // $scope.selectedItemCO = $scope.handBandLocker[0];
+   // });
+   
 
+   //獲取beaconlist
+     function getBeaconList(){      
+		$.ajax({
+                type: "Get",
+                url: ServerUrl+"beacon/list",
+                dataType: "json",
+				data:{ t: new Date()},
+                success: function (data) {
+				 unbind_beacon_list.length=0;
+				 bind_beacon_list.length=0;
+                 for(var i in data){
+					if(!data[i].bind_guest_id){ 
+				     unbind_beacon_list.push(data[i]);
+					}
+					else{
+					 bind_beacon_list.push(data[i]);
+					}
+				 }					 
+				 $scope.unbecaon_List=unbind_beacon_list;
+				 $scope.becaon_List=bind_beacon_list;
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });	 
+	 }
 
     $scope.selectedHandBand = false;
     $scope.selectHandBand = function() {
         $scope.selectedHandBand = true;
     };
 
+	 //綁定手環
+   function RegisterCustomerInfomation(){
+	    var memberID = $('#member_id').attr("o-data-id");
+		var cbID = $('#select-hb option:selected').html();
+		var booking_no =$('#booking_no').attr("o-data-id");
+		getBeaconList();
+       $.ajax({
+                type: "Post",
+                url: ServerUrl+"beacon/association",
+                dataType: "json",
+				data:{t: new Date(),cbID:'DFC0F1FF6013',UID:memberID,target_type:1},//
+                success: function (data) {
+					     var str_show="Bind successfully";
+						 UpdateBookingStatus(booking_no,"S",str_show);//修改訂單狀態為S
+                         $('#oneofCheck-in').click();						 
+                }, error: function () {
+                    layer.alert("Have not any booking was selected");
+                }
+            });
+   }
+    //解除手環綁定
+	function CheckOutBeacon(){	  
+         var booking_no =$('#unbind_booking_no').attr("o-data-id");
+         var cbID  =$('#select-hb-co option:selected').html();	
+          getBeaconList();		 
+	     $.ajax({
+                type: "Post",
+                url: ServerUrl+"beacon/unbind",
+                dataType: "json",
+				data:{cbID:cbID },//需要解除綁定的手環ID
+                success: function (data) {
+					  var str_show="Unbind successfully";				   
+                      UpdateBookingStatus(booking_no,"P",str_show);//修改訂單狀態為P
+                      var i =bind_beacon_list.indexOf(cbID)
+                      bind_beacon_list.splice(i, 1);
+					  $scope.booking_BindCustomerInfomation=bind_beacon_list;	
+                      console.log($scope.booking_BindCustomerInfomation);					  
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+	}
+	
+	 //修改訂單狀態
+   function  UpdateBookingStatus(booking_no,bk_status,str_show){
+	   
+       $.ajax({
+                type: "GET",
+                url: ServerUrl+"base/updateBookingStatus",
+                dataType: "json",
+				data:{t: new Date(),bookingNo:booking_no,status:bk_status},
+                success: function (data) {	
+                       $('.close').click();
+						layer.msg(str_show);
+                        getBeaconList();							
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+   }
+	
+	
+	//獲取綁定Beacon的客戶信息
+	function GetBindCustomerInfomation(){
+	   var bindbeaconId =$('#select-hb-co option:selected').html();
+	   var bind_guest_id="";
+	   for(var i in  bind_beacon_list){
+	      if( bind_beacon_list[i].ble_addr==bindbeaconId){
+			  bind_guest_id=bind_beacon_list[i].bind_guest_id;
+		  }  
+	    
+	   }
+	  if(bind_guest_id!=""&&bind_guest_id!=null){
+		   for(var i in $scope.booking_finish){
+			   if($scope.booking_finish[i].mbr_code==bind_guest_id){
+				  $scope.booking_BindCustomerInfomation=$scope.booking_finish[i];
+			   }
+		   }
+		   $scope.booking_BindCustomerInfomation
+	  }
+	 }
+	
+	
 }]);
 
 
@@ -3862,30 +4048,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
 
 
 
-'use strict';
-
-angular.module('app.home').directive('bookingRecords', function() {
-  return {
-    restrict: 'E',//A 用于元素的 Attribute，这是默认值,E 用于元素的名称,C 用于 CSS 中的 class
-    templateUrl: 'app/map-dashboard/views/booking-records.tpl.html'
-  };
-});
-'use strict';
-
-angular.module('app.home').directive('selectedItemCO', function() {
-  return {
-    restrict: 'C',//A 用于元素的 Attribute，这是默认值,E 用于元素的名称,C 用于 CSS 中的 class
-    templateUrl: 'app/map-dashboard/views/selectedItemCO.tpl.html'
-  };
-});
-'use strict';
-
-angular.module('app.home').directive('selectedRecords', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'app/map-dashboard/views/selected-record.tpl.html'
-  };
-});
 "use strict";
 
 angular.module('app.home').factory('customerBookingRecord', ['$http', function($http) {
@@ -3993,32 +4155,6 @@ angular.module('app.maps').factory('SmartMapStyle', function ($q, $http, APP_CON
 
 
 
-});
-"use strict";
-
-angular.module('app').factory('Project', function($http, APP_CONFIG){
-    return {
-        list: $http.get(APP_CONFIG.apiRootUrl + '/projects.json')
-    }
-});
-"use strict";
-
-angular.module('app').directive('recentProjects', function(Project){
-    return {
-        restrict: "EA",
-        replace: true,
-        templateUrl: "app/dashboard/projects/recent-projects.tpl.html",
-        scope: true,
-        link: function(scope, element){
-
-            Project.list.then(function(response){
-                scope.projects = response.data;
-            });
-            scope.clearProjects = function(){
-                scope.projects = [];
-            }
-        }
-    }
 });
 /**
  * Created by griga on 2/9/16.
@@ -6352,6 +6488,448 @@ angular.module('app.graphs').directive('dygraphsNoRollTimestamp', function (Dygr
         }
     }
 });
+"use strict";
+
+angular.module('app.graphs').directive('flotAutoUpdatingChart', function($timeout, FlotConfig){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+
+// For the demo we use generated data, but normally it would be coming from the server
+            var data = [], totalPoints = 200;
+            function getRandomData() {
+                if (data.length > 0)
+                    data = data.slice(1);
+
+                // do a random walk
+                while (data.length < totalPoints) {
+                    var prev = data.length > 0 ? data[data.length - 1] : 50;
+                    var y = prev + Math.random() * 10 - 5;
+                    if (y < 0)
+                        y = 0;
+                    if (y > 100)
+                        y = 100;
+                    data.push(y);
+                }
+
+                // zip the generated y values with the x values
+                var res = [];
+                for (var i = 0; i < data.length; ++i)
+                    res.push([i, data[i]])
+                return res;
+            }
+
+            // setup control widget
+            var updateInterval = 1000;
+            element.val(updateInterval).change(function() {
+                var v = $(this).val();
+                if (v && !isNaN(+v)) {
+                    updateInterval = +v;
+                    if (updateInterval < 1)
+                        updateInterval = 1;
+                    if (updateInterval > 2000)
+                        updateInterval = 2000;
+                    $(this).val("" + updateInterval);
+                }
+            });
+
+            // setup plot
+            var options = {
+                yaxis : {
+                    min : 0,
+                    max : 100
+                },
+                xaxis : {
+                    min : 0,
+                    max : 100
+                },
+                colors : [FlotConfig.chartFourth],
+                series : {
+                    lines : {
+                        lineWidth : 1,
+                        fill : true,
+                        fillColor : {
+                            colors : [{
+                                opacity : 0.4
+                            }, {
+                                opacity : 0
+                            }]
+                        },
+                        steps : false
+
+                    }
+                }
+            };
+            var plot = $.plot(element, [getRandomData()], options);
+
+            function update() {
+                plot.setData([getRandomData()]);
+                // since the axes don't change, we don't need to call plot.setupGrid()
+                plot.draw();
+
+                $timeout(update, updateInterval);
+            }
+
+            update();
+        }
+    }
+});
+
+"use strict";
+
+angular.module('app.graphs').directive('flotBarChart', function(FlotConfig){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+
+            $.plot(element, scope.data, {
+                colors : [FlotConfig.chartSecond, FlotConfig.chartFourth, "#666", "#BBB"],
+                grid : {
+                    show : true,
+                    hoverable : true,
+                    clickable : true,
+                    tickColor : FlotConfig.chartBorderColor,
+                    borderWidth : 0,
+                    borderColor : FlotConfig.chartBorderColor
+                },
+                legend : true,
+                tooltip : true,
+                tooltipOpts : {
+                    content : "<b>%x</b> = <span>%y</span>",
+                    defaultTheme : false
+                }
+
+            });
+        }
+    }
+});
+'use strict';
+
+angular.module('app.graphs').directive('flotBasic', function () {
+    return {
+        restrict: 'A',
+        scope:{
+            data:'=flotData',
+            options: '=flotOptions'
+        },
+        link: function (scope, element, attributes) {
+            var plot = $.plot(element, scope.data, scope.options);
+
+            scope.$watchCollection('data', function(newData, oldData){
+                if(newData != oldData){
+                    plot.setData(newData);
+                    plot.draw();
+                }
+            });
+        }
+    }
+});
+"use strict";
+
+
+angular.module('app.graphs').value('FlotConfig', {
+    "chartBorderColor": "#efefef",
+    "chartGridColor": "#DDD",
+    "charMain": "#E24913",
+    "chartSecond": "#6595b4",
+    "chartThird": "#FF9F01",
+    "chartFourth": "#7e9d3a",
+    "chartFifth": "#BD362F",
+    "chartMono": "#000"
+
+});
+
+"use strict";
+
+angular.module('app.graphs').directive('flotFillChart', function(){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+
+            $.plot(element, scope.data, {
+
+                xaxis : {
+                    tickDecimals : 0
+                },
+
+                yaxis : {
+                    tickFormatter : function(v) {
+                        return v + " cm";
+                    }
+                }
+
+            });
+        }
+    }
+})
+"use strict";
+
+angular.module('app.graphs').directive('flotHorizontalBarChart', function(FlotConfig){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+            $.plot(element, scope.data, {
+                colors : [FlotConfig.chartSecond, FlotConfig.chartFourth, "#666", "#BBB"],
+                grid : {
+                    show : true,
+                    hoverable : true,
+                    clickable : true,
+                    tickColor : FlotConfig.chartBorderColor,
+                    borderWidth : 0,
+                    borderColor : FlotConfig.chartBorderColor
+                },
+                legend : true,
+                tooltip : true,
+                tooltipOpts : {
+                    content : "<b>%x</b> = <span>%y</span>",
+                    defaultTheme : false
+                }
+            });
+        }
+    }
+});
+"use strict";
+
+angular.module('app.graphs').directive('flotPieChart', function(){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+            $.plot(element, scope.data, {
+                series : {
+                    pie : {
+                        show : true,
+                        innerRadius : 0.5,
+                        radius : 1,
+                        label : {
+                            show : false,
+                            radius : 2 / 3,
+                            formatter : function(label, series) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            threshold : 0.1
+                        }
+                    }
+                },
+                legend : {
+                    show : true,
+                    noColumns : 1, // number of colums in legend table
+                    labelFormatter : null, // fn: string -> string
+                    labelBoxBorderColor : "#000", // border color for the little label boxes
+                    container : null, // container (as jQuery object) to put legend in, null means default on top of graph
+                    position : "ne", // position of default legend container within plot
+                    margin : [5, 10], // distance from grid edge to default legend container within plot
+                    backgroundColor : "#efefef", // null means auto-detect
+                    backgroundOpacity : 1 // set to 0 to avoid background
+                },
+                grid : {
+                    hoverable : true,
+                    clickable : true
+                },
+            });
+
+        }
+    }
+});
+
+"use strict";
+
+angular.module('app.graphs').directive('flotSalesChart', function(FlotConfig){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+
+            $.plot(element, [scope.data], {
+                xaxis : {
+                    mode : "time",
+                    tickLength : 5
+                },
+                series : {
+                    lines : {
+                        show : true,
+                        lineWidth : 1,
+                        fill : true,
+                        fillColor : {
+                            colors : [{
+                                opacity : 0.1
+                            }, {
+                                opacity : 0.15
+                            }]
+                        }
+                    },
+                    //points: { show: true },
+                    shadowSize : 0
+                },
+                selection : {
+                    mode : "x"
+                },
+                grid : {
+                    hoverable : true,
+                    clickable : true,
+                    tickColor : FlotConfig.chartBorderColor,
+                    borderWidth : 0,
+                    borderColor : FlotConfig.chartBorderColor
+                },
+                tooltip : true,
+                tooltipOpts : {
+                    content : "Your sales for <b>%x</b> was <span>$%y</span>",
+                    dateFormat : "%y-%0m-%0d",
+                    defaultTheme : false
+                },
+                colors : [FlotConfig.chartSecond]
+
+            });
+
+        }
+    }
+});
+"use strict";
+
+angular.module('app.graphs').directive('flotSinChart', function (FlotConfig) {
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function (scope, element) {
+
+            var plot = $.plot(element, scope.data, {
+                series: {
+                    lines: {
+                        show: true
+                    },
+                    points: {
+                        show: true
+                    }
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true,
+                    tickColor: FlotConfig.chartBorderColor,
+                    borderWidth: 0,
+                    borderColor: FlotConfig.chartBorderColor
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    //content : "Value <b>$x</b> Value <span>$y</span>",
+                    defaultTheme: false
+                },
+                colors: [FlotConfig.chartSecond, FlotConfig.chartFourth],
+                yaxis: {
+                    min: -1.1,
+                    max: 1.1
+                },
+                xaxis: {
+                    min: 0,
+                    max: 15
+                }
+            });
+
+            element.on("plotclick", function (event, pos, item) {
+                if (item) {
+                    $("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+                    plot.highlight(item.series, item.datapoint);
+                }
+            });
+        }
+    }
+});
+"use strict";
+
+angular.module('app.graphs').directive('flotSiteStatsChart', function(FlotConfig){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            data: '='
+        },
+        link: function(scope, element){
+
+            $.plot(element, scope.data, {
+                series : {
+                    lines : {
+                        show : true,
+                        lineWidth : 1,
+                        fill : true,
+                        fillColor : {
+                            colors : [{
+                                opacity : 0.1
+                            }, {
+                                opacity : 0.15
+                            }]
+                        }
+                    },
+                    points : {
+                        show : true
+                    },
+                    shadowSize : 0
+                },
+
+                yaxes : [{
+                    min : 20,
+                    tickLength : 5
+                }],
+                grid : {
+                    hoverable : true,
+                    clickable : true,
+                    tickColor : FlotConfig.chartBorderColor,
+                    borderWidth : 0,
+                    borderColor : FlotConfig.chartBorderColor
+                },
+                tooltip : true,
+                tooltipOpts : {
+                    content : "%s for <b>%x:00 hrs</b> was %y",
+                    dateFormat : "%y-%0m-%0d",
+                    defaultTheme : false
+                },
+                colors : [FlotConfig.charMain, FlotConfig.chartSecond],
+                xaxis : {
+                    mode : "time",
+                    tickLength : 10,
+                    ticks : 15,
+                    tickDecimals : 2
+                },
+                yaxis : {
+                    ticks : 15,
+                    tickDecimals : 0
+                }
+            });
+
+        }
+    }
+});
 'use strict';
 
 angular.module('app.graphs').directive('highchartTable', function (lazyScript) {
@@ -7597,448 +8175,6 @@ angular.module('app.graphs').directive('vectorMap', function () {
         }
     }
 });
-"use strict";
-
-angular.module('app.graphs').directive('flotAutoUpdatingChart', function($timeout, FlotConfig){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-
-// For the demo we use generated data, but normally it would be coming from the server
-            var data = [], totalPoints = 200;
-            function getRandomData() {
-                if (data.length > 0)
-                    data = data.slice(1);
-
-                // do a random walk
-                while (data.length < totalPoints) {
-                    var prev = data.length > 0 ? data[data.length - 1] : 50;
-                    var y = prev + Math.random() * 10 - 5;
-                    if (y < 0)
-                        y = 0;
-                    if (y > 100)
-                        y = 100;
-                    data.push(y);
-                }
-
-                // zip the generated y values with the x values
-                var res = [];
-                for (var i = 0; i < data.length; ++i)
-                    res.push([i, data[i]])
-                return res;
-            }
-
-            // setup control widget
-            var updateInterval = 1000;
-            element.val(updateInterval).change(function() {
-                var v = $(this).val();
-                if (v && !isNaN(+v)) {
-                    updateInterval = +v;
-                    if (updateInterval < 1)
-                        updateInterval = 1;
-                    if (updateInterval > 2000)
-                        updateInterval = 2000;
-                    $(this).val("" + updateInterval);
-                }
-            });
-
-            // setup plot
-            var options = {
-                yaxis : {
-                    min : 0,
-                    max : 100
-                },
-                xaxis : {
-                    min : 0,
-                    max : 100
-                },
-                colors : [FlotConfig.chartFourth],
-                series : {
-                    lines : {
-                        lineWidth : 1,
-                        fill : true,
-                        fillColor : {
-                            colors : [{
-                                opacity : 0.4
-                            }, {
-                                opacity : 0
-                            }]
-                        },
-                        steps : false
-
-                    }
-                }
-            };
-            var plot = $.plot(element, [getRandomData()], options);
-
-            function update() {
-                plot.setData([getRandomData()]);
-                // since the axes don't change, we don't need to call plot.setupGrid()
-                plot.draw();
-
-                $timeout(update, updateInterval);
-            }
-
-            update();
-        }
-    }
-});
-
-"use strict";
-
-angular.module('app.graphs').directive('flotBarChart', function(FlotConfig){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-
-            $.plot(element, scope.data, {
-                colors : [FlotConfig.chartSecond, FlotConfig.chartFourth, "#666", "#BBB"],
-                grid : {
-                    show : true,
-                    hoverable : true,
-                    clickable : true,
-                    tickColor : FlotConfig.chartBorderColor,
-                    borderWidth : 0,
-                    borderColor : FlotConfig.chartBorderColor
-                },
-                legend : true,
-                tooltip : true,
-                tooltipOpts : {
-                    content : "<b>%x</b> = <span>%y</span>",
-                    defaultTheme : false
-                }
-
-            });
-        }
-    }
-});
-'use strict';
-
-angular.module('app.graphs').directive('flotBasic', function () {
-    return {
-        restrict: 'A',
-        scope:{
-            data:'=flotData',
-            options: '=flotOptions'
-        },
-        link: function (scope, element, attributes) {
-            var plot = $.plot(element, scope.data, scope.options);
-
-            scope.$watchCollection('data', function(newData, oldData){
-                if(newData != oldData){
-                    plot.setData(newData);
-                    plot.draw();
-                }
-            });
-        }
-    }
-});
-"use strict";
-
-
-angular.module('app.graphs').value('FlotConfig', {
-    "chartBorderColor": "#efefef",
-    "chartGridColor": "#DDD",
-    "charMain": "#E24913",
-    "chartSecond": "#6595b4",
-    "chartThird": "#FF9F01",
-    "chartFourth": "#7e9d3a",
-    "chartFifth": "#BD362F",
-    "chartMono": "#000"
-
-});
-
-"use strict";
-
-angular.module('app.graphs').directive('flotFillChart', function(){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-
-            $.plot(element, scope.data, {
-
-                xaxis : {
-                    tickDecimals : 0
-                },
-
-                yaxis : {
-                    tickFormatter : function(v) {
-                        return v + " cm";
-                    }
-                }
-
-            });
-        }
-    }
-})
-"use strict";
-
-angular.module('app.graphs').directive('flotHorizontalBarChart', function(FlotConfig){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-            $.plot(element, scope.data, {
-                colors : [FlotConfig.chartSecond, FlotConfig.chartFourth, "#666", "#BBB"],
-                grid : {
-                    show : true,
-                    hoverable : true,
-                    clickable : true,
-                    tickColor : FlotConfig.chartBorderColor,
-                    borderWidth : 0,
-                    borderColor : FlotConfig.chartBorderColor
-                },
-                legend : true,
-                tooltip : true,
-                tooltipOpts : {
-                    content : "<b>%x</b> = <span>%y</span>",
-                    defaultTheme : false
-                }
-            });
-        }
-    }
-});
-"use strict";
-
-angular.module('app.graphs').directive('flotPieChart', function(){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-            $.plot(element, scope.data, {
-                series : {
-                    pie : {
-                        show : true,
-                        innerRadius : 0.5,
-                        radius : 1,
-                        label : {
-                            show : false,
-                            radius : 2 / 3,
-                            formatter : function(label, series) {
-                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
-                            },
-                            threshold : 0.1
-                        }
-                    }
-                },
-                legend : {
-                    show : true,
-                    noColumns : 1, // number of colums in legend table
-                    labelFormatter : null, // fn: string -> string
-                    labelBoxBorderColor : "#000", // border color for the little label boxes
-                    container : null, // container (as jQuery object) to put legend in, null means default on top of graph
-                    position : "ne", // position of default legend container within plot
-                    margin : [5, 10], // distance from grid edge to default legend container within plot
-                    backgroundColor : "#efefef", // null means auto-detect
-                    backgroundOpacity : 1 // set to 0 to avoid background
-                },
-                grid : {
-                    hoverable : true,
-                    clickable : true
-                },
-            });
-
-        }
-    }
-});
-
-"use strict";
-
-angular.module('app.graphs').directive('flotSalesChart', function(FlotConfig){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-
-            $.plot(element, [scope.data], {
-                xaxis : {
-                    mode : "time",
-                    tickLength : 5
-                },
-                series : {
-                    lines : {
-                        show : true,
-                        lineWidth : 1,
-                        fill : true,
-                        fillColor : {
-                            colors : [{
-                                opacity : 0.1
-                            }, {
-                                opacity : 0.15
-                            }]
-                        }
-                    },
-                    //points: { show: true },
-                    shadowSize : 0
-                },
-                selection : {
-                    mode : "x"
-                },
-                grid : {
-                    hoverable : true,
-                    clickable : true,
-                    tickColor : FlotConfig.chartBorderColor,
-                    borderWidth : 0,
-                    borderColor : FlotConfig.chartBorderColor
-                },
-                tooltip : true,
-                tooltipOpts : {
-                    content : "Your sales for <b>%x</b> was <span>$%y</span>",
-                    dateFormat : "%y-%0m-%0d",
-                    defaultTheme : false
-                },
-                colors : [FlotConfig.chartSecond]
-
-            });
-
-        }
-    }
-});
-"use strict";
-
-angular.module('app.graphs').directive('flotSinChart', function (FlotConfig) {
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function (scope, element) {
-
-            var plot = $.plot(element, scope.data, {
-                series: {
-                    lines: {
-                        show: true
-                    },
-                    points: {
-                        show: true
-                    }
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true,
-                    tickColor: FlotConfig.chartBorderColor,
-                    borderWidth: 0,
-                    borderColor: FlotConfig.chartBorderColor
-                },
-                tooltip: true,
-                tooltipOpts: {
-                    //content : "Value <b>$x</b> Value <span>$y</span>",
-                    defaultTheme: false
-                },
-                colors: [FlotConfig.chartSecond, FlotConfig.chartFourth],
-                yaxis: {
-                    min: -1.1,
-                    max: 1.1
-                },
-                xaxis: {
-                    min: 0,
-                    max: 15
-                }
-            });
-
-            element.on("plotclick", function (event, pos, item) {
-                if (item) {
-                    $("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
-                    plot.highlight(item.series, item.datapoint);
-                }
-            });
-        }
-    }
-});
-"use strict";
-
-angular.module('app.graphs').directive('flotSiteStatsChart', function(FlotConfig){
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div class="chart"></div>',
-        scope: {
-            data: '='
-        },
-        link: function(scope, element){
-
-            $.plot(element, scope.data, {
-                series : {
-                    lines : {
-                        show : true,
-                        lineWidth : 1,
-                        fill : true,
-                        fillColor : {
-                            colors : [{
-                                opacity : 0.1
-                            }, {
-                                opacity : 0.15
-                            }]
-                        }
-                    },
-                    points : {
-                        show : true
-                    },
-                    shadowSize : 0
-                },
-
-                yaxes : [{
-                    min : 20,
-                    tickLength : 5
-                }],
-                grid : {
-                    hoverable : true,
-                    clickable : true,
-                    tickColor : FlotConfig.chartBorderColor,
-                    borderWidth : 0,
-                    borderColor : FlotConfig.chartBorderColor
-                },
-                tooltip : true,
-                tooltipOpts : {
-                    content : "%s for <b>%x:00 hrs</b> was %y",
-                    dateFormat : "%y-%0m-%0d",
-                    defaultTheme : false
-                },
-                colors : [FlotConfig.charMain, FlotConfig.chartSecond],
-                xaxis : {
-                    mode : "time",
-                    tickLength : 10,
-                    ticks : 15,
-                    tickDecimals : 2
-                },
-                yaxis : {
-                    ticks : 15,
-                    tickDecimals : 0
-                }
-            });
-
-        }
-    }
-});
 'use strict';
 
 angular.module('app.tables').directive('datatableBasic', function ($compile) {
@@ -8607,188 +8743,6 @@ angular.module('SmartAdmin.Layout').directive('toggleMenu', function(){
         }
     }
 });
-'use strict';
-
-angular.module('SmartAdmin.Layout').factory('lazyScript', function($q, $http){
-
-    var cache = {};
-
-    function isPending(scriptName){
-        return (cache.hasOwnProperty(scriptName) && cache[scriptName].promise && cache[scriptName].promise.$$state.pending)
-    }
-
-    function isRegistered(scriptName){
-        return cache.hasOwnProperty(scriptName)
-    }
-    function loadScript(scriptName){
-        if(!cache[scriptName]){
-            cache[scriptName] = $q.defer();
-            var el = document.createElement( 'script' );
-            el.onload = function(script){
-                console.log('script is lazy loaded:', scriptName)
-                cache[scriptName].resolve(scriptName);
-            };
-            el.src = scriptName;
-            var x = document.getElementsByTagName('script')[0];
-            x.parentNode.insertBefore(el, x);
-            
-        }
-        return cache[scriptName].promise;
-
-    }
-
-    function register(scriptName){
-        if(isPending(scriptName)){
-            return cache[scriptName].promise
-        }
-        if(isRegistered(scriptName)){
-            return $q.resolve(scriptName);
-        } else {
-            var dfd = $q.defer();
-
-            loadScript(scriptName).then(function(){
-                dfd.resolve(scriptName);
-            });
-
-            return dfd.promise; 
-
-        }
-    }
-    return {
-        register: function (scripts) {
-            
-            var dfd = $q.defer();
-            var promises = [];
-            if (angular.isString(scripts))
-                scripts = [scripts];
-
-            angular.forEach(scripts, function(script){
-                promises.push(register(script));
-            })
-
-            $q.all(promises).then(function(resolves){
-                dfd.resolve(resolves);
-            })
-            return dfd.promise;
-
-        }
-    };
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').factory('SmartCss', function ($rootScope, $timeout) {
-
-    var sheet = (function () {
-        // Create the <style> tag
-        var style = document.createElement("style");
-
-        // Add a media (and/or media query) here if you'd like!
-        // style.setAttribute("media", "screen")
-        // style.setAttribute("media", "@media only screen and (max-width : 1024px)")
-
-        // WebKit hack :(
-        style.appendChild(document.createTextNode(""));
-
-        // Add the <style> element to the page
-        document.head.appendChild(style);
-
-        return style.sheet;
-    })();
-
-    var _styles = {};
-
-
-    var SmartCss = {
-        writeRule: function(selector){
-            SmartCss.deleteRuleFor(selector);
-            if(_.has(_styles, selector)){
-                var css = selector + '{ ' + _.map(_styles[selector], function(v, k){
-                    return  k + ':' +  v + ';'
-                }).join(' ') +'}';
-                sheet.insertRule(css, _.size(_styles) - 1);
-            }
-        },
-        add: function (selector, property, value, delay) {
-            if(!_.has(_styles, selector))
-                _styles[selector] = {};
-
-            if(value == undefined || value == null || value == '')
-                delete _styles[selector][property];
-            else
-                _styles[selector][property] = value;
-
-
-            if(_.keys(_styles[selector]).length == 0)
-                delete _styles[selector];
-
-            if(!delay)
-                delay = 0;
-            $timeout(function(){
-                SmartCss.writeRule(selector);
-            }, delay);
-
-        },
-        remove: function(selector, property, delay){
-            SmartCss.add(selector, property, null, delay);
-        },
-        deleteRuleFor: function (selector) {
-            _(sheet.rules).forEach(function (rule, idx) {
-                if (rule.selectorText == selector) {
-                    sheet.deleteRule(idx);
-                }
-            });
-        },
-        appViewSize: null
-    };
-
-    $rootScope.$on('$smartContentResize', function (event, data) {
-        SmartCss.appViewSize = data;
-    });
-
-    return SmartCss;
-
-});
-
-
-
-
-
-"use strict";
-
-angular.module('SmartAdmin.UI').directive('smartPopoverHtml', function () {
-    return {
-        restrict: "A",
-        link: function(scope, element, attributes){
-            var options = {};
-            options.content = attributes.smartPopoverHtml;
-            options.placement = attributes.popoverPlacement || 'top';
-            options.html = true;
-            options.trigger =  attributes.popoverTrigger || 'click';
-            options.title =  attributes.popoverTitle || attributes.title;
-            element.popover(options)
-
-        }
-
-    };
-});
-
-
-"use strict";
-
-angular.module('SmartAdmin.UI').directive('smartTooltipHtml', function () {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attributes){
-                element.tooltip({
-                    placement: attributes.tooltipPlacement || 'top',
-                    html: true,
-                    title: attributes.smartTooltipHtml
-                })
-            }
-        };
-    }
-);
-
 'use strict';
 
 angular.module('SmartAdmin.Layout').directive('bigBreadcrumbs', function () {
@@ -9839,6 +9793,188 @@ angular.module('SmartAdmin.Layout').directive('stateBreadcrumbs', function ($roo
         }
     }
 });
+'use strict';
+
+angular.module('SmartAdmin.Layout').factory('lazyScript', function($q, $http){
+
+    var cache = {};
+
+    function isPending(scriptName){
+        return (cache.hasOwnProperty(scriptName) && cache[scriptName].promise && cache[scriptName].promise.$$state.pending)
+    }
+
+    function isRegistered(scriptName){
+        return cache.hasOwnProperty(scriptName)
+    }
+    function loadScript(scriptName){
+        if(!cache[scriptName]){
+            cache[scriptName] = $q.defer();
+            var el = document.createElement( 'script' );
+            el.onload = function(script){
+                console.log('script is lazy loaded:', scriptName)
+                cache[scriptName].resolve(scriptName);
+            };
+            el.src = scriptName;
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(el, x);
+            
+        }
+        return cache[scriptName].promise;
+
+    }
+
+    function register(scriptName){
+        if(isPending(scriptName)){
+            return cache[scriptName].promise
+        }
+        if(isRegistered(scriptName)){
+            return $q.resolve(scriptName);
+        } else {
+            var dfd = $q.defer();
+
+            loadScript(scriptName).then(function(){
+                dfd.resolve(scriptName);
+            });
+
+            return dfd.promise; 
+
+        }
+    }
+    return {
+        register: function (scripts) {
+            
+            var dfd = $q.defer();
+            var promises = [];
+            if (angular.isString(scripts))
+                scripts = [scripts];
+
+            angular.forEach(scripts, function(script){
+                promises.push(register(script));
+            })
+
+            $q.all(promises).then(function(resolves){
+                dfd.resolve(resolves);
+            })
+            return dfd.promise;
+
+        }
+    };
+});
+'use strict';
+
+angular.module('SmartAdmin.Layout').factory('SmartCss', function ($rootScope, $timeout) {
+
+    var sheet = (function () {
+        // Create the <style> tag
+        var style = document.createElement("style");
+
+        // Add a media (and/or media query) here if you'd like!
+        // style.setAttribute("media", "screen")
+        // style.setAttribute("media", "@media only screen and (max-width : 1024px)")
+
+        // WebKit hack :(
+        style.appendChild(document.createTextNode(""));
+
+        // Add the <style> element to the page
+        document.head.appendChild(style);
+
+        return style.sheet;
+    })();
+
+    var _styles = {};
+
+
+    var SmartCss = {
+        writeRule: function(selector){
+            SmartCss.deleteRuleFor(selector);
+            if(_.has(_styles, selector)){
+                var css = selector + '{ ' + _.map(_styles[selector], function(v, k){
+                    return  k + ':' +  v + ';'
+                }).join(' ') +'}';
+                sheet.insertRule(css, _.size(_styles) - 1);
+            }
+        },
+        add: function (selector, property, value, delay) {
+            if(!_.has(_styles, selector))
+                _styles[selector] = {};
+
+            if(value == undefined || value == null || value == '')
+                delete _styles[selector][property];
+            else
+                _styles[selector][property] = value;
+
+
+            if(_.keys(_styles[selector]).length == 0)
+                delete _styles[selector];
+
+            if(!delay)
+                delay = 0;
+            $timeout(function(){
+                SmartCss.writeRule(selector);
+            }, delay);
+
+        },
+        remove: function(selector, property, delay){
+            SmartCss.add(selector, property, null, delay);
+        },
+        deleteRuleFor: function (selector) {
+            _(sheet.rules).forEach(function (rule, idx) {
+                if (rule.selectorText == selector) {
+                    sheet.deleteRule(idx);
+                }
+            });
+        },
+        appViewSize: null
+    };
+
+    $rootScope.$on('$smartContentResize', function (event, data) {
+        SmartCss.appViewSize = data;
+    });
+
+    return SmartCss;
+
+});
+
+
+
+
+
+"use strict";
+
+angular.module('SmartAdmin.UI').directive('smartPopoverHtml', function () {
+    return {
+        restrict: "A",
+        link: function(scope, element, attributes){
+            var options = {};
+            options.content = attributes.smartPopoverHtml;
+            options.placement = attributes.popoverPlacement || 'top';
+            options.html = true;
+            options.trigger =  attributes.popoverTrigger || 'click';
+            options.title =  attributes.popoverTitle || attributes.title;
+            element.popover(options)
+
+        }
+
+    };
+});
+
+
+"use strict";
+
+angular.module('SmartAdmin.UI').directive('smartTooltipHtml', function () {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attributes){
+                element.tooltip({
+                    placement: attributes.tooltipPlacement || 'top',
+                    html: true,
+                    title: attributes.smartTooltipHtml
+                })
+            }
+        };
+    }
+);
+
 "use strict";
 
 

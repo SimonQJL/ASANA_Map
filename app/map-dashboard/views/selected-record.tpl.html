@@ -1,7 +1,7 @@
 <div id="today-bookings">
     <div class="booking-number">
-        <div class="table-cell">
-            {{currentIdx.booking}}
+        <div id="booking_no" o-data-id="{{currentIdx.bk_no}}" class="table-cell">
+            {{currentIdx.bk_no}}
         </div>
         <div class="table-cell"></div>
         <div class="table-cell"></div>
@@ -9,20 +9,21 @@
     </div>
     <div class="customer-record">
         <div class="table-cell">
-            <img id="customer-pic" ng-src="{{currentIdx.customer.pic}}" alt="avatar">
+            <!-- <img id="customer-pic" ng-src="{{currentIdx.customer.pic}}" alt="avatar"> -->
+			 <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
         </div>
         <div class="table-cell customer-profile">
-            <div class="customer-name">{{currentIdx.customer.name}}</div>
-            <div class="member-id" id="member_id" o-data-id='{{currentIdx.customer.id}}'><i class="fa fa-id-card-o"></i> {{currentIdx.customer.id}}</div>
-            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{currentIdx.customer.mobile}}</div>
+            <div class="customer-name">{{currentIdx.mbr_name}}</div>
+            <div class="member-id" id="member_id" o-data-id='{{currentIdx.mbr_code}}'><i class="fa fa-id-card-o"></i> {{currentIdx.mbr_code}}</div>
+            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{currentIdx.mbr_phone}}</div>
             <div class="member-tier"><i ng-class="tierClass(currentIdx)"></i></div>
         </div>
         <div class="table-cell booking-info">
             <div ng-repeat="x in currentIdx.treatment">
-                <div class="booking-time">{{x.start_time}} - {{x.end_time}} ({{x.duration}})</div>
-                <div class="booking-treatment">{{x.treatment}}</div>
-                <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{x.therapist}}</span></div>
-                <div class="booking-room">{{x.room}}</div>
+                <div class="booking-time">{{x.from_date}} - {{x.to_date}} ({{x.str_time_length}})</div>
+                <div class="booking-treatment">{{x.item_name}}</div>
+                <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{x.staff_name}}</span></div>
+                <div class="booking-room">{{x.room_name}}</div>
                 <br>
             </div>
         </div>

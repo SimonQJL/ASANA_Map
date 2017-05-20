@@ -10,7 +10,7 @@
                 <a id="btn_RegisterGuest" class="btn btn-action txt-color-white" data-toggle="modal" data-target="#register-guest"><i class="fa fa-chain-broken"></i> Register Guest</a>
                 <br>
                 <br>
-                <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#check-out"><i class="fa fa-sign-out"></i> Check-out Guest</a>
+                <a id="btn_CheckoutGuest" class="btn btn-action txt-color-white" data-toggle="modal" data-target="#check-out"><i class="fa fa-sign-out"></i> Check-out Guest</a>
                 <br>
                 <br>
                 <a class="btn btn-action txt-color-white" data-toggle="modal" data-target="#booking-enquires"><i class="fa fa-search"></i> Booking Enquiries</a>
@@ -123,7 +123,7 @@
                     <div class="panel-group smart-accordion-default" id="register-guest-accordion">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#register-guest-accordion" href="#check-in"><span>1</span> Check-in</a></h4>
+                                <h4 class="panel-title"><a data-toggle="collapse" id="oneofCheck-in" data-parent="#register-guest-accordion" href="#check-in"><span>1</span> Check-in</a></h4>
                             </div>
                             <div id="check-in" class="panel-collapse collapse in">
                                 <div class="panel-body">
@@ -178,13 +178,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="select-hb">HandBand ID</label>
-                                                    <select class="form-control" id="select-hb" ng-model="selectedItem" ng-options="item.handBandId for item in handBandLocker">
+                                                    <select class="form-control" id="select-hb" ng-model="selectedItem" ng-options="item.ble_addr for item in unbecaon_List">
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 locker-no">
                                                 <h4>Locker No.</h4>
-                                                <div id="matched-locker">{{selectedItem.lockerId}}</div>
+                                                <div id="matched-locker">{{selectedItem.locker_no}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@
                     <!--End collapsible group-->
                 </div>
                 <div class="modal-footer">
-                    <button id="btn_SendGuestInfomation" type="button" class="btn btn-normal" ng-disabled="selectedItem.handBandId === 'Please Select'">
+                    <button id="btn_SendGuestInfomation" type="button" class="btn btn-normal" ng-disabled="!selectedItem">
                         Done
                     </button>
                 </div>
@@ -222,13 +222,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select-hb-co">HandBand ID</label>
-                                        <select class="form-control" id="select-hb-co" ng-model="selectedItemCO" ng-options="itemCO.handBandId for itemCO in handBandLocker">
+                                        <select class="form-control" id="select-hb-co" ng-model="selectedItemCO" ng-options="itemCO.ble_addr for itemCO in becaon_List">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6 locker-no">
                                     <h4>Locker No.</h4>
-                                    <div id="matched-locker">{{selectedItemCO.lockerId}}</div>
+                                    <div id="matched-locker">{{selectedItemCO.locker_no}}</div>
                                 </div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@
 					</div>
                 </div>
                 <div class="modal-footer">
-                    <button id="btn_Check-out" type="button" class="btn btn-normal" ng-disabled="selectedItemCO.handBandId === 'Please Select'">
+                    <button id="btn_Check-out" type="button" class="btn btn-normal" ng-disabled="!selectedItemCO">
                         Done
                     </button>
                 </div>

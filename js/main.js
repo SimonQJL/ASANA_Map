@@ -59,7 +59,7 @@ function loadmap () {
 						case 3: obj.guests[i].kind="VVIP";
 						    break;
 						}	
-                        josnobj.push(obj.guests[i]);	
+                        josnobj.push(obj.guests[i]);					
 						 }						
 					 }
 					 for(var i in obj.staffs){
@@ -85,6 +85,7 @@ function loadmap () {
                     else if (Point_Img.length > josnobj.length) {
                         removePoint(josnobj);//移除點座標					  
                     }
+					
 					setTimeout(getGuestList, 500);//0.5刷新一次坐标
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
@@ -153,12 +154,11 @@ function loadmap () {
                           else {
 							Point_Img[i].x = point[i].x;
                             Point_Img[i].y = point[i].y;
-
+                             
                            }
 						}
                     }
 					else{
-						
 						 Point_Img[i].x = point[i].x;
                          Point_Img[i].y = point[i].y;
 					   
@@ -274,11 +274,6 @@ function loadmap () {
   
 	});
 	
-     //綁定手環
-	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
-		
-	//解除綁定
-	    $('#btn_Check-out').on('click',function(){CheckOutBeacon()});
      //加載更多消息
 	   $('#message-box').scroll(function(){ 
 	   if($('#message-box')[0].scrollHeight-$('#message-box').height()-$('#message-box').scrollTop()==0){
@@ -297,7 +292,7 @@ function loadmap () {
                 type: "Get",
                 url: ServerUrl+"notification/byTimeQuantum",
                 dataType: "json",
-				data:{from:lastnowtime-600000,to:lastnowtime},
+				data:{from:lastnowtime-60000000,to:lastnowtime},
                 success: function (data) {
                   msgShow(data);
                   setTimeout(reloadmessageRecived,5000);				  
@@ -344,10 +339,11 @@ function loadmap () {
                 success: function (data) {
                   if(data.data.length==0){
 				    layer.alert("have no mroe notification");
+					$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
 				  }
 				  else{
 				  $('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
-				  msgMoreShow(data);
+				    msgMoreShow(data);
 				  }
                   $('#message-box').scrollTop(lastScrollHeight-100);				  
                 }, error: function () {
@@ -425,21 +421,6 @@ function loadmap () {
     }
    
    
-    //綁定手環
-   function RegisterCustomerInfomation(){
-       $.ajax({
-                type: "Post",
-                url: ServerUrl+"beacon/association",
-                dataType: "json",
-				data:{cbID:'FFD1E8A36720',UID:'5913c34a6d56282f882acb0b',target_type:1},//$('#select-hb option:selected').html()-----需要綁定的手環ID,
-                success: function (data) {                                              //$('#member_id').attr("o-data-id")-----選中的客戶id 
-					 $('.close').click();
-					 layer.msg('Bind successfully');
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-   }
 
    //過濾點類型
     function showIcon(obj){
@@ -455,21 +436,7 @@ function loadmap () {
 		}	
 	}
    
-    //解除手環綁定
-	function CheckOutBeacon(){		
-	     $.ajax({
-                type: "Post",
-                url: ServerUrl+"beacon/unbind",
-                dataType: "json",
-				data:{cbID:'FFD1E8A36720'},//$('#select-hb-co option:selected').html()----------需要解除綁定的手環ID
-                success: function (data) {
-					 $('.close').click();
-					  layer.msg('Check out successfully');
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-	}
+
    //轉換時間格式
    function changTimetype(time_length){
 	      if(time_length>60&&time_length<3600){
