@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('app.home').factory('customerBookingRecord', ['$http', function($http) {
-  return $http.get('http://10.0.0.188/base/list')
+  return $http.get(ServerUrl+'base/list')
   .success(function(records) {
     return records;
   })

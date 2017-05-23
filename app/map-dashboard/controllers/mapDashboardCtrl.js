@@ -135,15 +135,20 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
 				 unbind_beacon_list.length=0;
 				 bind_beacon_list.length=0;
                  for(var i in data){
-					if(!data[i].bind_guest_id){ 
+				   if(data[i].bind_staff_id){console.log(11111)}
+                   else{
+					   if(!data[i].bind_guest_id){ 
 				     unbind_beacon_list.push(data[i]);
 					}
 					else{
 					 bind_beacon_list.push(data[i]);
 					}
-				 }					 
+				   }
+				   }				   
 				 $scope.unbecaon_List=unbind_beacon_list;
 				 $scope.becaon_List=bind_beacon_list;
+				 $scope.unbecaon_Default = $scope.unbecaon_List[0];
+                 $scope.becaon_Default = $scope.becaon_List[0];
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -165,7 +170,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
                 type: "Post",
                 url: ServerUrl+"beacon/association",
                 dataType: "json",
-				data:{t: new Date(),cbID:'DFC0F1FF6013',UID:memberID,target_type:1},//
+				data:{t: new Date(),cbID:cbID,UID:memberID,target_type:1},//
                 success: function (data) {
 					     var str_show="Bind successfully";
 						 UpdateBookingStatus(booking_no,"S",str_show);//修改訂單狀態為S
@@ -220,6 +225,11 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
 	//獲取綁定Beacon的客戶信息
 	function GetBindCustomerInfomation(){
 	   var bindbeaconId =$('#select-hb-co option:selected').html();
+	   if(bindbeaconId=="Please Select"){
+		   $('#check-out > div > div > div.modal-body > div.selectedItemCO > div').css("display","none");
+	   }
+	   else{
+		  $('#check-out > div > div > div.modal-body > div.selectedItemCO > div').css("display","block"); 
 	   var bind_guest_id="";
 	   for(var i in  bind_beacon_list){
 	      if( bind_beacon_list[i].ble_addr==bindbeaconId){
@@ -236,6 +246,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope','selectedIte
 		   $scope.booking_BindCustomerInfomation
 	  }
 	 }
+	}
 	
 	
 }]);

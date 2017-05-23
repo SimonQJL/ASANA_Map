@@ -179,6 +179,7 @@
                                                 <div class="form-group">
                                                     <label for="select-hb">HandBand ID</label>
                                                     <select class="form-control" id="select-hb" ng-model="selectedItem" ng-options="item.ble_addr for item in unbecaon_List">
+													 <option value="">Please Select</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -222,7 +223,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="select-hb-co">HandBand ID</label>
-                                        <select class="form-control" id="select-hb-co" ng-model="selectedItemCO" ng-options="itemCO.ble_addr for itemCO in becaon_List">
+                                        <select class="form-control" id="select-hb-co"   ng-model="selectedItemCO" ng-options="itemCO.ble_addr for itemCO in becaon_List">
+										 <option value="">Please Select</option>
                                         </select>
                                     </div>
                                 </div>

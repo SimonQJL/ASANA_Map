@@ -7,9 +7,9 @@ var lastScrollHeight;//最後一次Scroll位置
 var nowtime = new Date().getTime();//當前时间
 var lastnowtime =new Date().getTime();//查詢前半小時
 var halfofhour =1;//查詢N個前半小時
-//var ServerUrl ="http://innosrc.cn:8889/";
+var ServerUrl ="http://innosrc.cn:8889/";
 //var ServerUrl="http://10.0.0.188/";
-var ServerUrl="http://localhost:80/";
+//var ServerUrl="http://localhost:80/";
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
@@ -292,7 +292,7 @@ function loadmap () {
                 type: "Get",
                 url: ServerUrl+"notification/byTimeQuantum",
                 dataType: "json",
-				data:{from:lastnowtime-600000,to:lastnowtime},
+				data:{from:lastnowtime-3600000,to:lastnowtime},
                 success: function (data) {
                   msgShow(data);
                   setTimeout(reloadmessageRecived,5000);				  
@@ -321,7 +321,7 @@ function loadmap () {
               if(b){     
 				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
 				  var time_str =changTimetype(time_length);//轉換時間格式
-				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">MAID: HAPPY CHAN<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
 		       }							
 			 	
 		 }
@@ -338,7 +338,7 @@ function loadmap () {
 				data:{from:lastnowtime-600000*halfofhour,to:lastnowtime-600000*(halfofhour-1)},
                 success: function (data) {
                   if(data.data.length==0){
-				    layer.alert("have no mroe notification");
+				    layer.msg('Have no mroe notification');
 					$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
 				  }
 				  else{
@@ -402,7 +402,7 @@ function loadmap () {
                      for(var i in data){
 					    if(data[i].id==event.data.coustomerid)
 						{
-						 $('#CustomerName').html(data[i].name+"(002266888)");
+						 $('#CustomerName').html(data[i].name+"("+data[i].mobile+")");
 						}
 					 }
                      showCustomerInfomation();						 
