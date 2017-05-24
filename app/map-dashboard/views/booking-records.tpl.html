@@ -1,36 +1,31 @@
-<div id="today-bookings" ng-repeat="record in booking">
-    <div class="booking-number">
-        <div class="table-cell">
-            {{record.bk_no}}
-        </div>
-        <div class="table-cell"></div>
-        <div class="table-cell"></div>
-        <div class="table-cell"></div>
-    </div>
-    <div class="customer-record">
-        <div class="table-cell">
-		 <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
-            <!-- <img id="customer-pic" ng-src="{{record.customer.pic}}" alt="avatar"> -->
-        </div>
-        <div class="table-cell customer-profile">
-            <div class="customer-name">{{record.mbr_name}}</div>
-            <div class="member-id"><i class="fa fa-id-card-o"></i> {{record.mbr_code}}</div>
-            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{record.mbr_phone}}</div>
-             <div class="member-tier"><i ng-class="tierClass(record)"></i></div> 
-        </div>
-        <div class="table-cell booking-info">
-            <div ng-repeat="info in record.items">
-            <div class="booking-time">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>
-            <div class="booking-treatment">{{info.item_name}}</div>
-            <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.staff_name}}</span></div>
-            <div class="booking-room">{{info.room_name}}</div>
-            <br>
+<div class="today-bookings" ng-repeat="record in booking">
+    <label ng-click="selectRecord()">
+        <div class="customer-record">
+            <div class="table-cell">
+                <span class="booking-number">{{record.bk_no}}</span>
+                <!-- <img id="customer-pic" ng-src="{{record.customer.pic}}" alt="avatar"> -->
+				 <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
             </div>
-        </div>
-        <div class="table-cell">
-            <div id="next">
+            <div class="table-cell customer-profile">
+                <div class="customer-name">{{record.mbr_name}}</div>
+                <div class="member-id"><i class="fa fa-id-card-o"></i>  {{record.mbr_code}}</div>
+                <div class="mobile"><i class="fa fa-mobile-phone"></i> {{record.mbr_phone}}</div>
+                <div class="member-grading" ng-class="gradingClass(record)">{{record.customer.group_name}}</div>
+            </div>
+            <div class="table-cell booking-info">
+                 <div ng-repeat="info in record.items">
+                    <div class="booking-time">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>
+					<div class="booking-treatment">{{info.item_name}}</div>
+					<div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.staff_name}}</span></div>
+					<div class="booking-room">{{info.room_name}}</div>
+                </div>
+            </div>
+            <div class="table-cell">
+                <input type="checkbox" ng-model="record.selected" ng-change="optionToggled()" class="css-checkbox">
+                <!--<div id="next">
                 <a href="#pairing" data-toggle="collapse" data-parent="#register-guest-accordion" ng-click="selectRecord($index)"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </div>-->
             </div>
         </div>
-    </div>
+    </label>
 </div>

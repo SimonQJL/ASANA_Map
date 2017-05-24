@@ -1,31 +1,23 @@
-<div id="today-bookings">
-    <div class="booking-number">
-        <div id="booking_no" o-data-id="{{currentIdx.bk_no}}" class="table-cell">
-            {{currentIdx.bk_no}}
-        </div>
-        <div class="table-cell"></div>
-        <div class="table-cell"></div>
-        <div class="table-cell"></div>
-    </div>
+<div class="today-bookings" ng-repeat="record in booking" ng-if="record.selected">
     <div class="customer-record">
         <div class="table-cell">
-            <!-- <img id="customer-pic" ng-src="{{currentIdx.customer.pic}}" alt="avatar"> -->
-			 <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
+            <span id="booking_no" o-data-id="{{record.bk_no}}" class="booking-number">{{record.bk_no}}</span>
+            <!-- <img id="customer-pic" ng-src="{{record.customer.pic}}" alt="avatar"> -->
+			<img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
         </div>
         <div class="table-cell customer-profile">
-            <div class="customer-name">{{currentIdx.mbr_name}}</div>
-            <div class="member-id" id="member_id" o-data-id='{{currentIdx.mbr_code}}'><i class="fa fa-id-card-o"></i> {{currentIdx.mbr_code}}</div>
-            <div class="mobile"><i class="fa fa-mobile-phone"></i> {{currentIdx.mbr_phone}}</div>
-            <div class="member-tier"><i ng-class="tierClass(currentIdx)"></i></div>
+            <div class="customer-name">{{record.mbr_name}}</div>
+            <div id="member_id" o-data-id='{{record.mbr_code}}' class="member-id"><i class="fa fa-id-card-o"></i>  {{record.mbr_code}}</div>
+			<div class="mobile"><i class="fa fa-mobile-phone"></i> {{record.mbr_phone}}</div>
+			<div class="member-grading" ng-class="gradingClass(record)">{{record.customer.group_name}}</div>
         </div>
         <div class="table-cell booking-info">
-            <div ng-repeat="x in currentIdx.treatment">
-                <div class="booking-time">{{x.from_date}} - {{x.to_date}} ({{x.str_time_length}})</div>
-                <div class="booking-treatment">{{x.item_name}}</div>
-                <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{x.staff_name}}</span></div>
-                <div class="booking-room">{{x.room_name}}</div>
-                <br>
-            </div>
+           <div ng-repeat="info in record.items">
+                    <div class="booking-time">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>
+					<div class="booking-treatment">{{info.item_name}}</div>
+					<div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.staff_name}}</span></div>
+					<div class="booking-room">{{info.room_name}}</div>
+           </div>
         </div>
         <div class="table-cell">
             <div id="confirmed">
@@ -34,3 +26,4 @@
         </div>
     </div>
 </div>
+

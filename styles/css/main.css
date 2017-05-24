@@ -23,15 +23,37 @@
     box-sizing: border-box;
 }
 
-#header-date {
-    float: left;
-    margin-left: 15px;
-    color: #812990;
+#header #weather {
+    margin: 0 50px;
+    display: inline-block;
+}
+
+#header h2 {
+    line-height: 49px;
+    margin: 0 20px;
+    display: inline-block;
+}
+
+#header .logo {
+    margin-left: 20px;
 }
 
 #header-time {
-    margin-left: 15px;
+    font-weight: bold;
+}
+
+#header #header-date, #header-time {
+    display: inline-block;
+    margin-left: 30px;
     color: #812990;
+}
+
+#logo-group {
+    display: inline-block;
+}
+
+.notification .chat-body  {
+    border: 0;
 }
 
 #hide-menu {
@@ -45,12 +67,34 @@
     padding: 0;
 }
 
-.map-dashboard .left-side-bar {
-    border-right: 1px solid #C8C8C8;
+.map-dashboard .all-data {
+    text-transform: uppercase;
+    margin: 15px 0;
+}
+
+.all-data h2, .all-data h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.all-data .table>tbody>tr>td {
+    border: 0;
+    vertical-align: middle;
+    padding: 8px 2px;
+}
+
+.all-data .table>tbody>tr>td:nth-child(1) {
+    width: 20%;
+}
+
+.all-data p {
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .map-dashboard .ui-datepicker {
     width: 100%;
+    margin: 15px 0 0 0;
 }
 
 .map-dashboard .ui-widget-content {
@@ -64,13 +108,17 @@
     background: #FFF;
 }
 
+.map-dashboard .date .form-control {
+    ta
+}
+
 .map-dashboard .ui-widget-header a {
     color: #812990;
     line-height: 100%;
     font-size: 18px;
 }
 
-.map-dashboard header {
+header {
     color: #812990;
 }
 
@@ -78,23 +126,68 @@
     margin: 0;
 }
 
-.map-dashboard .action .btn-action {
-    width: 100%;
-    background: #812990;
-    height: 50px;
-    line-height: 50px;
-    padding: 0;
-    font-size: 16px;
+header h2 {
+    text-align: left;
+    margin: 15px 0;
 }
 
-.map-dashboard article > div {
-    width: 100%;
+#btn-filter, .btn-action {
+    background: #812990;
+    color: #fff;
+    border-radius: 10px;
+    height: 40px;
+}
+
+.map-dashboard .control {
+    position: absolute;
+    z-index: 550;
+    top: 15px;
+}
+
+.map-dashboard .control > div {
+    display: inline-block;
+}
+
+.map-dashboard .btn-action:first-child {
+    margin-left: 50px;
+}
+
+.map-dashboard .btn-action {
+    display: inline-block;
+    width: 130px;
+    line-height: 40px;
+    padding: 0;
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.map-filter {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    z-index: 500;
+}
+
+#btn-filter:hover, #btn-filter:focus {
+    color: #fff;
+}
+
+.map-dashboard .map-filter-container {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    border: 1px solid #E9E9E9;
+    padding: 10px;
+    z-index: 500;
+    background: #fff;
 }
 
 .map-dashboard .map-filter-container > div {
+    margin: 0 30px;
+    display: inline-block;
     float: left;
-    width: 15%;
-    margin-left: 20px;
 }
 
 .map-dashboard .map-filter-container div ul {
@@ -108,25 +201,20 @@
     font-size: 20px;
 }
 
-.map-dashboard .map-filter-container .map-machine-status {
-    width: 20%;
-}
-
 .map-dashboard .map-filter-container .btn-normal {
     background: #FFF;
     color: #333;
     border: 1px solid #ccc;
+    white-space: normal;
+}
+
+.map-dashboard .map-filter-container .room-type ul li a {
+    width: 150px;
 }
 
 .map-dashboard .map-filter-container ul li .btn-selected {
     background: #812990;
     color: #FFF;
-}
-
-#date-picker {
-    color: #812990;
-    font-size: 28px;
-    padding: 0;
 }
 
 .map-dashboard .map-filter-container div ul li {
@@ -136,7 +224,13 @@
 
 .map-dashboard .map-filter-container div ul li a {
     margin-left: 5px;
-    min-width: 75%;
+    width: 100px;
+}
+
+#date-picker {
+    color: #812990;
+    font-size: 28px;
+    padding: 0;
 }
 
 .map-dashboard .map #beacon-map {
@@ -151,7 +245,7 @@
     font-size: 18px;
     height: 32px;
     min-width: 98px;
-    background: #812990;
+    background: #812990!important;
     color: #FFF;
     text-align: center;
     line-height: 100%;
@@ -159,7 +253,6 @@
 
 .map-dashboard .modal #check-in .btn-normal {
     float: right;
-    width: 50%;
 }
 
 .map-dashboard .modal #check-in .btn-normal,
@@ -176,7 +269,11 @@
     padding: 10px 15px;
 }
 
-.map-dashboard .modal .handband-and-locker-info #scan {
+.handband-and-locker-info .form-control {
+    margin-bottom: 10px;
+}
+
+.handband-and-locker-info .btn-normal {
     margin-top: 30px;
 }
 
@@ -262,8 +359,7 @@ label {
     color: #812990;
 }
 
-.map-dashboard .customer-record,
-.map-dashboard .booking-number {
+.map-dashboard .customer-record {
     display: table-row;
     background: #F3EAF4;
     font-size: 16px;
@@ -278,23 +374,45 @@ label {
     font-size: 20px
 }
 
-.map-dashboard .searching-result h4 {
+.searching-result {
+    overflow-y: scroll;
+    max-height: 500px;
+    clear: both;
+}
+
+#pairing .today-bookings, #check-out .today-bookings  {
+    margin-bottom: 10px;
+}
+
+.searching-result label {
+    cursor: pointer;
+}
+
+#check-in h4 {
     margin: 10px 0;
 }
 
-.map-dashboard #today-bookings {
-    margin: 10px 0;
+#check-in h4, #check-in span {
+    display: inline;
+}
+
+#select-all {
+    float: right;
 }
 
 .map-dashboard .table-cell {
     display: table-cell;
-    padding: 10px;
+    padding: 5px;
     vertical-align: top;
 }
 
 .map-dashboard .table-cell:first-child,
 .map-dashboard .table-cell:last-child {
     text-align: center;
+}
+
+.map-dashboard .table-cell:first-child {
+    width: 20%;
 }
 
 .map-dashboard .table-cell:last-child {
@@ -304,12 +422,16 @@ label {
 }
 
 .map-dashboard .customer-profile {
-    width: 33%;
+    width: 31%;
 }
 
 .map-dashboard .booking-info {
-    width: 47%;
-    font-size: 20px;
+    width: 39%;
+    font-size: 16px;
+}
+
+.booking-info > div {
+    margin-bottom: 10px;
 }
 
 .map-dashboard #customer-pic {
@@ -326,14 +448,14 @@ label {
     background: #F6F6F6;
 }
 
-.map-dashboard .customer-record .customer-name,
-.map-dashboard .customer-record .member-tier,
 .map-dashboard .booking-number {
-    font-size: 24px;
+    font-size: 20px;
 }
 
-.map-dashboard .customer-record .member-tier {
-    color: #F01307;
+.map-dashboard .customer-record .customer-name,
+.map-dashboard .customer-record .member-grading
+ {
+    font-size: 18px;
 }
 
 .map-dashboard .booking-therapist-name {
@@ -368,6 +490,59 @@ label {
 #booking-enquires h4 {
     margin-bottom: 10px;
 }
+
+.alert-box {
+    min-height: 60px;
+}
+
+.rmOccupied {
+    color: #0A5F38!important;
+}
+
+.rmConfirmed {
+    color: #866144!important;
+}
+
+.rmAvailable {
+    color: #07A0D9!important;
+}
+
+.rmNotAvailable {
+    color: #D9242B!important;
+}
+
+.rmOccupied-sel {
+    color: #0A5F38!important;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.rmConfirmed-sel {
+    color: #866144!important;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.rmAvailable-sel {
+    color: #07A0D9!important;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.rmNotAvailable-sel {
+    color: #D9242B!important;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.rm-booking-number {
+    font-size: 14px;
+    color: #fff;
+    text-shadow: none!important;
+    font-weight: bold;
+}
+
+
 #main{background-color: #fff;}
 input{border-radius: 6px;}
 ul,li{list-style: none;}

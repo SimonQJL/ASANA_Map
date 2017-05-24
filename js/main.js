@@ -1,15 +1,11 @@
-﻿﻿var Point_Img = [];//保存座標數據
+﻿var Point_Img = [];//保存座標數據
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-var MessageList =[{"id":-1}];
-var lastScrollHeight;//最後一次Scroll位置
-var nowtime = new Date().getTime();//當前时间
-var lastnowtime =new Date().getTime();//查詢前半小時
-var halfofhour =1;//查詢N個前半小時
-var ServerUrl ="http://innosrc.cn:8889/";
-//var ServerUrl="http://10.0.0.188/";
+var ServerUrl ="http://52.76.160.92/";
 //var ServerUrl="http://localhost:80/";
+//var ServerUrl="http://localhost:8888/api/";
+
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {
@@ -37,13 +33,12 @@ function loadmap () {
 
     //由于地图数据使用了异步加载，为避免出错请把所有的逻辑放在 mapready 事件内
     map.on("mapready", function (e) {
-		reloadmessageRecived();//接收通知消息
 		getGuestList();//獲取座標數據
 		function getGuestList() {
             $.ajax({
-				
                 type: "Get",
                 url:ServerUrl+"base/all",
+                //url:ServerUrl+"base.all",
                 data: { t: new Date() },
                 dataType: "json",
                 success: function (data) {
@@ -59,7 +54,7 @@ function loadmap () {
 						case 3: obj.guests[i].kind="VVIP";
 						    break;
 						}	
-                        josnobj.push(obj.guests[i]);					
+                        josnobj.push(obj.guests[i]);	
 						 }						
 					 }
 					 for(var i in obj.staffs){
@@ -85,7 +80,6 @@ function loadmap () {
                     else if (Point_Img.length > josnobj.length) {
                         removePoint(josnobj);//移除點座標					  
                     }
-					
 					setTimeout(getGuestList, 500);//0.5刷新一次坐标
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
@@ -120,7 +114,7 @@ function loadmap () {
 						    break;
 					    case "Escort": Icon_class = "fa fa-bookmark fa-fw";
                             break;
-                        case "Maid": Icon_class = "fa fa-shopping-basket fa-fw";
+                        case "Maid": Icon_class = "fa fa-shopping-basket fa-fw txt-color-blue";
                             break;
 						case "Therapist": Icon_class = "fa fa-heart-o fa-fw";
 						    break;
@@ -154,11 +148,12 @@ function loadmap () {
                           else {
 							Point_Img[i].x = point[i].x;
                             Point_Img[i].y = point[i].y;
-                             
+
                            }
 						}
                     }
 					else{
+						
 						 Point_Img[i].x = point[i].x;
                          Point_Img[i].y = point[i].y;
 					   
@@ -274,142 +269,24 @@ function loadmap () {
   
 	});
 	
-     //加載更多消息
-	   $('#message-box').scroll(function(){ 
-	   if($('#message-box')[0].scrollHeight-$('#message-box').height()-$('#message-box').scrollTop()==0){
-		   halfofhour=halfofhour+1;
-		   $('#div_loading').addClass('layui-layer-content layui-layer-loading1');
-		  lastScrollHeight =$('#message-box')[0].scrollHeight;
-		   setTimeout(reloadMoreMessageRecived,1500);
-	    }
-	  });
+     //綁定手環
+	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
+		
+	//解除綁定
+	    $('#btn_Check-out').on('click',function(){CheckOutBeacon()});
+     
 }
 
-	
-	//消息通知
-   function reloadmessageRecived(){
-		 $.ajax({
-                type: "Get",
-                url: ServerUrl+"notification/byTimeQuantum",
-                dataType: "json",
-				data:{from:lastnowtime-3600000,to:lastnowtime},
-                success: function (data) {
-                  msgShow(data);
-                  setTimeout(reloadmessageRecived,5000);				  
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-    }
-	
-	function msgShow(data){
-     var obj = eval(data);
-	   for(var i in obj){	 
-		  var jsonobj = obj[i];	
-		  for(var o in jsonobj) {	 		
-		   var b = true;
-		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
-		     for(var j in MessageList){
-                 if(MessageList.length>0){  			
-			        if(MessageList[j].id==jsonobj[o].id){	
-				        b = false;
-				        break;
-			        }
-			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
-			     }
-			   }
-              if(b){     
-				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
-				  var time_str =changTimetype(time_length);//轉換時間格式
-				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
-		       }							
-			 	
-		 }
-	   }
-          lastnowtime =obj.server_time;
-          reloadTime(obj.server_time);		  
-   }
-   
-	   function reloadMoreMessageRecived(){
-		 $.ajax({
-                type: "Get",
-                url: ServerUrl+"notification/byTimeQuantum",
-                dataType: "json",
-				data:{from:lastnowtime-600000*halfofhour,to:lastnowtime-600000*(halfofhour-1)},
-                success: function (data) {
-                  if(data.data.length==0){
-				    layer.msg('Have no mroe notification');
-					$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
-				  }
-				  else{
-				  $('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
-				    msgMoreShow(data);
-				  }
-                  $('#message-box').scrollTop(lastScrollHeight-100);				  
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-    }
-	
-   	function msgMoreShow(data){
-     var obj = eval(data);
-	   for(var i in obj){	 
-		  var jsonobj = obj[i];	
-		  for(var o=jsonobj.length-1;o>=0;o--) {	 		
-		   var b = true;
-		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
-		     for(var j in MessageList){
-                 if(MessageList.length>0){  			
-			        if(MessageList[j].id==jsonobj[o].id){	
-				        b = false;
-				        break;
-			        }
-			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
-			     }
-			   }
-              if(b){     
-				  MessageList.splice(0,0,{"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
-				  var time_str =changTimetype(time_length);//轉換時間格式
-				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">MAID: HAPPY CHAN<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
-		       }							
-			 	
-		 }
-	   }
-          lastnowtime =obj.server_time;
-          reloadTime(obj.server_time);		  
-   }
-   
-   
-    //刷新時間
-    function reloadTime(server_time){
-	   for(var i in MessageList){
-		MessageList[i].time_length =(server_time-MessageList[i].create_time)/1000;//更新數組時間
-        var time_str =changTimetype(MessageList[i].time_length);//轉換時間格式	
-        var index=MessageList.length-1-i;		
-	    $('#message-box li a small:eq('+index+')').html(time_str);										 			
-	   }   
-	}
    
    //獲取客戶信息
-   function GetCustomerInfomation(event){									
-        $.ajax({
-                type: "Get",
-                url: ServerUrl+"guest/list",
-                dataType: "json",
-				data:{time:lastnowtime},
-                success: function (data) {
-                     for(var i in data){
-					    if(data[i].id==event.data.coustomerid)
+   function GetCustomerInfomation(event){									        
+		 for(var i in ConfirmedBookingList){
+					    if(ConfirmedBookingList[i].id==event.data.coustomerid)
 						{
-						 $('#CustomerName').html(data[i].name+"("+data[i].mobile+")");
+						 $('#CustomerName').html(ConfirmedBookingList[i].name+"("+ConfirmedBookingList[i].mobile+")");
 						}
 					 }
-                     showCustomerInfomation();						 
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
+                     showCustomerInfomation();	
 			return false;
    }
    
@@ -421,35 +298,108 @@ function loadmap () {
     }
    
    
+    //綁定手環
+   function RegisterCustomerInfomation(){
+       $.ajax({
+                type: "Post",
+                url: ServerUrl+"beacon/association",
+                dataType: "json",
+				data:{cbID:'FFD1E8A36720',UID:'5913c34a6d56282f882acb0b',target_type:1},
+                success: function (data) {
+					 $('.close').click();
+					 layer.msg('Bind successfully');
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+   }
 
    //過濾點類型
     function showIcon(obj){
         isShowAllIcon=false;
 		var value =$(obj).html();
-		if(!$(obj).hasClass('btn-selected')){
-			  Point_Icon.push(value);	
+		if(!$(obj).hasClass('btn-selected')){	
+			 switch (value) {
+                        case "Member": Point_Icon.push("VIP","VVIP","Guest");
+                            break;
+                        case "Therapist": Point_Icon.push("Maid","Therapist","Escort");
+                            break;
+						case "Equipment": Point_Icon.push("Theraphy Machines","Treatment Machines","Cleaning Machines");
+						    break;
+			 }	
 		}
 		else{
-           Point_Icon = $.grep(Point_Icon, function(str) {
-             return str != value;
-           });
+             switch (value) {
+                        case "Member":Point_Icon.splice(Point_Icon.indexOf("VIP"),3);
+                            break;
+                        case "Therapist": Point_Icon.splice(Point_Icon.indexOf("Maid"),3);
+                            break;
+						case "Equipment": Point_Icon.splice(Point_Icon.indexOf("Theraphy Machines"),3);
+						    break;
+			 }	
 		}	
 	}
    
-
-   //轉換時間格式
-   function changTimetype(time_length){
-	      if(time_length>60&&time_length<3600){
-			 time_str = (time_length/60).toFixed(0)+"m"//分
-		 }	
-         else if(time_length>3600){
-			 time_str = (time_length/3600).toFixed(1)+"h"//小時
-		 }	
-         else{
-             time_str = (time_length).toFixed(0)+"s"//秒
-		 }
-		 return time_str;
+    //解除手環綁定
+	function CheckOutBeacon(){		
+	     $.ajax({
+                type: "Post",
+                url: ServerUrl+"beacon/unbind",
+                dataType: "json",
+				data:{cbID:'FFD1E8A36720'},
+                success: function (data) {
+					 $('.close').click();
+					  layer.msg('Check out successfully');
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+	}
+	 //修改訂單狀態
+   function  UpdateBookingStatus(booking_no,bk_status,str_show){
+	   
+       $.ajax({
+                type: "GET",
+                url: ServerUrl+"base/updateBookingStatus",
+                dataType: "json",
+				data:{t: new Date(),bookingNo:booking_no,status:bk_status},
+                success: function (data) {	
+                       $('.close').click();
+						layer.msg(str_show);
+                        getBeaconList();							
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
    }
+	
+	
+	//獲取綁定Beacon的客戶信息
+	function GetBindCustomerInfomation(){
+	   var bindbeaconId =$('#select-hb-co option:selected').html();
+	   if(bindbeaconId=="Please Select"){
+		   $('#check-out > div > div > div.modal-body > div.selectedItemCO > div').css("display","none");
+	   }
+	   else{
+		  $('#check-out > div > div > div.modal-body > div.selectedItemCO > div').css("display","block"); 
+	   var bind_guest_id="";
+	   for(var i in  bind_beacon_list){
+	      if( bind_beacon_list[i].ble_addr==bindbeaconId){
+			  bind_guest_id=bind_beacon_list[i].bind_guest_id;
+		  }  
+	    
+	   }
+	  if(bind_guest_id!=""&&bind_guest_id!=null){
+		   for(var i in $scope.booking_finish){
+			   if($scope.booking_finish[i].mbr_code==bind_guest_id){
+				  $scope.booking_BindCustomerInfomation=$scope.booking_finish[i];
+			   }
+		   }
+		   $scope.booking_BindCustomerInfomation
+	  }
+	 }
+	}
+   
    
    
    

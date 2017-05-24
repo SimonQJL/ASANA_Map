@@ -1,32 +1,9 @@
               <div ng-model='booking_BindCustomerInfomation' ng-if="(booking_BindCustomerInfomation.bk_no)">
-                        <div class="booking-number">
-                            <div id='unbind_booking_no' class="table-cell" o-data-id='{{booking_BindCustomerInfomation.bk_no}}'>{{booking_BindCustomerInfomation.bk_no}}</div>
-                            <div class="table-cell"></div>
-                            <div class="table-cell"></div>
-                            <div class="table-cell"></div>
-                        </div>
-                        <div class="customer-record">
-                            <div class="table-cell">
-                                <img id="customer-pic" src="styles/img/avatars/5.png" alt="avatar">
-                            </div>
-                            <div class="table-cell customer-profile">
-                                <div class="customer-name">{{booking_BindCustomerInfomation.mbr_name}}</div>
-                                <div  class="member-id" ><i class="fa fa-id-card-o"></i> {{booking_BindCustomerInfomation.mbr_code}}</div>
-                                <div class="mobile"><i class="fa fa-mobile-phone"></i> {{booking_BindCustomerInfomation.mbr_phone}}</div>
-                                <div class="member-tier"><i class="fa fa-trophy"></i></div>
-                            </div>
-                            <div class="table-cell booking-info">
-							    <div ng-repeat="info in booking_BindCustomerInfomation.items">
-                                <div class="booking-time">{{info.from_date}} - {{info.to_date}} ({{info.str_time_length}})</div>
-                                <div class="booking-treatment">{{info.item_name}}</div>
-                                <div class="booking-therapist">Therapist: <span class="booking-therapist-name">{{info.staff_name}}</span></div>
-                                <div class="booking-room">{{info.room_name}}</div>
-                                </div>
+                <div class="name-on-map">
+								<h2>Name on map: 
+								{{booking_BindCustomerInfomation.mbr_name}}
+								</h2>
 							</div>
-                            <div class="table-cell">
-                                <div id="confirmed">
-                                    <i class="fa fa-check-circle"></i>
-                                </div>
-                            </div>
-                        </div>
+							<div class="searching-result">
+							</div>
                     </div>

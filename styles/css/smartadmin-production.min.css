@@ -12186,9 +12186,9 @@ aside {
 	text-decoration: none!important
 }
 
-#header>:first-child,aside {
+/*#header>:first-child,aside {
 	width: 220px
-}
+}*/
 
 #left-panel {
 	position: absolute;
@@ -14395,7 +14395,7 @@ img.away {
 	display: none;
 	z-index: 905;
 	top: 48px;
-	left: 16px;
+	right: 0;
 	width: 344px;
 	height: 435px;
 	border-radius: 0;
@@ -14423,7 +14423,7 @@ img.away {
 	border-color: rgba(255,255,255,0);
 	border-bottom-color: #fff;
 	border-width: 7px;
-	left: 50%;
+	left: 92%;
 	margin-left: -7px
 }
 
@@ -14431,7 +14431,7 @@ img.away {
 	border-color: rgba(131,131,131,0);
 	border-bottom-color: #838383;
 	border-width: 8px;
-	left: 50%;
+	left: 92%;
 	margin-left: -8px
 }
 
