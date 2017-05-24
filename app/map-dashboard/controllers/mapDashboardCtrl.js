@@ -309,7 +309,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
    }
     //解除手環綁定
 	function CheckOutBeacon(){	  
-         var booking_no =$('#unbind_booking_no').attr("o-data-id");
+         var booking_no =$('#unbind_booking_code').attr("o-data-id");
          var cbID  =$('#select-hb-co option:selected').html();	
           getBeaconList();		 
 	     $.ajax({
@@ -322,8 +322,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                       UpdateBookingStatus(booking_no,"P",str_show);//修改訂單狀態為P
                       var i =bind_beacon_list.indexOf(cbID)
                       bind_beacon_list.splice(i, 1);
-					  $scope.booking_BindCustomerInfomation=bind_beacon_list;	
-                      console.log($scope.booking_BindCustomerInfomation);					  
+					  $scope.booking_BindCustomerInfomation=bind_beacon_list;						  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -331,8 +330,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 	}
 	
 	 //修改訂單狀態
-   function  UpdateBookingStatus(booking_no,bk_status,str_show){
-	   
+   function  UpdateBookingStatus(booking_no,bk_status,str_show){	   
        $.ajax({
                 type: "GET",
                 url: ServerUrl+"base/updateBookingStatus",

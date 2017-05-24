@@ -2,9 +2,9 @@
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-var ServerUrl ="http://52.76.160.92/";
+//var ServerUrl ="http://52.76.160.92/";
 //var ServerUrl="http://localhost:80/";
-//var ServerUrl="http://localhost:8888/api/";
+var ServerUrl ="http://innosrc.cn:8889/";
 
 function loadmap () {
     //绘制地图
@@ -269,11 +269,6 @@ function loadmap () {
   
 	});
 	
-     //綁定手環
-	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
-		
-	//解除綁定
-	    $('#btn_Check-out').on('click',function(){CheckOutBeacon()});
      
 }
 
@@ -297,22 +292,6 @@ function loadmap () {
 		$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});
     }
    
-   
-    //綁定手環
-   function RegisterCustomerInfomation(){
-       $.ajax({
-                type: "Post",
-                url: ServerUrl+"beacon/association",
-                dataType: "json",
-				data:{cbID:'FFD1E8A36720',UID:'5913c34a6d56282f882acb0b',target_type:1},
-                success: function (data) {
-					 $('.close').click();
-					 layer.msg('Bind successfully');
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-   }
 
    //過濾點類型
     function showIcon(obj){
@@ -340,65 +319,19 @@ function loadmap () {
 		}	
 	}
    
-    //解除手環綁定
-	function CheckOutBeacon(){		
-	     $.ajax({
-                type: "Post",
-                url: ServerUrl+"beacon/unbind",
-                dataType: "json",
-				data:{cbID:'FFD1E8A36720'},
-                success: function (data) {
-					 $('.close').click();
-					  layer.msg('Check out successfully');
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-	}
-	 //修改訂單狀態
-   function  UpdateBookingStatus(booking_no,bk_status,str_show){
-	   
-       $.ajax({
-                type: "GET",
-                url: ServerUrl+"base/updateBookingStatus",
-                dataType: "json",
-				data:{t: new Date(),bookingNo:booking_no,status:bk_status},
-                success: function (data) {	
-                       $('.close').click();
-						layer.msg(str_show);
-                        getBeaconList();							
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-   }
-	
-	
-	//獲取綁定Beacon的客戶信息
-	function GetBindCustomerInfomation(){
-	   var bindbeaconId =$('#select-hb-co option:selected').html();
-	   if(bindbeaconId=="Please Select"){
-		   $('#check-out > div > div > div.modal-body > div.selectedItemCO > div').css("display","none");
-	   }
-	   else{
-		  $('#check-out > div > div > div.modal-body > div.selectedItemCO > div').css("display","block"); 
-	   var bind_guest_id="";
-	   for(var i in  bind_beacon_list){
-	      if( bind_beacon_list[i].ble_addr==bindbeaconId){
-			  bind_guest_id=bind_beacon_list[i].bind_guest_id;
-		  }  
-	    
-	   }
-	  if(bind_guest_id!=""&&bind_guest_id!=null){
-		   for(var i in $scope.booking_finish){
-			   if($scope.booking_finish[i].mbr_code==bind_guest_id){
-				  $scope.booking_BindCustomerInfomation=$scope.booking_finish[i];
-			   }
-		   }
-		   $scope.booking_BindCustomerInfomation
-	  }
-	 }
-	}
+   // function showTips(beacon_id){
+	 // var domNode;
+	 // for(var i in Point_Img){
+	    // if(Point_Img[i].id==beacon_id){
+		    // domNode=Point_Img[i].domNode
+		// }
+	 // }
+     // layer.tips('客戶johnson在廁所呆超過5分鐘',domNode, {
+    // tips: [1, '#812990'],
+    // time: 10000
+   // });
+	 
+   // }
    
    
    
