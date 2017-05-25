@@ -2,10 +2,10 @@
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-//var ServerUrl ="http://52.76.160.92/";
+var ServerUrl ="http://52.76.160.92/";
 //var ServerUrl="http://localhost:80/";
-var ServerUrl ="http://innosrc.cn:8889/";
-
+//var ServerUrl ="http://innosrc.cn:8889/";
+var testmap;
 function loadmap () {
     //绘制地图
     var map = new BRTMap("mapContainer", {

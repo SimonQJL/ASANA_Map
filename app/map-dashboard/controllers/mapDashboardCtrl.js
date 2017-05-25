@@ -2,6 +2,10 @@
    var unbind_beacon_list=[];//未被使用的beacon list
    var bind_beacon_list=[];//被使用的beacon list
    var ConfirmedBookingList =[];
+   var MessageList =[{"id":-1}];
+   var nowtime = new Date().getTime();//當前时间
+   var lastnowtime =new Date().getTime();//查詢前半小時
+   var UnReadMessageCount =0;
 angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($scope) {
     //Change status button color in map filter
     $scope.selectStatus = function() {
@@ -16,6 +20,10 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 		
 		//获取綁定beacon客戶的信息
 		$('#select-hb-co').on('change',function(){GetBindCustomerInfomation();});
+		
+     	//加載消息
+		reloadmessageRecived();
+		setTimeout(function(){$('#activity').on('click',function(){reloadMoreMessageRecived();})},500);//加載歷史消息
         jQuery('.btn-normal').click(function() {
             jQuery(this).toggleClass('btn-selected');
         });
@@ -151,33 +159,23 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 
     };
 
-    //Hand Band ID and locker
-    $scope.handBandLocker = [{
-        "handBandId": "Please Select",
-        "lockerId": ""
-    }, {
-        "handBandId": "BBtest1",
-        "lockerId": "01"
-    }];
-    $scope.selectedItem = $scope.handBandLocker[0];
-    $scope.selectedItemCO = $scope.handBandLocker[0];
+    // //Hand Band ID and locker
+    // $scope.handBandLocker = [{
+        // "handBandId": "Please Select",
+        // "lockerId": ""
+    // }, {
+        // "handBandId": "BBtest1",
+        // "lockerId": "01"
+    // }];
+    // $scope.selectedItem = $scope.handBandLocker[0];
+    // $scope.selectedItemCO = $scope.handBandLocker[0];
 
-    $scope.selectedHandBand = false;
-    $scope.selectHandBand = function() {
-        $scope.selectedHandBand = true;
-    };
+    // $scope.selectedHandBand = false;
+    // $scope.selectHandBand = function() {
+        // $scope.selectedHandBand = true;
+    // };
 
-    //alert box
-    $scope.eg5 = function() {
-
-        $.smallBox({
-            title: "Warning!",
-            content: "<div class='alert-box'>Member stay inside Private Room!</div",
-            color: "#C79121",
-            //timeout: 8000,
-            icon: "fa fa-bell swing animated"
-        });
-    };
+   
 
     //Map filter pop-up and assign ID to the room
     $scope.filterPopup = function() {
@@ -372,5 +370,138 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 	  }
 	 }
 	}
+	
+	
+	 //alert box
+	function alert_box(content){
+           $.smallBox({
+            title: "Warning!",
+            content: "<div class='alert-box'>"+content+"</div",
+            color: "#C79121",
+            //timeout: 8000,
+            icon: "fa fa-bell swing animated"
+           });
+	 }
+	//消息通知
+   function reloadmessageRecived(){
+		 $.ajax({
+                type: "Get",
+                url: ServerUrl+"notification/byTimeQuantum",
+                dataType: "json",
+				data:{from:lastnowtime-5000,to:lastnowtime},
+                success: function (data) {
+                  msgShow(data);				  	    
+                  setTimeout(reloadmessageRecived,5000);				  
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+    }
+	
+	function msgShow(data){
+     var obj = eval(data);
+	   for(var i in obj){	 
+		  var jsonobj = obj[i];	
+		  for(var o in jsonobj) {	 		
+		   var b = true;
+		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
+		     for(var j in MessageList){
+                 if(MessageList.length>0){  			
+			        if(MessageList[j].id==jsonobj[o].id){	
+				        b = false;
+				        break;
+			        }
+			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
+			     }
+			   }
+              if(b){     
+				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
+				  var time_str =changTimetype(time_length);//轉換時間格式
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+                  alert_box(jsonobj[o].content);
+				  UnReadMessageCount++;
+                  $('#activity > b').addClass('bg-color-red');
+                  $('#activity > b').html(UnReadMessageCount);				  
+		       }							
+			 	
+		 }
+	   }
+          lastnowtime =obj.server_time;
+          reloadTime(obj.server_time);		  
+   }
+   
+	   function reloadMoreMessageRecived(){
+		 $.ajax({
+                type: "Get",
+                url: ServerUrl+"notification/byTimeQuantum",
+                dataType: "json",
+				data:{from:lastnowtime-86400000,to:lastnowtime},
+                success: function (data) {
+                  if(data.data.length==0){
+				    layer.msg('Have no mroe notification');
+					$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
+				  }
+				  else{
+				  $('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
+				    msgMoreShow(data);
+				  }			  
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+    }
+	
+   	function msgMoreShow(data){
+     var obj = eval(data);
+	   for(var i in obj){	 
+		  var jsonobj = obj[i];	
+		  for(var o=jsonobj.length-1;o>=0;o--) {	 		
+		   var b = true;
+		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
+		     for(var j in MessageList){
+                 if(MessageList.length>0){  			
+			        if(MessageList[j].id==jsonobj[o].id){	
+				        b = false;
+				        break;
+			        }
+			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
+			     }
+			   }
+              if(b){     
+				  MessageList.splice(0,0,{"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
+				  var time_str =changTimetype(time_length);//轉換時間格式
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+		       }							
+			 	
+		 }
+	   }
+          lastnowtime =obj.server_time;
+          reloadTime(obj.server_time);		  
+   }
+   
+   
+    //刷新時間
+    function reloadTime(server_time){
+	   for(var i in MessageList){
+		MessageList[i].time_length =(server_time-MessageList[i].create_time)/1000;//更新數組時間
+        var time_str =changTimetype(MessageList[i].time_length);//轉換時間格式	
+        var index=MessageList.length-1-i;		
+	    $('#message-box li a small:eq('+index+')').html(time_str);										 			
+	   }   
+	}
+	   //轉換時間格式
+    function changTimetype(time_length){
+	      var time_str;
+	      if(time_length>60&&time_length<3600){
+			 time_str = (time_length/60).toFixed(0)+"m"//分
+		 }	
+         else if(time_length>3600){
+			 time_str = (time_length/3600).toFixed(1)+"h"//小時
+		 }	
+         else{
+             time_str = (time_length).toFixed(0)+"s"//秒
+		 }
+		 return time_str;
+   }
 	
 }]);
