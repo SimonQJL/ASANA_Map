@@ -1,7 +1,6 @@
 'use strict';
    var unbind_beacon_list=[];//未被使用的beacon list
    var bind_beacon_list=[];//被使用的beacon list
-   var ConfirmedBookingList =[];
    var MessageList =[{"id":-1}];
    var nowtime = new Date().getTime();//當前时间
    var lastnowtime =new Date().getTime();//查詢前半小時
@@ -103,7 +102,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 				   getMember(data[i]);
 				   	}   
 				 $scope.booking_finish =data;
-				 ConfirmedBookingList =data;
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -503,5 +501,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 		 }
 		 return time_str;
    }
+	
 	
 }]);

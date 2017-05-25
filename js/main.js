@@ -2,9 +2,9 @@
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-var ServerUrl ="http://52.76.160.92/";
+//var ServerUrl ="http://52.76.160.92/";
 //var ServerUrl="http://localhost:80/";
-//var ServerUrl ="http://innosrc.cn:8889/";
+var ServerUrl ="http://innosrc.cn:8889/";
 var testmap;
 function loadmap () {
     //绘制地图
@@ -106,29 +106,29 @@ function loadmap () {
 				  if(point[i].x!=null&&point[i].y!=null&&point[i].x!=0.0&&point[i].y!=0.0&&point[i].beacon_id!=""){
                     var Icon_class = "";//Icon ClassNmae
                     switch (point[i].kind) {
-                        case "Guest": Icon_class = "fa fa-circle fa-fw";
+                        case "Guest": {Icon_class = "fa fa-circle fa-fw";point[i].url="guest/list";}
                             break;
-                        case "VIP": Icon_class = "fa fa-circle fa-fw txt-color-red";
+                        case "VIP": {Icon_class = "fa fa-circle fa-fw txt-color-red";point[i].url="guest/list";}
                             break;
-						case "VVIP": Icon_class = "fa fa-circle fa-fw txt-color-magenta";
+						case "VVIP": {Icon_class = "fa fa-circle fa-fw txt-color-magenta";point[i].url="guest/list";}
 						    break;
-					    case "Escort": Icon_class = "fa fa-bookmark fa-fw";
+					    case "Escort": {Icon_class = "fa fa-bookmark fa-fw";point[i].url="staff/list";}
                             break;
-                        case "Maid": Icon_class = "fa fa-shopping-basket fa-fw txt-color-blue";
+                        case "Maid": {Icon_class = "fa fa-shopping-basket fa-fw txt-color-blue";point[i].url="staff/list";}
                             break;
-						case "Therapist": Icon_class = "fa fa-heart-o fa-fw";
+						case "Therapist": {Icon_class = "fa fa-heart-o fa-fw";point[i].url="staff/list";}
 						    break;
-						case "Cleaning Machines": Icon_class = "fa fa-cog fa-fw txt-color-green";
+						case "Cleaning Machines": {Icon_class = "fa fa-cog fa-fw txt-color-green";point[i].url="";}
                             break;
-                        case "Theraphy Machines": Icon_class = "fa fa-cog fa-fw txt-color-red";
+                        case "Theraphy Machines": {Icon_class = "fa fa-cog fa-fw txt-color-red";point[i].url="";}
                             break;
-						case "Treatment Machines": Icon_class = "fa fa-cog fa-fw";
+						case "Treatment Machines": {Icon_class = "fa fa-cog fa-fw";point[i].url="";}
 						    break;
-						case "Available": Icon_class = "fa fa-star fa-fw";
+						case "Available": {Icon_class = "fa fa-star fa-fw";point[i].url="";}
                             break;
-                        case "Ready for Clean": Icon_class = "fa fa-paint-brush fa-fw";
+                        case "Ready for Clean": {Icon_class = "fa fa-paint-brush fa-fw";point[i].url="";}
                             break;
-						case "Occupied": Icon_class = "fa fa-ban fa-fw txt-color-red";
+						case "Occupied": {Icon_class = "fa fa-ban fa-fw txt-color-red";point[i].url="";}
 						    break;
                     }
                     if (!isShowAllIcon) {
@@ -176,9 +176,10 @@ function loadmap () {
                     Point_Img[Point_Img.length - 1].id = point[i].beacon_id;
 					Point_Img[Point_Img.length - 1].kind = point[i].kind;
                     Point_Img[Point_Img.length - 1].x = point[i].x;
-                    Point_Img[Point_Img.length - 1].y = point[i].y;						 
+                    Point_Img[Point_Img.length - 1].y = point[i].y;	
+                    Point_Img[Point_Img.length - 1].url = point[i].url;					
 					//循環綁定click事件，
-                    $(Point_Img[Point_Img.length - 1].domNode).on('click', { coustomerid: point[i].id }, GetCustomerInfomation);			
+                    $(Point_Img[Point_Img.length - 1].domNode).on('click', { coustomerid: point[i].id,url:point[i].url}, GetMemberInfomation);					
 					}					
 
                 }
@@ -224,7 +225,7 @@ function loadmap () {
                     // var xy = { "x": point[o].x, "y": point[o].y };
                     // var shop = map.getShop(xy);
                     $(Point_Img[i].domNode).off('click');//解除舊的绑定事件
-                    $(Point_Img[i].domNode).on('click', { coustomerid: point[o].id }, GetCustomerInfomation);//循環綁定click事件，	
+                    $(Point_Img[i].domNode).on('click', { coustomerid: point[o].id,url:Point_Img[i].url }, GetMemberInfomation);//循環綁定click事件，	
                  break;
 				}
 				
@@ -273,15 +274,25 @@ function loadmap () {
 }
 
    
-   //獲取客戶信息
-   function GetCustomerInfomation(event){									        
-		 for(var i in ConfirmedBookingList){
-					    if(ConfirmedBookingList[i].id==event.data.coustomerid)
+   //獲取人員信息
+   function GetMemberInfomation(event){	
+		  $.ajax({
+                type: "Get",
+                url: ServerUrl+event.data.url,
+                dataType: "json",
+				data:{time:lastnowtime},
+                success: function (data) {
+                     for(var i in data){
+					    if(data[i].id==event.data.coustomerid)
 						{
-						 $('#CustomerName').html(ConfirmedBookingList[i].name+"("+ConfirmedBookingList[i].mobile+")");
+						 $('#CustomerName').html(data[i].name+"("+data[i].mobile+")");
 						}
 					 }
-                     showCustomerInfomation();	
+                     showCustomerInfomation();						 
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
 			return false;
    }
    
