@@ -1,4 +1,4 @@
-<div class="today-bookings" ng-repeat="record in booking">
+<div class="today-bookings" ng-repeat="record in booking|filter:CustomerName|filter:CustomerID|filter:CustomerMobile">
     <label ng-click="selectRecord()">
         <div class="customer-record">
             <div class="table-cell">

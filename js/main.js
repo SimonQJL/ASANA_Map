@@ -2,9 +2,9 @@
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-//var ServerUrl ="http://52.76.160.92/";
+var ServerUrl ="http://52.76.160.92/";
 //var ServerUrl="http://localhost:80/";
-var ServerUrl ="http://innosrc.cn:8889/";
+//var ServerUrl ="http://innosrc.cn:8889/";
 var testmap;
 function loadmap () {
     //绘制地图
@@ -80,7 +80,7 @@ function loadmap () {
                     else if (Point_Img.length > josnobj.length) {
                         removePoint(josnobj);//移除點座標					  
                     }
-					setTimeout(getGuestList, 500);//0.5刷新一次坐标
+					setTimeout(getGuestList,500);//0.5刷新一次坐标
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -89,7 +89,6 @@ function loadmap () {
 		
         //創建點座標
         function createPoint(point) {
-
             if (Point_Img.length <= 0) {
                 Point_Img.push({ id: -1 });
                 Point_Lable.push({ id: -1 });
@@ -282,13 +281,12 @@ function loadmap () {
                 dataType: "json",
 				data:{time:lastnowtime},
                 success: function (data) {
-                     for(var i in data){
-					    if(data[i].id==event.data.coustomerid)
-						{
-						 $('#CustomerName').html(data[i].name+"("+data[i].mobile+")");
-						}
-					 }
-                     showCustomerInfomation();						 
+                     switch (event.data.url){
+					   case "guest/list":showCustomerInfomation(data,event);
+					   break;
+					   case "staff/list":showStaffInfomation(data,event);
+					   break;
+					 }						 
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -297,12 +295,27 @@ function loadmap () {
    }
    
    	//用戶信息彈窗
-    function showCustomerInfomation() {
+    function showCustomerInfomation(data,event) {
+	    for(var i in data){
+			if(data[i].id==event.data.coustomerid){
+			 $('.alert-enquiries .user-name').html(data[i].name+"("+data[i].mobile+")");
+			}
+		 }
         $('.CoverModal').show();
 	    $('.alert-enquiries').show();
 		$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});
     }
-   
+     	//員工信息彈窗
+    function showStaffInfomation(data,event) {
+		for(var i in data){
+			if(data[i].id==event.data.coustomerid){
+			 $('.alert-enquiries .user-name').html(data[i].name+"("+data[i].mobile+")");
+			}
+		 }
+        $('.CoverModal').show();
+	    $('.alert-enquiries').show();
+		$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});
+    }
 
    //過濾點類型
     function showIcon(obj){

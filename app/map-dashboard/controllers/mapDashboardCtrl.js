@@ -502,5 +502,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 		 return time_str;
    }
 	
+    // 更新狀態數據
 	
 }]);

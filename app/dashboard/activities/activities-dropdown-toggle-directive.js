@@ -11,7 +11,7 @@ angular.module('app').directive('activitiesDropdownToggle', function($log) {
 			if (badge.hasClass('bg-color-red')) {
 
 				badge.removeClass('bg-color-red').text(0);
-                UnReadMessageCount=0;
+                UnReadMessageCount=0;//將未讀消息數目清零
 			}
 
 			ajax_dropdown = $(this).next('.ajax-dropdown');
