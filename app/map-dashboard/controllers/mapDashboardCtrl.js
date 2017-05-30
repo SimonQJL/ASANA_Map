@@ -2,25 +2,34 @@
    var unbind_beacon_list=[];//未被使用的beacon list
    var bind_beacon_list=[];//被使用的beacon list
    var MessageList =[{"id":-1}];
-   var nowtime = new Date().getTime();//當前时间
-   var lastnowtime =new Date().getTime();//查詢前半小時
+   var lastnowtime =new Date().getTime();
    var UnReadMessageCount =0;
+   var Room_name;
+   var BookingCountList =0;
+   var ConfirmedBkRoomList =['vip_rm1','vip_rm2','vip_rm3'];//CONFIRMEDBOOKING
+   var OccupiedRmList = ['rm23','rm24','rm25'];//OCCUPIEDROOM
+   var notAvailableRmList=[];//NOT AVAILABLEROOM
+   var availableRmList=['vip_rm1','vip_rm2','vip_rm3','vip_rm4','vip_rm5','vvip_rm1','vvip_rm2', 'vvip_rm3', 'vvip_rm4', 'vvip_rm5','vvip_rm6',
+	'vvip_rm7','vvip_rm8','vvip_rm9','rm1','rm2','rm3','rm4','rm5','rm6','rm7','rm8','rm9','rm10','rm11','rm12','rm13','rm14','rm15','rm16','rm17',
+	'rm18','rm19','rm20','rm21','rm22','rm23','rm24','rm25','rm26','rm27','rm28','rm29','rm30','rm31','rm32','rm33','rm34','rm35','rm36','rm37','rm38',
+	'rm40','rm41','rm42','rm43','rm44','rm45','rm46','rm47','rm48','rm49','rm50','rm51','rm52','rm53','rm54','rm55','rm56'];//AVAILABLEROOM
 angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($scope) {
     //Change status button color in map filter
     $scope.selectStatus = function() {
-		
 		 //獲取所有beacon
 		 getBeaconList();
+		 CalculateavailableRm();
 		 //綁定手環
+		RegisterGuest();
 	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
-		
+		$('#btn_RegisterGuest').on('click',RegisterGuest);
 	     //解除綁定
 	    $('#btn_Check-out').on('click',function(){CheckOutBeacon();});
 		
 		//获取綁定beacon客戶的信息
 		$('#select-hb-co').on('change',function(){GetBindCustomerInfomation();});
-		
-     	//加載消息
+        				
+    	//加載消息
 		reloadmessageRecived();
 		setTimeout(function(){$('#activity').on('click',function(){reloadMoreMessageRecived();})},500);//加載歷史消息
         jQuery('.btn-normal').click(function() {
@@ -42,22 +51,28 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
     });
 
      //search record data
-    $('#btn_RegisterGuest').click(function(){
+
+   function RegisterGuest(event){
 		$.ajax({
                 type: "Get",
-                url: ServerUrl+"base/listByStatus",
+                url: ServerUrl+"booking/listByStatus",
                 dataType: "json",
 				data:{ t: new Date(),status:"M"},
                 success: function (records) {
+					BookingCountList=records.length;
+					$('#BookingCount').html(BookingCountList);
 			     for(var i in records){
-				   getMember(records[i]);
+					 
+				    getMember(records[i]);
 				   	} 
 				 $scope.booking = records;
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
             });
-    });
+			// return false;
+   }
+	
     function getMember(records){
 		$.ajax({
                 type: "Get",
@@ -80,21 +95,38 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 							  }
 							  records.items[o].from_date=new Date(records.items[o].from_date).getHours()+":"+from_date_minutes ;
 							  records.items[o].to_date=new Date(records.items[o].to_date).getHours()+":"+to_date_minutes;
+							  getRoomName(records.items[o].room_id[0]);
+							  records.items[o].room_name=Room_name;
 							  records.items[o].str_time_length=str_time_length;
+							  
 						  }
                 }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
+                    layer.alert("cann't find the member information");
                 }
             }); 
        }
-	   
+	   	 function getRoomName(room_id){
+		  $.ajax({
+                type: "Get",
+                url: ServerUrl+"room/getById",
+                dataType: "json",
+				data:{id:room_id},
+                success: function (data) { 
+					    Room_name =data.name;	
+                        if(ConfirmedBkRoom.indexOf(Room_name)==-1){
+					    ConfirmedBkRoom.push(Room_name);
+					    }						
+                }, error: function () {
+                }
+            });  
+	   }
 	   
 	   //查詢正在進行的訂單
 	
 	$('#btn_CheckoutGuest').click(function(){
 		$.ajax({
                 type: "Get",
-                url: ServerUrl+"base/listByStatus",
+                url: ServerUrl+"booking/listByStatus",
                 dataType: "json",
 				data:{ t: new Date(),status:"S"},
                 success: function (data) {
@@ -106,7 +138,8 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                     layer.alert("The system is busy. Please try again later");
                 }
             });
-    });
+    
+	});
 
     //Display different color according to member's grading
     // $scope.gradingClass = function(record) {
@@ -179,7 +212,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
     $scope.filterPopup = function() {
         jQuery('.map-filter-container').toggle();
         $('.leaflet-marker-icon').each(function() {
-            var rmID = $("span:contains('Rm')", this).text().toLowerCase().replace(" ", "_");;
+            var rmID = $("span:contains('Rm')", this).text().toLowerCase().replace(" ", "_");
             $(this).attr('id', rmID);
         });
     }
@@ -197,13 +230,32 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 		$(dom).addClass('selected');   
 		}
     }
-
-    //Room type data
-    $scope.occupiedRm = ['vip_rm1', 'vvip_rm2', 'vvip_rm3', 'vvip_rm4', 'vvip_rm5','vvip_rm6','vvip_rm7','vvip_rm8','vvip_rm9'];
-    $scope.confirmedBk = ['rm6', 'rm7', 'rm14', 'vvip_rm1'];
-    $scope.availableRm = ['rm20', 'rm21', 'rm22', 'rm23'];
-    $scope.notAvailableRm = ['rm1', 'rm2', 'rm3'];
-
+  
+  
+  //Room type data
+    $scope.confirmedBk = ConfirmedBkRoomList;
+    $scope.occupiedRm = OccupiedRmList;
+	$scope.notAvailableRm = notAvailableRmList;
+	 function CalculateavailableRm(){
+		 Removeroomname(ConfirmedBkRoomList);
+		 Removeroomname(OccupiedRmList);
+		 Removeroomname(notAvailableRmList);
+	 }
+	 function Removeroomname(list){
+	    for(var i in list){
+	      if(availableRmList.indexOf(list[i])!=-1){
+		    availableRmList.splice(availableRmList.indexOf(list[i]),1);
+		  }
+		 } 
+	 }
+    $scope.availableRm =availableRmList ;
+	//Room type count
+	$scope.availableRmCount= 70;
+	
+	
+	
+	
+	
     //Show selected room type
     $scope.showOccupied = function() {
         $('#' + $scope.occupiedRm.join(',#')).toggleClass('rmOccupied-sel');
@@ -297,6 +349,8 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 success: function (data) {
 					     var str_show="Bind successfully";
 						 UpdateBookingStatus(booking_no,"S",str_show);//修改訂單狀態為S
+						  BookingCountList--;
+                          $('#BookingCount').html(BookingCountList);
                          $('#register-guest-accordion > div:nth-child(1) > div.panel-heading > h4 > a').click();						 
                 }, error: function () {
                     layer.alert("Have not any booking was selected");
@@ -318,7 +372,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                       UpdateBookingStatus(booking_no,"P",str_show);//修改訂單狀態為P
                       var i =bind_beacon_list.indexOf(cbID)
                       bind_beacon_list.splice(i, 1);
-					  $scope.booking_BindCustomerInfomation=bind_beacon_list;						  
+					  $scope.booking_BindCustomerInfomation=bind_beacon_list;  					  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -329,7 +383,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
    function  UpdateBookingStatus(booking_no,bk_status,str_show){	   
        $.ajax({
                 type: "GET",
-                url: ServerUrl+"base/updateBookingStatus",
+                url: ServerUrl+"booking/updateBookingStatus",
                 dataType: "json",
 				data:{t: new Date(),bookingNo:booking_no,status:bk_status},
                 success: function (data) {	
@@ -415,7 +469,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
               if(b){     
 				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
 				  var time_str =changTimetype(time_length);//轉換時間格式
-				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');										 			
                   alert_box(jsonobj[o].content);
 				  UnReadMessageCount++;
                   $('#activity > b').addClass('bg-color-red');
@@ -434,13 +488,14 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 url: ServerUrl+"notification/byTimeQuantum",
                 dataType: "json",
 				data:{from:lastnowtime-86400000,to:lastnowtime},
+				beforeSend:function(){$('#div_loading').addClass('layui-layer-loading1');},
                 success: function (data) {
                   if(data.data.length==0){
 				    layer.msg('Have no mroe notification');
-					$('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
+					$('#div_loading').removeClass('layui-layer-loading1')
 				  }
 				  else{
-				  $('#div_loading').removeClass('layui-layer-content layui-layer-loading1')
+				  $('#div_loading').removeClass('layui-layer-loading1')
 				    msgMoreShow(data);
 				  }			  
                 }, error: function () {
@@ -449,11 +504,12 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
             });
     }
 	
-   	function msgMoreShow(data){
+	
+	function  msgMoreShow(data){
      var obj = eval(data);
 	   for(var i in obj){	 
 		  var jsonobj = obj[i];	
-		  for(var o=jsonobj.length-1;o>=0;o--) {	 		
+		  for(var o in jsonobj) {	 		
 		   var b = true;
 		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
 		     for(var j in MessageList){
@@ -466,17 +522,14 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 			     }
 			   }
               if(b){     
-				  MessageList.splice(0,0,{"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
+				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
 				  var time_str =changTimetype(time_length);//轉換時間格式
-				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+MessageList[j].content+'</span></li>');										 			
+				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');										 						  
 		       }							
 			 	
 		 }
 	   }
-          lastnowtime =obj.server_time;
-          reloadTime(obj.server_time);		  
-   }
-   
+	}
    
     //刷新時間
     function reloadTime(server_time){
@@ -502,6 +555,12 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 		 return time_str;
    }
 	
+	
     // 更新狀態數據
+	
+	
+	
+	
+	
 	
 }]);

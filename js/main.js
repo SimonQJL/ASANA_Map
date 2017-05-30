@@ -2,9 +2,9 @@
 var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
-var ServerUrl ="http://52.76.160.92/";
-//var ServerUrl="http://localhost:80/";
-//var ServerUrl ="http://innosrc.cn:8889/";
+//var ServerUrl ="http://52.76.160.92/";
+var ServerUrl="http://localhost:80/";
+var ServerUrl ="http://10.0.0.188/";
 var testmap;
 function loadmap () {
     //绘制地图
@@ -71,6 +71,20 @@ function loadmap () {
                          
 						 }						 
 					 }
+					 // for(var i in obj.machine){
+						 // if(obj.machine[i].beacon_id!=""&&obj.machine[i].x!=0.0&&obj.machine[i].y!=0.0){
+						// switch (obj.machine[i].type) {
+                        // case 1: obj.machine[i].kind="Cleaning Machines";
+                            // break;
+                        // case 2: obj.machine[i].kind="Theraphy Machines";
+                            // break;
+						// case 3: obj.machine[i].kind="Treatment Machines";
+						    // break;
+						// }	
+                        // josnobj.push(obj.machine[i])
+                         
+						 // }						 
+					 // }
                     if (Point_Img.length < josnobj.length) {
                         createPoint(josnobj);//創建點座標 	
                     }
@@ -123,12 +137,12 @@ function loadmap () {
                             break;
 						case "Treatment Machines": {Icon_class = "fa fa-cog fa-fw";point[i].url="";}
 						    break;
-						case "Available": {Icon_class = "fa fa-star fa-fw";point[i].url="";}
-                            break;
-                        case "Ready for Clean": {Icon_class = "fa fa-paint-brush fa-fw";point[i].url="";}
-                            break;
-						case "Occupied": {Icon_class = "fa fa-ban fa-fw txt-color-red";point[i].url="";}
-						    break;
+						// case "Available": {Icon_class = "fa fa-star fa-fw";point[i].url="";}
+                            // break;
+                        // case "Ready for Clean": {Icon_class = "fa fa-paint-brush fa-fw";point[i].url="";}
+                            // break;
+						// case "Occupied": {Icon_class = "fa fa-ban fa-fw txt-color-red";point[i].url="";}
+						    // break;
                     }
                     if (!isShowAllIcon) {
 						
@@ -166,9 +180,13 @@ function loadmap () {
 					var myLabel = new BRTSymbol.divIcon([point[i].x, point[i].y], {
                         html: point[i].name,
                         className: 'User',
-                        fonsSize: 12,
-                        offsetY: 20,
+						width:80,
+                        fontSize:20,
+                        offsetY: 25,
+						offsetX: -20,
                         color: "#FF3300",
+						autoCenter:true
+
                     }).addTo(map);								
 					Point_Lable.push(myLabel);//將對象加入Point_Img數組
                     Point_Img.push(image);
@@ -298,6 +316,7 @@ function loadmap () {
     function showCustomerInfomation(data,event) {
 	    for(var i in data){
 			if(data[i].id==event.data.coustomerid){
+			   getCustomerBookingInfomation(event.data.coustomerid);
 			 $('.alert-enquiries .user-name').html(data[i].name+"("+data[i].mobile+")");
 			}
 		 }
@@ -342,20 +361,37 @@ function loadmap () {
 			 }	
 		}	
 	}
-   
-   // function showTips(beacon_id){
-	 // var domNode;
-	 // for(var i in Point_Img){
-	    // if(Point_Img[i].id==beacon_id){
-		    // domNode=Point_Img[i].domNode
-		// }
-	 // }
-     // layer.tips('客戶johnson在廁所呆超過5分鐘',domNode, {
-    // tips: [1, '#812990'],
-    // time: 10000
-   // });
-	 
-   // }
+      
+	 function getCustomerBookingInfomation(id){
+		 $.ajax({
+                type: "Get",
+                url: ServerUrl+"base/findByGuestId",
+                dataType: "json",
+				data:{t: new Date(), id:id},
+                success: function (data) { 
+					   records.mbr_name=data.name;
+					   records.mbr_phone=data.mobile;
+						  for(var o in records.items){
+							  var time_length =records.items[o].to_date-records.items[o].from_date;
+							  var str_time_length=(time_length/3600000).toFixed(1)+"h";
+							  var from_date_minutes =new Date(records.items[o].from_date).getMinutes();
+							  var to_date_minutes =new Date(records.items[o].to_date).getMinutes();
+							  if(from_date_minutes<10){
+							     from_date_minutes="0"+from_date_minutes.toString();
+							  }
+							  if(to_date_minutes<10){
+							     to_date_minutes="0"+to_date_minutes.toString();
+							  }
+							  records.items[o].from_date=new Date(records.items[o].from_date).getHours()+":"+from_date_minutes ;
+							  records.items[o].to_date=new Date(records.items[o].to_date).getHours()+":"+to_date_minutes;
+							  records.items[o].str_time_length=str_time_length;
+						  }
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            }); 
+	       
+	 }
    
    
    

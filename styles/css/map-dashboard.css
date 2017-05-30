@@ -95,6 +95,8 @@ div.event:nth-of-type(1){background-color: #F2E9F3;}
 .Notification_Box{ overflow:auto; height:390px;}
 #mapContainer{height:850px;margin-bottom:30px;}
 .btn_Close{ z-index:99999}
-
+.layui-layer-loading1{
+	position:absolute;top:49%;left:47%; width:40px;height:40px;background-image:url('/styles/img/loading-1.gif');background-repeat:no-repeat;
+}
 
 
