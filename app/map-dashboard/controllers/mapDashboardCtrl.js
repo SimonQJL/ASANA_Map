@@ -5,22 +5,25 @@
    var lastnowtime =new Date().getTime();
    var UnReadMessageCount =0;
    var Room_name;
-   var BookingCountList =0;
-   var ConfirmedBkRoomList =['vip_rm1','vip_rm2','vip_rm3'];//CONFIRMEDBOOKING
-   var OccupiedRmList = ['rm23','rm24','rm25'];//OCCUPIEDROOM
+   var ConfirmedBkRoomList =[];//CONFIRMEDBOOKING
+   var OccupiedRmList = [];//OCCUPIEDROOM
    var notAvailableRmList=[];//NOT AVAILABLEROOM
    var availableRmList=['vip_rm1','vip_rm2','vip_rm3','vip_rm4','vip_rm5','vvip_rm1','vvip_rm2', 'vvip_rm3', 'vvip_rm4', 'vvip_rm5','vvip_rm6',
 	'vvip_rm7','vvip_rm8','vvip_rm9','rm1','rm2','rm3','rm4','rm5','rm6','rm7','rm8','rm9','rm10','rm11','rm12','rm13','rm14','rm15','rm16','rm17',
 	'rm18','rm19','rm20','rm21','rm22','rm23','rm24','rm25','rm26','rm27','rm28','rm29','rm30','rm31','rm32','rm33','rm34','rm35','rm36','rm37','rm38',
-	'rm40','rm41','rm42','rm43','rm44','rm45','rm46','rm47','rm48','rm49','rm50','rm51','rm52','rm53','rm54','rm55','rm56'];//AVAILABLEROOM
+	'rm39','rm40','rm41','rm42','rm43','rm44','rm45','rm46','rm47','rm48','rm49','rm50','rm51','rm52','rm53','rm54','rm55','rm56'];//AVAILABLEROOM
 angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($scope) {
     //Change status button color in map filter
     $scope.selectStatus = function() {
 		 //獲取所有beacon
 		 getBeaconList();
-		 CalculateavailableRm();
 		 //綁定手環
+		 $scope.confirmedBkCount = ConfirmedBkRoomList.length;
+         $scope.occupiedRmCount = OccupiedRmList.length;
+		 $scope.availableRmCount=availableRmList.length;
+		 $scope.notavailableRmCount=0;
 		RegisterGuest();
+		doingItemsBooking();
 	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
 		$('#btn_RegisterGuest').on('click',RegisterGuest);
 	     //解除綁定
@@ -59,11 +62,9 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 dataType: "json",
 				data:{ t: new Date(),status:"M"},
                 success: function (records) {
-					BookingCountList=records.length;
-					$('#BookingCount').html(BookingCountList);
-			     for(var i in records){
-					 
-				    getMember(records[i]);
+					 for(var i in records){
+					 getTimeLength(records[i])
+				     getMember(records[i],"M");
 				   	} 
 				 $scope.booking = records;
                 }, error: function () {
@@ -73,7 +74,25 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 			// return false;
    }
 	
-    function getMember(records){
+	function getTimeLength(records){
+	  for(var o in records.items){
+		  var time_length =records.items[o].to_date-records.items[o].from_date;
+		  var str_time_length=(time_length/3600000).toFixed(1)+"h";
+		  var from_date_minutes =new Date(records.items[o].from_date).getMinutes();
+		  var to_date_minutes =new Date(records.items[o].to_date).getMinutes();
+		  if(from_date_minutes<10){
+			 from_date_minutes="0"+from_date_minutes.toString();
+		  }
+		  if(to_date_minutes<10){
+			 to_date_minutes="0"+to_date_minutes.toString();
+		  }
+		  records.items[o].from_date=new Date(records.items[o].from_date).getHours()+":"+from_date_minutes ;
+		  records.items[o].to_date=new Date(records.items[o].to_date).getHours()+":"+to_date_minutes;
+		  records.items[o].str_time_length=str_time_length;
+	  } 
+	}
+	
+    function getMember(records,type){
 		$.ajax({
                 type: "Get",
                 url: ServerUrl+"guest/byID",
@@ -82,48 +101,47 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 success: function (data) { 
 					   records.mbr_name=data.name;
 					   records.mbr_phone=data.mobile;
-						  for(var o in records.items){
-							  var time_length =records.items[o].to_date-records.items[o].from_date;
-							  var str_time_length=(time_length/3600000).toFixed(1)+"h";
-							  var from_date_minutes =new Date(records.items[o].from_date).getMinutes();
-							  var to_date_minutes =new Date(records.items[o].to_date).getMinutes();
-							  if(from_date_minutes<10){
-							     from_date_minutes="0"+from_date_minutes.toString();
-							  }
-							  if(to_date_minutes<10){
-							     to_date_minutes="0"+to_date_minutes.toString();
-							  }
-							  records.items[o].from_date=new Date(records.items[o].from_date).getHours()+":"+from_date_minutes ;
-							  records.items[o].to_date=new Date(records.items[o].to_date).getHours()+":"+to_date_minutes;
-							  getRoomName(records.items[o].room_id[0]);
-							  records.items[o].room_name=Room_name;
-							  records.items[o].str_time_length=str_time_length;
-							  
-						  }
+                       for(var o in records.items){					   
+					   getRoomName(records.items[o],type);
+					   }					   
                 }, error: function () {
                     layer.alert("cann't find the member information");
                 }
             }); 
        }
-	   	 function getRoomName(room_id){
-		  $.ajax({
-                type: "Get",
-                url: ServerUrl+"room/getById",
-                dataType: "json",
-				data:{id:room_id},
-                success: function (data) { 
-					    Room_name =data.name;	
-                        if(ConfirmedBkRoom.indexOf(Room_name)==-1){
-					    ConfirmedBkRoom.push(Room_name);
-					    }						
-                }, error: function () {
-                }
-            });  
-	   }
+	   	 function getRoomName(records,type){			 
+				  $.ajax({
+					type: "Get",
+					url: ServerUrl+"room/getById",
+					dataType: "json",
+					data:{id:records.room_id[0]},
+					success: function (data) { 
+							 records.room_name=data.name;
+							 if(type=="M"){
+								 if(ConfirmedBkRoomList.indexOf(records.room_name.toLowerCase())==-1){
+								 ConfirmedBkRoomList.push(records.room_name.toLowerCase());
+								 }
+                                  $scope.confirmedRmCount=ConfirmedBkRoomList.length;								 
+							 }
+							 else{
+							   if(OccupiedRmList.indexOf(records.room_name.toLowerCase())==-1){
+								 OccupiedRmList.push(records.room_name.toLowerCase());
+								 }
+                               $scope.occupiedRmCount=OccupiedRmList.length;							 
+							 }
+                             CalculateavailableRm();//過濾房間類型的房間名字							 
+					}, error: function () {
+					}
+				});  
+		 }
 	   
 	   //查詢正在進行的訂單
 	
 	$('#btn_CheckoutGuest').click(function(){
+		doingItemsBooking();
+	});
+    
+	function doingItemsBooking(){
 		$.ajax({
                 type: "Get",
                 url: ServerUrl+"booking/listByStatus",
@@ -131,16 +149,14 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 				data:{ t: new Date(),status:"S"},
                 success: function (data) {
 			     for(var i in data){
-				   getMember(data[i]);
+				   getMember(data[i],"S");
 				   	}   
 				 $scope.booking_finish =data;
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
             });
-    
-	});
-
+	}
     //Display different color according to member's grading
     // $scope.gradingClass = function(record) {
         // switch (record.customer.mbr_group) {
@@ -233,13 +249,15 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
   
   
   //Room type data
-    $scope.confirmedBk = ConfirmedBkRoomList;
-    $scope.occupiedRm = OccupiedRmList;
-	$scope.notAvailableRm = notAvailableRmList;
 	 function CalculateavailableRm(){
 		 Removeroomname(ConfirmedBkRoomList);
 		 Removeroomname(OccupiedRmList);
 		 Removeroomname(notAvailableRmList);
+		 $scope.confirmedBkCount = ConfirmedBkRoomList;
+         $scope.occupiedRmCount = OccupiedRmList;
+		 $scope.availableRmCount=availableRmList.length;
+		 $scope.notavailableRmCount=0;
+		 //$scope.notavailableRmCount=notavailableRmList.length;
 	 }
 	 function Removeroomname(list){
 	    for(var i in list){
@@ -248,14 +266,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 		  }
 		 } 
 	 }
-    $scope.availableRm =availableRmList ;
-	//Room type count
-	$scope.availableRmCount= 70;
-	
-	
-	
-	
-	
     //Show selected room type
     $scope.showOccupied = function() {
         $('#' + $scope.occupiedRm.join(',#')).toggleClass('rmOccupied-sel');
@@ -264,7 +274,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
         $('#' + $scope.confirmedBk.join(',#')).toggleClass('rmConfirmed-sel');
     }
     $scope.showAvailableRm = function() {
-        $('#' + $scope.availableRm.join(',#')).toggleClass('rmAvailable-sel');
+        $('#' + $scope.availableRmCount.join(',#')).toggleClass('rmAvailable-sel');
     }
     $scope.showNotAvailableRm = function() {
         $('#' + $scope.notAvailableRm.join(',#')).toggleClass('rmNotAvailable-sel');
@@ -317,18 +327,19 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 				 unbind_beacon_list.length=0;
 				 bind_beacon_list.length=0;
                  for(var i in data){
-				   if(data[i].bind_staff_id!=null){}
-                   else{
-					   if(!data[i].bind_guest_id){ 
-				     unbind_beacon_list.push(data[i]);
-					}
-					else{
-					 bind_beacon_list.push(data[i]);
-					}
-				   }
-				   }				   
+					  console.log(data[i]);
+					  if(data[i].bind_staff_id==null||data[i].bind_staff_id==""){
+							if(!data[i].bind_guest_id){ 
+							  unbind_beacon_list.push(data[i]);
+							}
+							else{
+							  bind_beacon_list.push(data[i]);
+							}
+					  }
+				  }				   
 				 $scope.unbecaon_List=unbind_beacon_list;
 				 $scope.becaon_List=bind_beacon_list;
+				 $scope.lockeCount=bind_beacon_list.length;
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -349,8 +360,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 success: function (data) {
 					     var str_show="Bind successfully";
 						 UpdateBookingStatus(booking_no,"S",str_show);//修改訂單狀態為S
-						  BookingCountList--;
-                          $('#BookingCount').html(BookingCountList);
                          $('#register-guest-accordion > div:nth-child(1) > div.panel-heading > h4 > a').click();						 
                 }, error: function () {
                     layer.alert("Have not any booking was selected");
@@ -389,7 +398,10 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 success: function (data) {	
                        $('.close').click();
 						layer.msg(str_show);
-                        getBeaconList();							
+                        getBeaconList();
+						 //重新獲取房間狀態數據
+                         RegisterGuest();
+		                 doingItemsBooking();						
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }

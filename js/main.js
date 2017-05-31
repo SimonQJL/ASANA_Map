@@ -3,7 +3,7 @@ var Point_Lable = [];
 var Point_Icon = [];
 var isShowAllIcon=true;
 //var ServerUrl ="http://52.76.160.92/";
-var ServerUrl="http://localhost:80/";
+//var ServerUrl="http://localhost:80/";
 var ServerUrl ="http://10.0.0.188/";
 var testmap;
 function loadmap () {
