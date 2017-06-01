@@ -44,10 +44,7 @@
 .book-left i{width: 26px; height: 32px; line-height: 32px;font-size: 24px;color: #F0342C;}
 .arrow-right {width: 56px; height: 56px;line-height: 56px; font-size: 56px; transform: rotate(90deg);padding: 0;margin-top: 3%;	}
 .book-left,.book-right span{height: 26px;line-height:26px;}
-
-
-.alert-room-detail{ display: none;position: fixed;top: 50%; left: 50%; margin-top: -174px; margin-left: -245px;width: 490px; height: 348px;padding:0 24px; color: #812990;font-weight: bold;background-color: #fff; border-radius: 6px; border: 1px solid #812990; z-index: 111111111;box-shadow:4px 4px 10px rgba(0,0,0,0.5);box-sizing: border-box;}
-.alert-room-detail{ display: none;position: fixed;top: 50%; left: 50%; margin-top: -174px; margin-left: -245px;width: 490px; height: 348px;padding:0 24px; color: #812990;font-weight: bold;background-color: #fff; border-radius: 6px; border: 1px solid #812990; z-index: 111111111;}
+.alert-room-detail{ display: none;position: fixed;top: 50%; left: 50%; margin-top: -174px; margin-left: -245px;width:620px; height: auto;padding: 24px; color: #812990;font-weight: bold;background-color: #fff; border-radius: 6px; border: 1px solid #812990; z-index: 111111111;}
 .alert-room-detail div,span,p,i{margin: 0;padding: 0;}
 .alert-room-detail div,span,p,i{margin: 0;padding: 0;}
 

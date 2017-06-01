@@ -21,15 +21,84 @@ function loadmap () {
     });
 	//顯示房間信息
 	   map.on("click", function (e) {
-        var poi = map.getShop(e.mapPoint);
-        if (poi.name) {
-	    $('#RoomName-detail').html("Room Details:"+poi.name);
-        $('.CoverModal').show();
-	    $('.alert-room-detail').show();
-		$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});
-		return false;	
-        }
-        });
+		    var poi = map.getShop(e.mapPoint);	
+				if (poi.name){
+					$.ajax({
+					type: "Get",
+					url: ServerUrl+"room/getByRoomName",
+					dataType: "json",
+					data:{t: new Date(), roomName:poi.name},
+					success: function (data) { 
+					         if(data.length<=0){
+							   layer.msg("The Room have not any booking infomation");
+							   return false;
+							 }
+						     for(var i in data){
+								 for(var o in data[i].items){
+									  var time_length =(data[i].items[o].from_date-new Date().getTime())/1000;
+									  if(time_length<0){
+										  layer.msg("The Room have not any booking infomation");
+										  return false;
+									  }
+									  else{        
+									 getMemberinfomation(data[i],data[i].items[o]);
+									}
+								}
+							 }
+							$('#RoomName-detail').html("Room Details:"+poi.name);
+							$('.CoverModal').show();
+							$('.alert-room-detail').show();
+							$(document.body).css({"overflow-x":"hidden","overflow-y":"hidden"});	
+					}, error: function () {
+						layer.msg("The Room have not any booking infomation");
+					}
+				}); 
+			  }	  	   
+      });
+	  
+	   function getMemberinfomation(data,items){
+		$.ajax({
+                type: "Get",
+                url: ServerUrl+"guest/byCode",
+                dataType: "json",
+				data:{t: new Date(), code:data.mbr_code},
+                success: function (data) { 
+					  mbr_name=data.name;
+					  mbr_phone=data.mobile;
+					  var time_length =(items.from_date-new Date().getTime())/1000;
+					  var str_time_length=changTimetype(time_length);
+					  str_time_length=str_time_length+" later"
+					  var from_date_minutes = new Date(items.from_date).getMinutes();
+					  var to_date_minutes = new Date(items.to_date).getMinutes();
+					  var from_date_hours = new Date(items.from_date).getHours();
+					  var to_date_hours = new Date(items.from_date).getHours();
+					  if(from_date_minutes<10){
+						 from_date_minutes="0"+from_date_minutes.toString();
+					  }
+					  if(to_date_minutes<10){
+						 to_date_minutes="0"+to_date_minutes.toString();
+					  }
+                      $('#RoomBoodkingDetails').append('<div class=" Bookingitems event col-lg-12"><div class="col-lg-3"><span class="col-lg-12">'+from_date_hours+':'+from_date_minutes+'</span><span class="col-lg-12">'+from_date_hours+':'+to_date_minutes+'</span><span class="time-his col-lg-12">'+str_time_length+'</span></div><div class="col-lg-6"><span class="col-lg-12">'+items.item_name+'</span><span class="col-lg-12">'+items.staff_name+'</span><span class="col-lg-12">Machine:Trearment Machine</span></div><i style="color: transparent;" class="col-lg-1 fa fa-trophy" aria-hidden="true"></i><div class="col-lg-2"> <span class="col-lg-12">'+mbr_name+'</span><span class="col-lg-12">'+mbr_phone+'</span></div></div>')
+					   
+                }, error: function () {
+                    layer.msg("cann't find the member information");
+                }
+            }); 
+       }
+	  	   //轉換時間格式
+    function changTimetype(time_length){
+	      var time_str;
+	      if(time_length>60&&time_length<3600){
+			 time_str = (time_length/60).toFixed(0)+"m"//分
+		 }	
+         else if(time_length>3600){
+			 time_str = (time_length/3600).toFixed(1)+"h"//小時
+		 }	
+         else{
+             time_str = (time_length).toFixed(0)+"s"//秒
+		 }
+		 return time_str;
+   }
 
     //由于地图数据使用了异步加载，为避免出错请把所有的逻辑放在 mapready 事件内
     map.on("mapready", function (e) {
@@ -278,6 +347,7 @@ function loadmap () {
 	//關閉彈窗
 	$('.btn_Close').on('click',
 	function(){
+		$('#RoomBoodkingDetails .Bookingitems').remove();
 		$('.CoverModal').hide();
 		$('.roomInfomationModal').hide();
 		$('.customerInfomationModal').hide();

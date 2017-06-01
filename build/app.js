@@ -2410,14 +2410,14 @@ $templateCache.put("app/dashboard/chat/directives/aside-chat-widget.tpl.html","<
 $templateCache.put("app/dashboard/chat/directives/chat-users.tpl.html","<div id=\"chat-container\" ng-class=\"{open: open}\">\n    <span class=\"chat-list-open-close\" ng-click=\"openToggle()\"><i class=\"fa fa-user\"></i><b>!</b></span>\n\n    <div class=\"chat-list-body custom-scroll\">\n        <ul id=\"chat-users\">\n            <li ng-repeat=\"chatUser in chatUsers | filter: chatUserFilter\">\n                <a ng-click=\"messageTo(chatUser)\"><img ng-src=\"{{chatUser.picture}}\">{{chatUser.username}} <span\n                        class=\"badge badge-inverse\">{{chatUser.username.length}}</span><span class=\"state\"><i\n                        class=\"fa fa-circle txt-color-green pull-right\"></i></span></a>\n            </li>\n        </ul>\n    </div>\n    <div class=\"chat-list-footer\">\n        <div class=\"control-group\">\n            <form class=\"smart-form\">\n                <section>\n                    <label class=\"input\" >\n                        <input type=\"text\" ng-model=\"chatUserFilter\" id=\"filter-chat-list\" placeholder=\"Filter\">\n                    </label>\n                </section>\n            </form>\n        </div>\n    </div>\n</div>");
 $templateCache.put("app/dashboard/chat/directives/chat-widget.tpl.html","<div id=\"chat-widget\" jarvis-widget data-widget-color=\"blueDark\" data-widget-editbutton=\"false\"\n     data-widget-fullscreenbutton=\"false\">\n\n\n    <header>\n        <span class=\"widget-icon\"> <i class=\"fa fa-comments txt-color-white\"></i> </span>\n\n        <h2> SmartMessage </h2>\n\n        <div class=\"widget-toolbar\">\n            <!-- add: non-hidden - to disable auto hide -->\n\n            <div class=\"btn-group\" data-dropdown>\n                <button class=\"btn dropdown-toggle btn-xs btn-success\" data-toggle=\"dropdown\">\n                    Status <i class=\"fa fa-caret-down\"></i>\n                </button>\n                <ul class=\"dropdown-menu pull-right js-status-update\">\n                    <li>\n                        <a href-void><i class=\"fa fa-circle txt-color-green\"></i> Online</a>\n                    </li>\n                    <li>\n                        <a href-void><i class=\"fa fa-circle txt-color-red\"></i> Busy</a>\n                    </li>\n                    <li>\n                        <a href-void><i class=\"fa fa-circle txt-color-orange\"></i> Away</a>\n                    </li>\n                    <li class=\"divider\"></li>\n                    <li>\n                        <a href-void><i class=\"fa fa-power-off\"></i> Log Off</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </header>\n\n    <!-- widget div-->\n    <div>\n        <div class=\"widget-body widget-hide-overflow no-padding\">\n            <!-- content goes here -->\n\n            <chat-users></chat-users>\n\n            <!-- CHAT BODY -->\n            <div id=\"chat-body\" class=\"chat-body custom-scroll\">\n                <ul>\n                    <li class=\"message\" ng-repeat=\"message in chatMessages\">\n                        <img class=\"message-picture online\" ng-src=\"{{message.user.picture}}\">\n\n                        <div class=\"message-text\">\n                            <time>\n                                {{message.date | date }}\n                            </time>\n                            <a ng-click=\"messageTo(message.user)\" class=\"username\">{{message.user.username}}</a>\n                            <div ng-bind-html=\"message.body\"></div>\n\n                        </div>\n                    </li>\n                </ul>\n            </div>\n\n            <!-- CHAT FOOTER -->\n            <div class=\"chat-footer\">\n\n                <!-- CHAT TEXTAREA -->\n                <div class=\"textarea-div\">\n\n                    <div class=\"typearea\">\n                        <textarea placeholder=\"Write a reply...\" id=\"textarea-expand\"\n                                  class=\"custom-scroll\" ng-model=\"newMessage\"></textarea>\n                    </div>\n\n                </div>\n\n                <!-- CHAT REPLY/SEND -->\n											<span class=\"textarea-controls\">\n												<button class=\"btn btn-sm btn-primary pull-right\" ng-click=\"sendMessage()\">\n                                                    Reply\n                                                </button> <span class=\"pull-right smart-form\"\n                                                                style=\"margin-top: 3px; margin-right: 10px;\"> <label\n                                                    class=\"checkbox pull-right\">\n                                                <input type=\"checkbox\" name=\"subscription\" id=\"subscription\">\n                                                <i></i>Press <strong> ENTER </strong> to send </label> </span> <a\n                                                    href-void class=\"pull-left\"><i\n                                                    class=\"fa fa-camera fa-fw fa-lg\"></i></a> </span>\n\n            </div>\n\n            <!-- end content -->\n        </div>\n\n    </div>\n    <!-- end widget div -->\n</div>");
 $templateCache.put("app/dashboard/todo/directives/todo-list.tpl.html","<div>\n    <h5 class=\"todo-group-title\"><i class=\"fa fa-{{icon}}\"></i> {{title}} (\n        <small class=\"num-of-tasks\">{{scopeItems.length}}</small>\n        )\n    </h5>\n    <ul class=\"todo\">\n        <li ng-class=\"{complete: todo.completedAt}\" ng-repeat=\"todo in todos | orderBy: todo._id | filter: filter  track by todo._id\" >\n    	<span class=\"handle\"> <label class=\"checkbox\">\n            <input type=\"checkbox\" ng-click=\"todo.toggle()\" ng-checked=\"todo.completedAt\"\n                   name=\"checkbox-inline\">\n            <i></i> </label> </span>\n\n            <p>\n                <strong>Ticket #{{$index + 1}}</strong> - {{todo.title}}\n                <span class=\"text-muted\" ng-if=\"todo.description\">{{todo.description}}</span>\n                <span class=\"date\">{{todo.createdAt | date}} &dash; <a ng-click=\"deleteTodo(todo)\" class=\"text-muted\"><i\n                        class=\"fa fa-trash\"></i></a></span>\n\n            </p>\n        </li>\n    </ul>\n</div>");
+$templateCache.put("app/_common/layout/directives/demo/demo-states.tpl.html","<div class=\"demo\"><span id=\"demo-setting\"><i class=\"fa fa-cog txt-color-blueDark\"></i></span>\n\n    <form>\n        <legend class=\"no-padding margin-bottom-10\">Layout Options</legend>\n        <section>\n            <label><input type=\"checkbox\" ng-model=\"fixedHeader\"\n                          class=\"checkbox style-0\"><span>Fixed Header</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"fixedNavigation\"\n                          class=\"checkbox style-0\"><span>Fixed Navigation</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"fixedRibbon\"\n                          class=\"checkbox style-0\"><span>Fixed Ribbon</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"fixedPageFooter\"\n                          class=\"checkbox style-0\"><span>Fixed Footer</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"insideContainer\"\n                          class=\"checkbox style-0\"><span>Inside <b>.container</b></span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"rtl\"\n                          class=\"checkbox style-0\"><span>RTL</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"menuOnTop\"\n                          class=\"checkbox style-0\"><span>Menu on <b>top</b></span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"colorblindFriendly\"\n                          class=\"checkbox style-0\"><span>For Colorblind <div\n                    class=\"font-xs text-right\">(experimental)\n            </div></span>\n            </label><span id=\"smart-bgimages\"></span></section>\n        <section><h6 class=\"margin-top-10 semi-bold margin-bottom-5\">Clear Localstorage</h6><a\n                ng-click=\"factoryReset()\" class=\"btn btn-xs btn-block btn-primary\" id=\"reset-smart-widget\"><i\n                class=\"fa fa-refresh\"></i> Factory Reset</a></section>\n\n        <h6 class=\"margin-top-10 semi-bold margin-bottom-5\">SmartAdmin Skins</h6>\n\n\n        <section id=\"smart-styles\">\n            <a ng-repeat=\"skin in skins\" ng-click=\"setSkin(skin)\" class=\"{{skin.class}}\" style=\"{{skin.style}}\"><i ng-if=\"skin.name == $parent.smartSkin\" class=\"fa fa-check fa-fw\"></i> {{skin.label}} <sup ng-if=\"skin.beta\">beta</sup></a>\n        </section>\n    </form>\n</div>");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-attribute-form.tpl.html","<form id=\"attributeForm\" class=\"form-horizontal\"\n      data-bv-message=\"This value is not valid\"\n      data-bv-feedbackicons-valid=\"glyphicon glyphicon-ok\"\n      data-bv-feedbackicons-invalid=\"glyphicon glyphicon-remove\"\n      data-bv-feedbackicons-validating=\"glyphicon glyphicon-refresh\">\n\n    <fieldset>\n        <legend>\n            Set validator options via HTML attributes\n        </legend>\n\n        <div class=\"alert alert-warning\">\n            <code>&lt; input\n                data-bv-validatorname\n                data-bv-validatorname-validatoroption=\"...\" / &gt;</code>\n\n            <br>\n            <br>\n            More validator options can be found here:\n            <a href=\"http://bootstrapvalidator.com/validators/\" target=\"_blank\">http://bootstrapvalidator.com/validators/</a>\n        </div>\n\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Full name</label>\n            <div class=\"col-lg-4\">\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\"\n                       data-bv-notempty=\"true\"\n                       data-bv-notempty-message=\"The first name is required and cannot be empty\" />\n            </div>\n            <div class=\"col-lg-4\">\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\"\n                       data-bv-notempty=\"true\"\n                       data-bv-notempty-message=\"The last name is required and cannot be empty\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Username</label>\n            <div class=\"col-lg-5\">\n                <input type=\"text\" class=\"form-control\" name=\"username\"\n                       data-bv-message=\"The username is not valid\"\n\n                       data-bv-notempty=\"true\"\n                       data-bv-notempty-message=\"The username is required and cannot be empty\"\n\n                       data-bv-regexp=\"true\"\n                       data-bv-regexp-regexp=\"^[a-zA-Z0-9_\\.]+$\"\n                       data-bv-regexp-message=\"The username can only consist of alphabetical, number, dot and underscore\"\n\n                       data-bv-stringlength=\"true\"\n                       data-bv-stringlength-min=\"6\"\n                       data-bv-stringlength-max=\"30\"\n                       data-bv-stringlength-message=\"The username must be more than 6 and less than 30 characters long\"\n\n                       data-bv-different=\"true\"\n                       data-bv-different-field=\"password\"\n                       data-bv-different-message=\"The username and password cannot be the same as each other\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Email address</label>\n            <div class=\"col-lg-5\">\n                <input class=\"form-control\" name=\"email\" type=\"email\"\n                       data-bv-emailaddress=\"true\"\n                       data-bv-emailaddress-message=\"The input is not a valid email address\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Password</label>\n            <div class=\"col-lg-5\">\n                <input type=\"password\" class=\"form-control\" name=\"password\"\n                       data-bv-notempty=\"true\"\n                       data-bv-notempty-message=\"The password is required and cannot be empty\"\n\n                       data-bv-identical=\"true\"\n                       data-bv-identical-field=\"confirmPassword\"\n                       data-bv-identical-message=\"The password and its confirm are not the same\"\n\n                       data-bv-different=\"true\"\n                       data-bv-different-field=\"username\"\n                       data-bv-different-message=\"The password cannot be the same as username\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Retype password</label>\n            <div class=\"col-lg-5\">\n                <input type=\"password\" class=\"form-control\" name=\"confirmPassword\"\n                       data-bv-notempty=\"true\"\n                       data-bv-notempty-message=\"The confirm password is required and cannot be empty\"\n\n                       data-bv-identical=\"true\"\n                       data-bv-identical-field=\"password\"\n                       data-bv-identical-message=\"The password and its confirm are not the same\"\n\n                       data-bv-different=\"true\"\n                       data-bv-different-field=\"username\"\n                       data-bv-different-message=\"The password cannot be the same as username\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Languages</label>\n            <div class=\"col-lg-5\">\n                <div class=\"checkbox\">\n                    <label>\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"english\"\n                               data-bv-message=\"Please specify at least one language you can speak\"\n                               data-bv-notempty=\"true\" />\n                        English </label>\n                </div>\n                <div class=\"checkbox\">\n                    <label>\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"french\" />\n                        French </label>\n                </div>\n                <div class=\"checkbox\">\n                    <label>\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"german\" />\n                        German </label>\n                </div>\n                <div class=\"checkbox\">\n                    <label>\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"russian\" />\n                        Russian </label>\n                </div>\n                <div class=\"checkbox\">\n                    <label>\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"other\" />\n                        Other </label>\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n\n</form>\n     ");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-button-group-form.tpl.html","<form id=\"buttonGroupForm\" method=\"post\" class=\"form-horizontal\">\n\n    <fieldset>\n        <legend>\n            Default Form Elements\n        </legend>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Gender</label>\n            <div class=\"col-lg-9\">\n                <div class=\"btn-group\" data-toggle=\"buttons\">\n                    <label class=\"btn btn-default\">\n                        <input type=\"radio\" name=\"gender\" value=\"male\" />\n                        Male </label>\n                    <label class=\"btn btn-default\">\n                        <input type=\"radio\" name=\"gender\" value=\"female\" />\n                        Female </label>\n                    <label class=\"btn btn-default\">\n                        <input type=\"radio\" name=\"gender\" value=\"other\" />\n                        Other </label>\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Languages</label>\n            <div class=\"col-lg-9\">\n                <div class=\"btn-group\" data-toggle=\"buttons\">\n                    <label class=\"btn btn-default\">\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"english\" />\n                        English </label>\n                    <label class=\"btn btn-default\">\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"german\" />\n                        German </label>\n                    <label class=\"btn btn-default\">\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"french\" />\n                        French </label>\n                    <label class=\"btn btn-default\">\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"russian\" />\n                        Russian </label>\n                    <label class=\"btn btn-default\">\n                        <input type=\"checkbox\" name=\"languages[]\" value=\"italian\">\n                        Italian </label>\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n\n</form>\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-contact-form.tpl.html","<form id=\"contactForm\" method=\"post\" class=\"form-horizontal\">\n\n    <fieldset>\n        <legend>Showing messages in custom area</legend>\n        <div class=\"form-group\">\n            <label class=\"col-md-3 control-label\">Full name</label>\n            <div class=\"col-md-6\">\n                <input type=\"text\" class=\"form-control\" name=\"fullName\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-md-3 control-label\">Email</label>\n            <div class=\"col-md-6\">\n                <input type=\"text\" class=\"form-control\" name=\"email\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-md-3 control-label\">Title</label>\n            <div class=\"col-md-6\">\n                <input type=\"text\" class=\"form-control\" name=\"title\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-md-3 control-label\">Content</label>\n            <div class=\"col-md-6\">\n                <textarea class=\"form-control\" name=\"content\" rows=\"5\"></textarea>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <!-- #messages is where the messages are placed inside -->\n        <div class=\"form-group\">\n            <div class=\"col-md-9 col-md-offset-3\">\n                <div id=\"messages\"></div>\n            </div>\n        </div>\n    </fieldset>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n\n</form>\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-movie-form.tpl.html","\n<form id=\"movieForm\" method=\"post\">\n\n    <fieldset>\n        <legend>\n            Default Form Elements\n        </legend>\n        <div class=\"form-group\">\n            <div class=\"row\">\n                <div class=\"col-md-8\">\n                    <label class=\"control-label\">Movie title</label>\n                    <input type=\"text\" class=\"form-control\" name=\"title\" />\n                </div>\n\n                <div class=\"col-md-4 selectContainer\">\n                    <label class=\"control-label\">Genre</label>\n                    <select class=\"form-control\" name=\"genre\">\n                        <option value=\"\">Choose a genre</option>\n                        <option value=\"action\">Action</option>\n                        <option value=\"comedy\">Comedy</option>\n                        <option value=\"horror\">Horror</option>\n                        <option value=\"romance\">Romance</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <div class=\"row\">\n                <div class=\"col-sm-12 col-md-4\">\n                    <label class=\"control-label\">Director</label>\n                    <input type=\"text\" class=\"form-control\" name=\"director\" />\n                </div>\n\n                <div class=\"col-sm-12 col-md-4\">\n                    <label class=\"control-label\">Writer</label>\n                    <input type=\"text\" class=\"form-control\" name=\"writer\" />\n                </div>\n\n                <div class=\"col-sm-12 col-md-4\">\n                    <label class=\"control-label\">Producer</label>\n                    <input type=\"text\" class=\"form-control\" name=\"producer\" />\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <div class=\"row\">\n                <div class=\"col-sm-12 col-md-6\">\n                    <label class=\"control-label\">Website</label>\n                    <input type=\"text\" class=\"form-control\" name=\"website\" />\n                </div>\n\n                <div class=\"col-sm-12 col-md-6\">\n                    <label class=\"control-label\">Youtube trailer</label>\n                    <input type=\"text\" class=\"form-control\" name=\"trailer\" />\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"control-label\">Review</label>\n            <textarea class=\"form-control\" name=\"review\" rows=\"8\"></textarea>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n\n            <div class=\"row\">\n                <div class=\"col-sm-12 col-md-12\">\n                    <label class=\"control-label\">Rating</label>\n                </div>\n\n                <div class=\"col-sm-12 col-md-10\">\n\n                    <label class=\"radio radio-inline no-margin\">\n                        <input type=\"radio\" name=\"rating\" value=\"terrible\" class=\"radiobox style-2\" />\n                        <span>Terrible</span> </label>\n\n                    <label class=\"radio radio-inline\">\n                        <input type=\"radio\" name=\"rating\" value=\"watchable\" class=\"radiobox style-2\" />\n                        <span>Watchable</span> </label>\n                    <label class=\"radio radio-inline\">\n                        <input type=\"radio\" name=\"rating\" value=\"best\" class=\"radiobox style-2\" />\n                        <span>Best ever</span> </label>\n\n                </div>\n\n            </div>\n\n        </div>\n    </fieldset>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n\n</form>\n\n ");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-product-form.tpl.html","<form id=\"productForm\" class=\"form-horizontal\">\n\n    <fieldset>\n        <legend>\n            Default Form Elements\n        </legend>\n        <div class=\"form-group\">\n            <label class=\"col-xs-2 col-lg-3 control-label\">Price</label>\n            <div class=\"col-xs-9 col-lg-6 inputGroupContainer\">\n                <div class=\"input-group\">\n                    <input type=\"text\" class=\"form-control\" name=\"price\" />\n                    <span class=\"input-group-addon\">$</span>\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-xs-2 col-lg-3 control-label\">Amount</label>\n            <div class=\"col-xs-9 col-lg-6 inputGroupContainer\">\n                <div class=\"input-group\">\n                    <span class=\"input-group-addon\">&#8364;</span>\n                    <input type=\"text\" class=\"form-control\" name=\"amount\" />\n                </div>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-xs-2 col-lg-3 control-label\">Color</label>\n            <div class=\"col-xs-9 col-lg-6 selectContainer\">\n                <select class=\"form-control\" name=\"color\">\n                    <option value=\"\">Choose a color</option>\n                    <option value=\"blue\">Blue</option>\n                    <option value=\"green\">Green</option>\n                    <option value=\"red\">Red</option>\n                    <option value=\"yellow\">Yellow</option>\n                    <option value=\"white\">White</option>\n                </select>\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-xs-2 col-lg-3 control-label\">Size</label>\n            <div class=\"col-xs-9 col-lg-6 selectContainer\">\n                <select class=\"form-control\" name=\"size\">\n                    <option value=\"\">Choose a size</option>\n                    <option value=\"S\">S</option>\n                    <option value=\"M\">M</option>\n                    <option value=\"L\">L</option>\n                    <option value=\"XL\">XL</option>\n                </select>\n            </div>\n        </div>\n    </fieldset>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n</form>\n\n");
 $templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-profile-form.tpl.html","<form id=\"profileForm\">\n\n    <fieldset>\n        <legend>\n            Default Form Elements\n        </legend>\n        <div class=\"form-group\">\n            <label>Email address</label>\n            <input type=\"text\" class=\"form-control\" name=\"email\" />\n        </div>\n    </fieldset>\n    <fieldset>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\" />\n        </div>\n    </fieldset>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n</form>\n");
-$templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-toggling-form.tpl.html","<form id=\"togglingForm\" method=\"post\" class=\"form-horizontal\">\n\n    <fieldset>\n        <legend>\n            Default Form Elements\n        </legend>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Full name <sup>*</sup></label>\n            <div class=\"col-lg-4\">\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\" />\n            </div>\n            <div class=\"col-lg-4\">\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Company <sup>*</sup></label>\n            <div class=\"col-lg-5\">\n                <input type=\"text\" class=\"form-control\" name=\"company\"\n                       required data-bv-notempty-message=\"The company name is required\" />\n            </div>\n            <div class=\"col-lg-2\">\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#jobInfo\">\n                    Add more info\n                </button>\n            </div>\n        </div>\n    </fieldset>\n\n    <!-- These fields will not be validated as long as they are not visible -->\n    <div id=\"jobInfo\" style=\"display: none;\">\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Job title <sup>*</sup></label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"job\" />\n                </div>\n            </div>\n        </fieldset>\n\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Department <sup>*</sup></label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"department\" />\n                </div>\n            </div>\n        </fieldset>\n    </div>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Mobile phone <sup>*</sup></label>\n            <div class=\"col-lg-5\">\n                <input type=\"text\" class=\"form-control\" name=\"mobilePhone\" />\n            </div>\n            <div class=\"col-lg-2\">\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#phoneInfo\">\n                    Add more phone numbers\n                </button>\n            </div>\n        </div>\n    </fieldset>\n    <!-- These fields will not be validated as long as they are not visible -->\n    <div id=\"phoneInfo\" style=\"display: none;\">\n\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Home phone</label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"homePhone\" />\n                </div>\n            </div>\n        </fieldset>\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Office phone</label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"officePhone\" />\n                </div>\n            </div>\n        </fieldset>\n    </div>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n</form>");
-$templateCache.put("app/_common/layout/directives/demo/demo-states.tpl.html","<div class=\"demo\"><span id=\"demo-setting\"><i class=\"fa fa-cog txt-color-blueDark\"></i></span>\n\n    <form>\n        <legend class=\"no-padding margin-bottom-10\">Layout Options</legend>\n        <section>\n            <label><input type=\"checkbox\" ng-model=\"fixedHeader\"\n                          class=\"checkbox style-0\"><span>Fixed Header</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"fixedNavigation\"\n                          class=\"checkbox style-0\"><span>Fixed Navigation</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"fixedRibbon\"\n                          class=\"checkbox style-0\"><span>Fixed Ribbon</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"fixedPageFooter\"\n                          class=\"checkbox style-0\"><span>Fixed Footer</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"insideContainer\"\n                          class=\"checkbox style-0\"><span>Inside <b>.container</b></span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"rtl\"\n                          class=\"checkbox style-0\"><span>RTL</span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"menuOnTop\"\n                          class=\"checkbox style-0\"><span>Menu on <b>top</b></span></label>\n            <label><input type=\"checkbox\"\n                          ng-model=\"colorblindFriendly\"\n                          class=\"checkbox style-0\"><span>For Colorblind <div\n                    class=\"font-xs text-right\">(experimental)\n            </div></span>\n            </label><span id=\"smart-bgimages\"></span></section>\n        <section><h6 class=\"margin-top-10 semi-bold margin-bottom-5\">Clear Localstorage</h6><a\n                ng-click=\"factoryReset()\" class=\"btn btn-xs btn-block btn-primary\" id=\"reset-smart-widget\"><i\n                class=\"fa fa-refresh\"></i> Factory Reset</a></section>\n\n        <h6 class=\"margin-top-10 semi-bold margin-bottom-5\">SmartAdmin Skins</h6>\n\n\n        <section id=\"smart-styles\">\n            <a ng-repeat=\"skin in skins\" ng-click=\"setSkin(skin)\" class=\"{{skin.class}}\" style=\"{{skin.style}}\"><i ng-if=\"skin.name == $parent.smartSkin\" class=\"fa fa-check fa-fw\"></i> {{skin.label}} <sup ng-if=\"skin.beta\">beta</sup></a>\n        </section>\n    </form>\n</div>");}]);
+$templateCache.put("app/_common/forms/directives/bootstrap-validation/bootstrap-toggling-form.tpl.html","<form id=\"togglingForm\" method=\"post\" class=\"form-horizontal\">\n\n    <fieldset>\n        <legend>\n            Default Form Elements\n        </legend>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Full name <sup>*</sup></label>\n            <div class=\"col-lg-4\">\n                <input type=\"text\" class=\"form-control\" name=\"firstName\" placeholder=\"First name\" />\n            </div>\n            <div class=\"col-lg-4\">\n                <input type=\"text\" class=\"form-control\" name=\"lastName\" placeholder=\"Last name\" />\n            </div>\n        </div>\n    </fieldset>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Company <sup>*</sup></label>\n            <div class=\"col-lg-5\">\n                <input type=\"text\" class=\"form-control\" name=\"company\"\n                       required data-bv-notempty-message=\"The company name is required\" />\n            </div>\n            <div class=\"col-lg-2\">\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#jobInfo\">\n                    Add more info\n                </button>\n            </div>\n        </div>\n    </fieldset>\n\n    <!-- These fields will not be validated as long as they are not visible -->\n    <div id=\"jobInfo\" style=\"display: none;\">\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Job title <sup>*</sup></label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"job\" />\n                </div>\n            </div>\n        </fieldset>\n\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Department <sup>*</sup></label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"department\" />\n                </div>\n            </div>\n        </fieldset>\n    </div>\n\n    <fieldset>\n        <div class=\"form-group\">\n            <label class=\"col-lg-3 control-label\">Mobile phone <sup>*</sup></label>\n            <div class=\"col-lg-5\">\n                <input type=\"text\" class=\"form-control\" name=\"mobilePhone\" />\n            </div>\n            <div class=\"col-lg-2\">\n                <button type=\"button\" class=\"btn btn-info btn-sm\" data-toggle=\"#phoneInfo\">\n                    Add more phone numbers\n                </button>\n            </div>\n        </div>\n    </fieldset>\n    <!-- These fields will not be validated as long as they are not visible -->\n    <div id=\"phoneInfo\" style=\"display: none;\">\n\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Home phone</label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"homePhone\" />\n                </div>\n            </div>\n        </fieldset>\n        <fieldset>\n            <div class=\"form-group\">\n                <label class=\"col-lg-3 control-label\">Office phone</label>\n                <div class=\"col-lg-5\">\n                    <input type=\"text\" class=\"form-control\" name=\"officePhone\" />\n                </div>\n            </div>\n        </fieldset>\n    </div>\n\n    <div class=\"form-actions\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-default\" type=\"submit\">\n                    <i class=\"fa fa-eye\"></i>\n                    Validate\n                </button>\n            </div>\n        </div>\n    </div>\n</form>");}]);
 "use strict";
 
 angular.module('app.auth').controller('LoginCtrl', function ($scope, $state, GooglePlus, User, ezfb) {
@@ -3791,7 +3791,7 @@ angular.module('app').directive('toggleShortcut', function($log,$timeout) {
 	'rm39','rm40','rm41','rm42','rm43','rm44','rm45','rm46','rm47','rm48','rm49','rm50','rm51','rm52','rm53','rm54','rm55','rm56'];//AVAILABLEROOM
 angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($scope) {
     //Change status button color in map filter
-    $scope.selectStatus = function() {
+         $scope.selectStatus = function() {
 		 //獲取所有beacon
 		 getBeaconList();
 		 //綁定手環
@@ -3799,8 +3799,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
          $scope.occupiedRmCount = OccupiedRmList.length;
 		 $scope.availableRmCount=availableRmList.length;
 		 $scope.notavailableRmCount=0;
-		RegisterGuest();
-		doingItemsBooking();
+		 changeallstatusdata();
 	 	$('#btn_SendGuestInfomation').on('click',function(){RegisterCustomerInfomation();});
 		$('#btn_RegisterGuest').on('click',RegisterGuest);
 	     //解除綁定
@@ -3831,7 +3830,11 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
     });
 
      //search record data
-
+   function changeallstatusdata(){
+     RegisterGuest();
+	 doingItemsBooking();
+   }
+	 
    function RegisterGuest(event){
 		$.ajax({
                 type: "Get",
@@ -3839,10 +3842,11 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 dataType: "json",
 				data:{ t: new Date(),status:"M"},
                 success: function (records) {
+					ConfirmedBkRoomList.length=0;
 					 for(var i in records){
 					 getTimeLength(records[i])
 				     getMember(records[i],"M");
-				   	} 
+				   	} 			 
 				 $scope.booking = records;
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
@@ -3850,6 +3854,33 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
             });
 			// return false;
    }
+	
+		   //查詢正在進行的訂單
+	
+	$('#btn_CheckoutGuest').click(function(){
+		doingItemsBooking();
+	});
+    
+	function doingItemsBooking(){
+		$.ajax({
+                type: "Get",
+                url: ServerUrl+"booking/listByStatus",
+                dataType: "json",
+				data:{ t: new Date(),status:"S"},
+                success: function (data) {
+				 OccupiedRmList.length =0;
+				 if(data.length<=0){
+				 CalculateavailableRm();
+				 }
+			     for(var i in data){
+				   getMember(data[i],"S");
+				   	}   
+				 $scope.booking_finish =data;
+                }, error: function () {
+                    layer.alert("The system is busy. Please try again later");
+                }
+            });
+	}
 	
 	function getTimeLength(records){
 	  for(var o in records.items){
@@ -3869,71 +3900,55 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 	  } 
 	}
 	
-    function getMember(records,type){
+ function getMember(records,type){
 		$.ajax({
                 type: "Get",
-                url: ServerUrl+"guest/byID",
+                url: ServerUrl+"guest/byCode",
                 dataType: "json",
-				data:{t: new Date(), ID:records.mbr_code},
+				data:{t: new Date(), code:records.mbr_code},
                 success: function (data) { 
 					   records.mbr_name=data.name;
 					   records.mbr_phone=data.mobile;
                        for(var o in records.items){					   
-					   getRoomName(records.items[o],type);
+						  var roomnamelist="";
+					      for(var i in records.items[o].room_id){
+							    roomnamelist=roomnamelist+","+records.items[o].room_id[i]
+							 }
+						  records.items[o].room_name=roomnamelist.replace(",","");
+						  getRoomName(records.items[o],type);
 					   }					   
                 }, error: function () {
                     layer.alert("cann't find the member information");
                 }
             }); 
        }
-	   	 function getRoomName(records,type){			 
-				  $.ajax({
-					type: "Get",
-					url: ServerUrl+"room/getById",
-					dataType: "json",
-					data:{id:records.room_id[0]},
-					success: function (data) { 
-							 records.room_name=data.name;
-							 if(type=="M"){
-								 if(ConfirmedBkRoomList.indexOf(records.room_name.toLowerCase())==-1){
-								 ConfirmedBkRoomList.push(records.room_name.toLowerCase());
-								 }
-                                  $scope.confirmedRmCount=ConfirmedBkRoomList.length;								 
-							 }
-							 else{
-							   if(OccupiedRmList.indexOf(records.room_name.toLowerCase())==-1){
-								 OccupiedRmList.push(records.room_name.toLowerCase());
-								 }
-                               $scope.occupiedRmCount=OccupiedRmList.length;							 
-							 }
-                             CalculateavailableRm();//過濾房間類型的房間名字							 
-					}, error: function () {
-					}
-				});  
+	   	 function getRoomName(records,type){
+                 for(var i in records.room_id){	
+                 var mapRoomName=records.room_id[i].toLowerCase();
+				 if(mapRoomName.indexOf('v')!=-1){
+					mapRoomName=mapRoomName.replace(0,"_rm");
+					mapRoomName=mapRoomName.replace('a','');
+				    mapRoomName=mapRoomName.replace('b','');
+				 }
+				 else{
+              	    mapRoomName=mapRoomName.replace(0,"");	
+				 }				 
+				 if(type=="M"){
+					 if(ConfirmedBkRoomList.indexOf(mapRoomName)==-1){
+					  ConfirmedBkRoomList.push(mapRoomName);
+					 }
+					  $scope.confirmedRmCount=ConfirmedBkRoomList.length;								 
+				 }
+				 else{
+				   if(OccupiedRmList.indexOf(mapRoomName)==-1){
+					  OccupiedRmList.push(mapRoomName);
+					 }
+				   $scope.occupiedRmCount=OccupiedRmList.length;							 
+				 }	
+				}
+				CalculateavailableRm();//過濾房間類型的房間名字	 
 		 }
 	   
-	   //查詢正在進行的訂單
-	
-	$('#btn_CheckoutGuest').click(function(){
-		doingItemsBooking();
-	});
-    
-	function doingItemsBooking(){
-		$.ajax({
-                type: "Get",
-                url: ServerUrl+"booking/listByStatus",
-                dataType: "json",
-				data:{ t: new Date(),status:"S"},
-                success: function (data) {
-			     for(var i in data){
-				   getMember(data[i],"S");
-				   	}   
-				 $scope.booking_finish =data;
-                }, error: function () {
-                    layer.alert("The system is busy. Please try again later");
-                }
-            });
-	}
     //Display different color according to member's grading
     // $scope.gradingClass = function(record) {
         // switch (record.customer.mbr_group) {
@@ -4027,13 +4042,17 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
   
   //Room type data
 	 function CalculateavailableRm(){
+		   availableRmList= ['vip_rm1','vip_rm2','vip_rm3','vip_rm4','vip_rm5','vvip_rm1','vvip_rm2', 'vvip_rm3', 'vvip_rm4', 'vvip_rm5','vvip_rm6',
+			'vvip_rm7','vvip_rm8','vvip_rm9','rm1','rm2','rm3','rm4','rm5','rm6','rm7','rm8','rm9','rm10','rm11','rm12','rm13','rm14','rm15','rm16','rm17',
+			'rm18','rm19','rm20','rm21','rm22','rm23','rm24','rm25','rm26','rm27','rm28','rm29','rm30','rm31','rm32','rm33','rm34','rm35','rm36','rm37','rm38',
+			'rm39','rm40','rm41','rm42','rm43','rm44','rm45','rm46','rm47','rm48','rm49','rm50','rm51','rm52','rm53','rm54','rm55','rm56'];
 		 Removeroomname(ConfirmedBkRoomList);
 		 Removeroomname(OccupiedRmList);
 		 Removeroomname(notAvailableRmList);
-		 $scope.confirmedBkCount = ConfirmedBkRoomList;
-         $scope.occupiedRmCount = OccupiedRmList;
+		 $scope.confirmedBkCount = ConfirmedBkRoomList.length;
+         $scope.occupiedRmCount = OccupiedRmList.length;
 		 $scope.availableRmCount=availableRmList.length;
-		 $scope.notavailableRmCount=0;
+		 $scope.notavailableRmCount=notAvailableRmList.length;
 		 //$scope.notavailableRmCount=notavailableRmList.length;
 	 }
 	 function Removeroomname(list){
@@ -4045,16 +4064,16 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 	 }
     //Show selected room type
     $scope.showOccupied = function() {
-        $('#' + $scope.occupiedRm.join(',#')).toggleClass('rmOccupied-sel');
+        $('#' + OccupiedRmList.join(',#')).toggleClass('rmOccupied-sel');
     }
     $scope.showConfirmed = function() {
-        $('#' + $scope.confirmedBk.join(',#')).toggleClass('rmConfirmed-sel');
+        $('#' + ConfirmedBkRoomList.join(',#')).toggleClass('rmConfirmed-sel');
     }
     $scope.showAvailableRm = function() {
-        $('#' + $scope.availableRmCount.join(',#')).toggleClass('rmAvailable-sel');
+        $('#' + availableRmList.join(',#')).toggleClass('rmAvailable-sel');
     }
     $scope.showNotAvailableRm = function() {
-        $('#' + $scope.notAvailableRm.join(',#')).toggleClass('rmNotAvailable-sel');
+        $('#' + notAvailableRmList.join(',#')).toggleClass('rmNotAvailable-sel');
     }
 
     //Toggle collapse
@@ -4104,7 +4123,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 				 unbind_beacon_list.length=0;
 				 bind_beacon_list.length=0;
                  for(var i in data){
-					  console.log(data[i]);
 					  if(data[i].bind_staff_id==null||data[i].bind_staff_id==""){
 							if(!data[i].bind_guest_id){ 
 							  unbind_beacon_list.push(data[i]);
@@ -4128,7 +4146,6 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 	    var memberID = $('#member_id').attr("o-data-id");
 		var cbID = $('#select-hb option:selected').html();
 		var booking_no =$('#booking_no').attr("o-data-id");
-		getBeaconList();
        $.ajax({
                 type: "Post",
                 url: ServerUrl+"beacon/association",
@@ -4137,7 +4154,9 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 success: function (data) {
 					     var str_show="Bind successfully";
 						 UpdateBookingStatus(booking_no,"S",str_show);//修改訂單狀態為S
-                         $('#register-guest-accordion > div:nth-child(1) > div.panel-heading > h4 > a').click();						 
+                         $('#register-guest-accordion > div:nth-child(1) > div.panel-heading > h4 > a').click();
+                         $('#pairing > div > div.searching-result > selected-records > div > div > div.table-cell.booking-info > div:nth-child(2) > div.booking-room.ng-binding');
+                          getBeaconList();						 
                 }, error: function () {
                     layer.alert("Have not any booking was selected");
                 }
@@ -4146,8 +4165,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
     //解除手環綁定
 	function CheckOutBeacon(){	  
          var booking_no =$('#unbind_booking_code').attr("o-data-id");
-         var cbID  =$('#select-hb-co option:selected').html();	
-          getBeaconList();		 
+         var cbID  =$('#select-hb-co option:selected').html();			 
 	     $.ajax({
                 type: "Post",
                 url: ServerUrl+"beacon/unbind",
@@ -4158,7 +4176,8 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                       UpdateBookingStatus(booking_no,"P",str_show);//修改訂單狀態為P
                       var i =bind_beacon_list.indexOf(cbID)
                       bind_beacon_list.splice(i, 1);
-					  $scope.booking_BindCustomerInfomation=bind_beacon_list;  					  
+					  $scope.booking_BindCustomerInfomation=bind_beacon_list; 
+                       getBeaconList();					  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -4175,10 +4194,9 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 success: function (data) {	
                        $('.close').click();
 						layer.msg(str_show);
-                        getBeaconList();
-						 //重新獲取房間狀態數據
-                         RegisterGuest();
-		                 doingItemsBooking();						
+                        
+						 changeallstatusdata();
+						 //重新獲取房間狀態數據						
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
                 }
@@ -4231,7 +4249,7 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
                 dataType: "json",
 				data:{from:lastnowtime-5000,to:lastnowtime},
                 success: function (data) {
-                  msgShow(data);				  	    
+				  msgShow(data);				  	    
                   setTimeout(reloadmessageRecived,5000);				  
                 }, error: function () {
                     layer.alert("The system is busy. Please try again later");
@@ -4242,8 +4260,9 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 	function msgShow(data){
      var obj = eval(data);
 	   for(var i in obj){	 
-		  var jsonobj = obj[i];	
-		  for(var o in jsonobj) {	 		
+		  var jsonobj = obj[i];	  
+		  for(var o in jsonobj) {
+          if(jsonobj[o].type.indexOf(5)!=-1){			  
 		   var b = true;
 		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
 		     for(var j in MessageList){
@@ -4259,12 +4278,13 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
 				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
 				  var time_str =changTimetype(time_length);//轉換時間格式
 				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');										 			
-                  alert_box(jsonobj[o].content);
+                  // alert_box(jsonobj[o].content.replace('/n','<br>'));
+				  alert_box(jsonobj[o].content);
 				  UnReadMessageCount++;
                   $('#activity > b').addClass('bg-color-red');
                   $('#activity > b').html(UnReadMessageCount);				  
 		       }							
-			 	
+		  } 	
 		 }
 	   }
           lastnowtime =obj.server_time;
@@ -4294,32 +4314,37 @@ angular.module('app.home').controller('mapDashboardCtrl', ['$scope', function($s
     }
 	
 	
-	function  msgMoreShow(data){
+	
+	function msgMoreShow(data){
      var obj = eval(data);
 	   for(var i in obj){	 
 		  var jsonobj = obj[i];	
-		  for(var o in jsonobj) {	 		
-		   var b = true;
-		   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
-		     for(var j in MessageList){
-                 if(MessageList.length>0){  			
-			        if(MessageList[j].id==jsonobj[o].id){	
-				        b = false;
-				        break;
-			        }
-			        if(MessageList[0].id==-1){MessageList.splice(0, 1);}
-			     }
-			   }
-              if(b){     
-				  MessageList.push({"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
-				  var time_str =changTimetype(time_length);//轉換時間格式
-				  $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');										 						  
-		       }							
+		  for(var o=jsonobj.length-1;o>=0;o--) {
+          if(jsonobj[o].type.indexOf(5)!=-1){	 		
+			   var b = true;
+			   var time_length =(obj.server_time-jsonobj[o].create_time)/1000;//計算時間差
+				 for(var j in MessageList){
+					 if(MessageList.length>0){  			
+						if(MessageList[j].id==jsonobj[o].id){	
+							b = false;
+							break;
+						}
+						if(MessageList[0].id==-1){MessageList.splice(0, 1);}
+					 }
+				   }
+				  if(b){     
+					  MessageList.splice(0,0,{"id":jsonobj[o].id,"content":jsonobj[o].content,"create_time":jsonobj[o].create_time,"time_length":time_length}); //創建新的消息
+					  var time_str =changTimetype(time_length);//轉換時間格式
+					   $('#message-box').prepend('<li class="message"><img src="styles/img/avatars/sunny.png" class="online" alt="sunny" height="42" width="42"><span style="display:block" class="message-text"> <a href-void class="username">Message:<small class="text-muted pull-right ultra-light"> '+time_str+'</small></a>'+jsonobj[o].content+'</span></li>');												 			
+				   }
+              }							
 			 	
 		 }
 	   }
-	}
-   
+          lastnowtime =obj.server_time;
+          reloadTime(obj.server_time);		   
+   }
+ 
     //刷新時間
     function reloadTime(server_time){
 	   for(var i in MessageList){
@@ -4399,6 +4424,42 @@ angular.module('app.home').factory('selectedItemCORecord', ['$http', function($h
     return err;
   });
 }]);
+'use strict';
+
+angular.module('app.maps').controller('MapsDemoCtrl',
+    function ($scope, $http, $q, SmartMapStyle, uiGmapGoogleMapApi) {
+
+
+        $scope.styles = SmartMapStyle.styles;
+
+        $scope.setType = function (key) {
+            SmartMapStyle.getMapType(key).then(function (type) {
+                $scope.map.control.getGMap().mapTypes.set(key, type);
+                $scope.map.control.getGMap().setMapTypeId(key);
+            });
+            $scope.currentType = key;
+        };
+
+
+        $scope.map = {
+            center: {latitude: 45, longitude: -73},
+            zoom: 8,
+            control: {}
+        };
+
+
+        uiGmapGoogleMapApi.then(function (maps) {
+
+            })
+            .then(function () {
+                return SmartMapStyle.getMapType('colorful')
+            }).then(function () {
+            $scope.setType('colorful')
+        });
+
+
+
+    });
 "use strict";
 
 
@@ -4449,42 +4510,6 @@ angular.module('app.maps').factory('SmartMapStyle', function ($q, $http, APP_CON
 
 
 });
-'use strict';
-
-angular.module('app.maps').controller('MapsDemoCtrl',
-    function ($scope, $http, $q, SmartMapStyle, uiGmapGoogleMapApi) {
-
-
-        $scope.styles = SmartMapStyle.styles;
-
-        $scope.setType = function (key) {
-            SmartMapStyle.getMapType(key).then(function (type) {
-                $scope.map.control.getGMap().mapTypes.set(key, type);
-                $scope.map.control.getGMap().setMapTypeId(key);
-            });
-            $scope.currentType = key;
-        };
-
-
-        $scope.map = {
-            center: {latitude: 45, longitude: -73},
-            zoom: 8,
-            control: {}
-        };
-
-
-        uiGmapGoogleMapApi.then(function (maps) {
-
-            })
-            .then(function () {
-                return SmartMapStyle.getMapType('colorful')
-            }).then(function () {
-            $scope.setType('colorful')
-        });
-
-
-
-    });
 /**
  * Created by griga on 2/9/16.
  */
@@ -7261,6 +7286,18 @@ angular.module('app.graphs').directive('flotSiteStatsChart', function(FlotConfig
 });
 'use strict';
 
+angular.module('app.graphs').directive('highchartTable', function (lazyScript) {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            lazyScript.register('build/vendor.graphs.js').then(function(){
+                element.highchartTable();
+            })
+        }
+    }
+});
+'use strict';
+
 angular.module('app.graphs').directive('easyPieChartContainer', function () {
     return {
         restrict: 'A',
@@ -8488,18 +8525,6 @@ angular.module('app.graphs').directive('vectorMap', function () {
 
             element.on('$destroy', function(){
                 element.children('.jvectormap-container').data('mapObject').remove();
-            })
-        }
-    }
-});
-'use strict';
-
-angular.module('app.graphs').directive('highchartTable', function (lazyScript) {
-    return {
-        restrict: 'A',
-        link: function (scope, element) {
-            lazyScript.register('build/vendor.graphs.js').then(function(){
-                element.highchartTable();
             })
         }
     }
@@ -10304,6 +10329,508 @@ angular.module('SmartAdmin.UI').directive('smartTooltipHtml', function () {
     }
 );
 
+'use strict';
+
+angular.module('SmartAdmin.Layout').directive('demoStates', function ($rootScope) {
+    return {
+        restrict: 'EA',
+        replace: true,
+        templateUrl: 'app/_common/layout/directives/demo/demo-states.tpl.html',
+        scope: true,
+        link: function (scope, element, attributes) {
+            element.parent().css({
+                position: 'relative'
+            });
+
+            element.on('click', '#demo-setting', function () {
+                element.toggleClass('activate')
+            })
+        },
+        controller: function ($scope) {
+            var $root = $('body');
+
+            $scope.$watch('fixedHeader', function (fixedHeader) {
+                localStorage.setItem('sm-fixed-header', fixedHeader);
+                $root.toggleClass('fixed-header', fixedHeader);
+                if (fixedHeader == false) {
+                    $scope.fixedRibbon = false;
+                    $scope.fixedNavigation = false;
+                }
+            });
+
+
+            $scope.$watch('fixedNavigation', function (fixedNavigation) {
+                localStorage.setItem('sm-fixed-navigation', fixedNavigation);
+                $root.toggleClass('fixed-navigation', fixedNavigation);
+                if (fixedNavigation) {
+                    $scope.insideContainer = false;
+                    $scope.fixedHeader = true;
+                } else {
+                    $scope.fixedRibbon = false;
+                }
+            });
+
+
+            $scope.$watch('fixedRibbon', function (fixedRibbon) {
+                localStorage.setItem('sm-fixed-ribbon', fixedRibbon);
+                $root.toggleClass('fixed-ribbon', fixedRibbon);
+                if (fixedRibbon) {
+                    $scope.fixedHeader = true;
+                    $scope.fixedNavigation = true;
+                    $scope.insideContainer = false;
+                }
+            });
+
+            $scope.$watch('fixedPageFooter', function (fixedPageFooter) {
+                localStorage.setItem('sm-fixed-page-footer', fixedPageFooter);
+                $root.toggleClass('fixed-page-footer', fixedPageFooter);
+            });
+
+            $scope.$watch('insideContainer', function (insideContainer) {
+                localStorage.setItem('sm-inside-container', insideContainer);
+                $root.toggleClass('container', insideContainer);
+                if (insideContainer) {
+                    $scope.fixedRibbon = false;
+                    $scope.fixedNavigation = false;
+                }
+            });
+
+            $scope.$watch('rtl', function (rtl) {
+                localStorage.setItem('sm-rtl', rtl);
+                $root.toggleClass('smart-rtl', rtl);
+            });
+
+            $scope.$watch('menuOnTop', function (menuOnTop) {
+                $rootScope.$broadcast('$smartLayoutMenuOnTop', menuOnTop);
+                localStorage.setItem('sm-menu-on-top', menuOnTop);
+                $root.toggleClass('menu-on-top', menuOnTop);
+
+                if(menuOnTop)$root.removeClass('minified');
+            });
+
+            $scope.$watch('colorblindFriendly', function (colorblindFriendly) {
+                localStorage.setItem('sm-colorblind-friendly', colorblindFriendly);
+                $root.toggleClass('colorblind-friendly', colorblindFriendly);
+            });
+
+
+            $scope.fixedHeader = localStorage.getItem('sm-fixed-header') == 'true';
+            $scope.fixedNavigation = localStorage.getItem('sm-fixed-navigation') == 'true';
+            $scope.fixedRibbon = localStorage.getItem('sm-fixed-ribbon') == 'true';
+            $scope.fixedPageFooter = localStorage.getItem('sm-fixed-page-footer') == 'true';
+            $scope.insideContainer = localStorage.getItem('sm-inside-container') == 'true';
+            $scope.rtl = localStorage.getItem('sm-rtl') == 'true';
+            $scope.menuOnTop = localStorage.getItem('sm-menu-on-top') == 'true' || $root.hasClass('menu-on-top');
+            $scope.colorblindFriendly = localStorage.getItem('sm-colorblind-friendly') == 'true';
+
+
+            $scope.skins = appConfig.skins;
+
+
+            $scope.smartSkin = localStorage.getItem('sm-skin') ? localStorage.getItem('sm-skin') : appConfig.smartSkin;
+
+            $scope.setSkin = function (skin) {
+                $scope.smartSkin = skin.name;
+                $root.removeClass(_.pluck($scope.skins, 'name').join(' '));
+                $root.addClass(skin.name);
+                localStorage.setItem('sm-skin', skin.name);
+                $("#logo img").attr('src', skin.logo);
+            };
+
+
+            if($scope.smartSkin != "smart-style-0"){
+                $scope.setSkin(_.find($scope.skins, {name: $scope.smartSkin}))
+            }
+
+
+            $scope.factoryReset = function () {
+                $.SmartMessageBox({
+                    title: "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
+                    content: "Would you like to RESET all your saved widgets and clear LocalStorage?1",
+                    buttons: '[No][Yes]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed == "Yes" && localStorage) {
+                        localStorage.clear();
+                        location.reload()
+                    }
+                });
+            }
+        }
+    }
+});
+"use strict";
+
+(function ($) {
+
+    $.fn.smartCollapseToggle = function () {
+
+        return this.each(function () {
+
+            var $body = $('body');
+            var $this = $(this);
+
+            // only if not  'menu-on-top'
+            if ($body.hasClass('menu-on-top')) {
+
+
+            } else {
+
+                $body.hasClass('mobile-view-activated')
+
+                // toggle open
+                $this.toggleClass('open');
+
+                // for minified menu collapse only second level
+                if ($body.hasClass('minified')) {
+                    if ($this.closest('nav ul ul').length) {
+                        $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
+                        $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
+                    }
+                } else {
+                    // toggle expand item
+                    $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
+                    $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
+                }
+            }
+        });
+    };
+})(jQuery);
+
+angular.module('SmartAdmin.Layout').directive('smartMenu', function ($state, $rootScope) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var $body = $('body');
+
+            var $collapsible = element.find('li[data-menu-collapse]');
+
+            var bindEvents = function(){
+                $collapsible.each(function (idx, li) {
+                    var $li = $(li);
+                    $li
+                        .on('click', '>a', function (e) {
+
+                            // collapse all open siblings
+                            $li.siblings('.open').smartCollapseToggle();
+
+                            // toggle element
+                            $li.smartCollapseToggle();
+
+                            // add active marker to collapsed element if it has active childs
+                            if (!$li.hasClass('open') && $li.find('li.active').length > 0) {
+                                $li.addClass('active')
+                            }
+
+                            e.preventDefault();
+                        })
+                        .find('>a').append('<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b>');
+
+                    // initialization toggle
+                    if ($li.find('li.active').length) {
+                        $li.smartCollapseToggle();
+                        $li.find('li.active').parents('li').addClass('active');
+                    }
+                });
+            }
+            bindEvents();
+
+
+            // click on route link
+            element.on('click', 'a[data-ui-sref]', function (e) {
+                // collapse all siblings to element parents and remove active markers
+                $(this)
+                    .parents('li').addClass('active')
+                    .each(function () {
+                        $(this).siblings('li.open').smartCollapseToggle();
+                        $(this).siblings('li').removeClass('active')
+                    });
+
+                if ($body.hasClass('mobile-view-activated')) {
+                    $rootScope.$broadcast('requestToggleMenu');
+                }
+            });
+
+
+            scope.$on('$smartLayoutMenuOnTop', function (event, menuOnTop) {
+                if (menuOnTop) {
+                    $collapsible.filter('.open').smartCollapseToggle();
+                }
+            });
+        }
+    }
+});
+(function(){
+    "use strict";
+
+    angular.module('SmartAdmin.Layout').directive('smartMenuItems', function ($http, $rootScope, $compile) {
+    return {
+        restrict: 'A',
+        compile: function (element, attrs) {
+            
+
+            function createItem(item, parent, level){
+                var li = $('<li />' ,{'ui-sref-active': "active"})
+                var a = $('<a />');
+                var i = $('<i />');
+
+                li.append(a);
+
+                if(item.sref)
+                    a.attr('ui-sref', item.sref);
+                if(item.href)
+                    a.attr('href', item.href);
+                if(item.icon){
+                    i.attr('class', 'fa fa-lg fa-fw fa-'+item.icon);
+                    a.append(i);
+                }
+                if(item.title){
+                    a.attr('title', item.title);
+                    if(level == 1){ 
+                        a.append(' <span class="menu-item-parent">' + item.title + '</span>');
+                    } else {
+                        a.append(' ' + item.title);
+
+                    }
+                }
+
+                if(item.items){
+                    var ul = $('<ul />');
+                    li.append(ul);
+                    li.attr('data-menu-collapse', '');
+                    _.forEach(item.items, function(child) {
+                        createItem(child, ul, level+1);
+                    })
+                } 
+
+                parent.append(li); 
+            }
+
+
+            $http.get(attrs.smartMenuItems).then(function(res){
+                var ul = $('<ul />', {
+                    'smart-menu': ''
+                })
+                _.forEach(res.data.items, function(item) {
+                    createItem(item, ul, 1);
+                })
+                
+                var $scope = $rootScope.$new();
+                var html = $('<div>').append(ul).html(); 
+                var linkingFunction = $compile(html);
+                
+                var _element = linkingFunction($scope);
+
+                element.replaceWith(_element);                
+            })
+        }
+    }
+});
+})();
+/**
+ * Jarvis Widget Directive
+ *
+ *    colorbutton="false"
+ *    editbutton="false"
+      togglebutton="false"
+       deletebutton="false"
+        fullscreenbutton="false"
+        custombutton="false"
+        collapsed="true"
+          sortable="false"
+ *
+ *
+ */
+"use strict";
+
+angular.module('SmartAdmin.Layout').directive('jarvisWidget', function($rootScope){
+    return {
+        restrict: "A",
+        compile: function(element, attributes){
+            if(element.data('widget-color'))
+                element.addClass('jarviswidget-color-' + element.data('widget-color'));
+
+
+            element.find('.widget-body').prepend('<div class="jarviswidget-editbox"><input class="form-control" type="text"></div>');
+
+            element.addClass('jarviswidget');
+            $rootScope.$emit('jarvisWidgetAdded', element )
+
+        }
+    }
+});
+ "use strict";
+ 
+ angular.module('SmartAdmin.Layout').directive('widgetGrid', function ($rootScope, $compile, $q, $state, $timeout) {
+
+    var jarvisWidgetsDefaults = {
+        grid: 'article',
+        widgets: '.jarviswidget',
+        localStorage: true,
+        deleteSettingsKey: '#deletesettingskey-options',
+        settingsKeyLabel: 'Reset settings?',
+        deletePositionKey: '#deletepositionkey-options',
+        positionKeyLabel: 'Reset position?',
+        sortable: true,
+        buttonsHidden: false,
+        // toggle button
+        toggleButton: true,
+        toggleClass: 'fa fa-minus | fa fa-plus',
+        toggleSpeed: 200,
+        onToggle: function () {
+        },
+        // delete btn
+        deleteButton: true,
+        deleteMsg: 'Warning: This action cannot be undone!',
+        deleteClass: 'fa fa-times',
+        deleteSpeed: 200,
+        onDelete: function () {
+        },
+        // edit btn
+        editButton: true,
+        editPlaceholder: '.jarviswidget-editbox',
+        editClass: 'fa fa-cog | fa fa-save',
+        editSpeed: 200,
+        onEdit: function () {
+        },
+        // color button
+        colorButton: true,
+        // full screen
+        fullscreenButton: true,
+        fullscreenClass: 'fa fa-expand | fa fa-compress',
+        fullscreenDiff: 3,
+        onFullscreen: function () {
+        },
+        // custom btn
+        customButton: false,
+        customClass: 'folder-10 | next-10',
+        customStart: function () {
+            alert('Hello you, this is a custom button...');
+        },
+        customEnd: function () {
+            alert('bye, till next time...');
+        },
+        // order
+        buttonOrder: '%refresh% %custom% %edit% %toggle% %fullscreen% %delete%',
+        opacity: 1.0,
+        dragHandle: '> header',
+        placeholderClass: 'jarviswidget-placeholder',
+        indicator: true,
+        indicatorTime: 600,
+        ajax: true,
+        timestampPlaceholder: '.jarviswidget-timestamp',
+        timestampFormat: 'Last update: %m%/%d%/%y% %h%:%i%:%s%',
+        refreshButton: true,
+        refreshButtonClass: 'fa fa-refresh',
+        labelError: 'Sorry but there was a error:',
+        labelUpdated: 'Last Update:',
+        labelRefresh: 'Refresh',
+        labelDelete: 'Delete widget:',
+        afterLoad: function () {
+        },
+        rtl: false, // best not to toggle this!
+        onChange: function () {
+
+        },
+        onSave: function () {
+
+        },
+        ajaxnav: true
+
+    }
+
+    var dispatchedWidgetIds = [];
+    var setupWaiting = false;
+
+    var debug = 1;
+
+    var setupWidgets = function (element, widgetIds) {
+
+        if (!setupWaiting) {
+
+            if(_.intersection(widgetIds, dispatchedWidgetIds).length != widgetIds.length){
+
+                dispatchedWidgetIds = _.union(widgetIds, dispatchedWidgetIds);
+
+//                    console.log('setupWidgets', debug++);
+
+                element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
+                element.jarvisWidgets(jarvisWidgetsDefaults);
+                initDropdowns(widgetIds);
+            }
+
+        } else {
+            if (!setupWaiting) {
+                setupWaiting = true;
+                $timeout(function () {
+                    setupWaiting = false;
+                    setupWidgets(element, widgetIds)
+                }, 200);
+            }
+        }
+
+    };
+
+    var destroyWidgets = function(element, widgetIds){
+        element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
+        dispatchedWidgetIds = _.xor(dispatchedWidgetIds, widgetIds);
+    };
+
+    var initDropdowns = function (widgetIds) {
+        angular.forEach(widgetIds, function (wid) {
+            $('#' + wid + ' [data-toggle="dropdown"]').each(function () {
+                var $parent = $(this).parent();
+                // $(this).removeAttr('data-toggle');
+                if (!$parent.attr('dropdown')) {
+                    $(this).removeAttr('href');
+                    $parent.attr('dropdown', '');
+                    var compiled = $compile($parent)($parent.scope())
+                    $parent.replaceWith(compiled);
+                }
+            })
+        });
+    };
+
+    var jarvisWidgetAddedOff,
+        $viewContentLoadedOff,
+        $stateChangeStartOff;
+
+    return {
+        restrict: 'A',
+        compile: function(element){
+
+            element.removeAttr('widget-grid data-widget-grid');
+
+            var widgetIds = [];
+
+            $viewContentLoadedOff = $rootScope.$on('$viewContentLoaded', function (event, data) {
+                $timeout(function () {
+                    setupWidgets(element, widgetIds)
+                }, 100);
+            });
+
+
+            $stateChangeStartOff = $rootScope.$on('$stateChangeStart',
+                function(event, toState, toParams, fromState, fromParams){
+                    jarvisWidgetAddedOff();
+                    $viewContentLoadedOff();
+                    $stateChangeStartOff();
+                    destroyWidgets(element, widgetIds)
+                });
+
+            jarvisWidgetAddedOff = $rootScope.$on('jarvisWidgetAdded', function (event, widget) {
+                if (widgetIds.indexOf(widget.attr('id')) == -1) {
+                    widgetIds.push(widget.attr('id'));
+                    $timeout(function () {
+                        setupWidgets(element, widgetIds)
+                    }, 100);
+                }
+//                    console.log('jarvisWidgetAdded', widget.attr('id'));
+            });
+
+        }
+    }
+});
+
 "use strict";
 
 
@@ -11964,507 +12491,6 @@ angular.module('SmartAdmin.Forms').directive('smartWizard', function () {
 
 
             setStep(currentStep);
-
-        }
-    }
-});
-'use strict';
-
-angular.module('SmartAdmin.Layout').directive('demoStates', function ($rootScope) {
-    return {
-        restrict: 'EA',
-        replace: true,
-        templateUrl: 'app/_common/layout/directives/demo/demo-states.tpl.html',
-        scope: true,
-        link: function (scope, element, attributes) {
-            element.parent().css({
-                position: 'relative'
-            });
-
-            element.on('click', '#demo-setting', function () {
-                element.toggleClass('activate')
-            })
-        },
-        controller: function ($scope) {
-            var $root = $('body');
-
-            $scope.$watch('fixedHeader', function (fixedHeader) {
-                localStorage.setItem('sm-fixed-header', fixedHeader);
-                $root.toggleClass('fixed-header', fixedHeader);
-                if (fixedHeader == false) {
-                    $scope.fixedRibbon = false;
-                    $scope.fixedNavigation = false;
-                }
-            });
-
-
-            $scope.$watch('fixedNavigation', function (fixedNavigation) {
-                localStorage.setItem('sm-fixed-navigation', fixedNavigation);
-                $root.toggleClass('fixed-navigation', fixedNavigation);
-                if (fixedNavigation) {
-                    $scope.insideContainer = false;
-                    $scope.fixedHeader = true;
-                } else {
-                    $scope.fixedRibbon = false;
-                }
-            });
-
-
-            $scope.$watch('fixedRibbon', function (fixedRibbon) {
-                localStorage.setItem('sm-fixed-ribbon', fixedRibbon);
-                $root.toggleClass('fixed-ribbon', fixedRibbon);
-                if (fixedRibbon) {
-                    $scope.fixedHeader = true;
-                    $scope.fixedNavigation = true;
-                    $scope.insideContainer = false;
-                }
-            });
-
-            $scope.$watch('fixedPageFooter', function (fixedPageFooter) {
-                localStorage.setItem('sm-fixed-page-footer', fixedPageFooter);
-                $root.toggleClass('fixed-page-footer', fixedPageFooter);
-            });
-
-            $scope.$watch('insideContainer', function (insideContainer) {
-                localStorage.setItem('sm-inside-container', insideContainer);
-                $root.toggleClass('container', insideContainer);
-                if (insideContainer) {
-                    $scope.fixedRibbon = false;
-                    $scope.fixedNavigation = false;
-                }
-            });
-
-            $scope.$watch('rtl', function (rtl) {
-                localStorage.setItem('sm-rtl', rtl);
-                $root.toggleClass('smart-rtl', rtl);
-            });
-
-            $scope.$watch('menuOnTop', function (menuOnTop) {
-                $rootScope.$broadcast('$smartLayoutMenuOnTop', menuOnTop);
-                localStorage.setItem('sm-menu-on-top', menuOnTop);
-                $root.toggleClass('menu-on-top', menuOnTop);
-
-                if(menuOnTop)$root.removeClass('minified');
-            });
-
-            $scope.$watch('colorblindFriendly', function (colorblindFriendly) {
-                localStorage.setItem('sm-colorblind-friendly', colorblindFriendly);
-                $root.toggleClass('colorblind-friendly', colorblindFriendly);
-            });
-
-
-            $scope.fixedHeader = localStorage.getItem('sm-fixed-header') == 'true';
-            $scope.fixedNavigation = localStorage.getItem('sm-fixed-navigation') == 'true';
-            $scope.fixedRibbon = localStorage.getItem('sm-fixed-ribbon') == 'true';
-            $scope.fixedPageFooter = localStorage.getItem('sm-fixed-page-footer') == 'true';
-            $scope.insideContainer = localStorage.getItem('sm-inside-container') == 'true';
-            $scope.rtl = localStorage.getItem('sm-rtl') == 'true';
-            $scope.menuOnTop = localStorage.getItem('sm-menu-on-top') == 'true' || $root.hasClass('menu-on-top');
-            $scope.colorblindFriendly = localStorage.getItem('sm-colorblind-friendly') == 'true';
-
-
-            $scope.skins = appConfig.skins;
-
-
-            $scope.smartSkin = localStorage.getItem('sm-skin') ? localStorage.getItem('sm-skin') : appConfig.smartSkin;
-
-            $scope.setSkin = function (skin) {
-                $scope.smartSkin = skin.name;
-                $root.removeClass(_.pluck($scope.skins, 'name').join(' '));
-                $root.addClass(skin.name);
-                localStorage.setItem('sm-skin', skin.name);
-                $("#logo img").attr('src', skin.logo);
-            };
-
-
-            if($scope.smartSkin != "smart-style-0"){
-                $scope.setSkin(_.find($scope.skins, {name: $scope.smartSkin}))
-            }
-
-
-            $scope.factoryReset = function () {
-                $.SmartMessageBox({
-                    title: "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
-                    content: "Would you like to RESET all your saved widgets and clear LocalStorage?1",
-                    buttons: '[No][Yes]'
-                }, function (ButtonPressed) {
-                    if (ButtonPressed == "Yes" && localStorage) {
-                        localStorage.clear();
-                        location.reload()
-                    }
-                });
-            }
-        }
-    }
-});
-"use strict";
-
-(function ($) {
-
-    $.fn.smartCollapseToggle = function () {
-
-        return this.each(function () {
-
-            var $body = $('body');
-            var $this = $(this);
-
-            // only if not  'menu-on-top'
-            if ($body.hasClass('menu-on-top')) {
-
-
-            } else {
-
-                $body.hasClass('mobile-view-activated')
-
-                // toggle open
-                $this.toggleClass('open');
-
-                // for minified menu collapse only second level
-                if ($body.hasClass('minified')) {
-                    if ($this.closest('nav ul ul').length) {
-                        $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
-                        $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
-                    }
-                } else {
-                    // toggle expand item
-                    $this.find('>a .collapse-sign .fa').toggleClass('fa-minus-square-o fa-plus-square-o');
-                    $this.find('ul:first').slideToggle(appConfig.menu_speed || 200);
-                }
-            }
-        });
-    };
-})(jQuery);
-
-angular.module('SmartAdmin.Layout').directive('smartMenu', function ($state, $rootScope) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var $body = $('body');
-
-            var $collapsible = element.find('li[data-menu-collapse]');
-
-            var bindEvents = function(){
-                $collapsible.each(function (idx, li) {
-                    var $li = $(li);
-                    $li
-                        .on('click', '>a', function (e) {
-
-                            // collapse all open siblings
-                            $li.siblings('.open').smartCollapseToggle();
-
-                            // toggle element
-                            $li.smartCollapseToggle();
-
-                            // add active marker to collapsed element if it has active childs
-                            if (!$li.hasClass('open') && $li.find('li.active').length > 0) {
-                                $li.addClass('active')
-                            }
-
-                            e.preventDefault();
-                        })
-                        .find('>a').append('<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b>');
-
-                    // initialization toggle
-                    if ($li.find('li.active').length) {
-                        $li.smartCollapseToggle();
-                        $li.find('li.active').parents('li').addClass('active');
-                    }
-                });
-            }
-            bindEvents();
-
-
-            // click on route link
-            element.on('click', 'a[data-ui-sref]', function (e) {
-                // collapse all siblings to element parents and remove active markers
-                $(this)
-                    .parents('li').addClass('active')
-                    .each(function () {
-                        $(this).siblings('li.open').smartCollapseToggle();
-                        $(this).siblings('li').removeClass('active')
-                    });
-
-                if ($body.hasClass('mobile-view-activated')) {
-                    $rootScope.$broadcast('requestToggleMenu');
-                }
-            });
-
-
-            scope.$on('$smartLayoutMenuOnTop', function (event, menuOnTop) {
-                if (menuOnTop) {
-                    $collapsible.filter('.open').smartCollapseToggle();
-                }
-            });
-        }
-    }
-});
-(function(){
-    "use strict";
-
-    angular.module('SmartAdmin.Layout').directive('smartMenuItems', function ($http, $rootScope, $compile) {
-    return {
-        restrict: 'A',
-        compile: function (element, attrs) {
-            
-
-            function createItem(item, parent, level){
-                var li = $('<li />' ,{'ui-sref-active': "active"})
-                var a = $('<a />');
-                var i = $('<i />');
-
-                li.append(a);
-
-                if(item.sref)
-                    a.attr('ui-sref', item.sref);
-                if(item.href)
-                    a.attr('href', item.href);
-                if(item.icon){
-                    i.attr('class', 'fa fa-lg fa-fw fa-'+item.icon);
-                    a.append(i);
-                }
-                if(item.title){
-                    a.attr('title', item.title);
-                    if(level == 1){ 
-                        a.append(' <span class="menu-item-parent">' + item.title + '</span>');
-                    } else {
-                        a.append(' ' + item.title);
-
-                    }
-                }
-
-                if(item.items){
-                    var ul = $('<ul />');
-                    li.append(ul);
-                    li.attr('data-menu-collapse', '');
-                    _.forEach(item.items, function(child) {
-                        createItem(child, ul, level+1);
-                    })
-                } 
-
-                parent.append(li); 
-            }
-
-
-            $http.get(attrs.smartMenuItems).then(function(res){
-                var ul = $('<ul />', {
-                    'smart-menu': ''
-                })
-                _.forEach(res.data.items, function(item) {
-                    createItem(item, ul, 1);
-                })
-                
-                var $scope = $rootScope.$new();
-                var html = $('<div>').append(ul).html(); 
-                var linkingFunction = $compile(html);
-                
-                var _element = linkingFunction($scope);
-
-                element.replaceWith(_element);                
-            })
-        }
-    }
-});
-})();
-/**
- * Jarvis Widget Directive
- *
- *    colorbutton="false"
- *    editbutton="false"
-      togglebutton="false"
-       deletebutton="false"
-        fullscreenbutton="false"
-        custombutton="false"
-        collapsed="true"
-          sortable="false"
- *
- *
- */
-"use strict";
-
-angular.module('SmartAdmin.Layout').directive('jarvisWidget', function($rootScope){
-    return {
-        restrict: "A",
-        compile: function(element, attributes){
-            if(element.data('widget-color'))
-                element.addClass('jarviswidget-color-' + element.data('widget-color'));
-
-
-            element.find('.widget-body').prepend('<div class="jarviswidget-editbox"><input class="form-control" type="text"></div>');
-
-            element.addClass('jarviswidget');
-            $rootScope.$emit('jarvisWidgetAdded', element )
-
-        }
-    }
-});
- "use strict";
- 
- angular.module('SmartAdmin.Layout').directive('widgetGrid', function ($rootScope, $compile, $q, $state, $timeout) {
-
-    var jarvisWidgetsDefaults = {
-        grid: 'article',
-        widgets: '.jarviswidget',
-        localStorage: true,
-        deleteSettingsKey: '#deletesettingskey-options',
-        settingsKeyLabel: 'Reset settings?',
-        deletePositionKey: '#deletepositionkey-options',
-        positionKeyLabel: 'Reset position?',
-        sortable: true,
-        buttonsHidden: false,
-        // toggle button
-        toggleButton: true,
-        toggleClass: 'fa fa-minus | fa fa-plus',
-        toggleSpeed: 200,
-        onToggle: function () {
-        },
-        // delete btn
-        deleteButton: true,
-        deleteMsg: 'Warning: This action cannot be undone!',
-        deleteClass: 'fa fa-times',
-        deleteSpeed: 200,
-        onDelete: function () {
-        },
-        // edit btn
-        editButton: true,
-        editPlaceholder: '.jarviswidget-editbox',
-        editClass: 'fa fa-cog | fa fa-save',
-        editSpeed: 200,
-        onEdit: function () {
-        },
-        // color button
-        colorButton: true,
-        // full screen
-        fullscreenButton: true,
-        fullscreenClass: 'fa fa-expand | fa fa-compress',
-        fullscreenDiff: 3,
-        onFullscreen: function () {
-        },
-        // custom btn
-        customButton: false,
-        customClass: 'folder-10 | next-10',
-        customStart: function () {
-            alert('Hello you, this is a custom button...');
-        },
-        customEnd: function () {
-            alert('bye, till next time...');
-        },
-        // order
-        buttonOrder: '%refresh% %custom% %edit% %toggle% %fullscreen% %delete%',
-        opacity: 1.0,
-        dragHandle: '> header',
-        placeholderClass: 'jarviswidget-placeholder',
-        indicator: true,
-        indicatorTime: 600,
-        ajax: true,
-        timestampPlaceholder: '.jarviswidget-timestamp',
-        timestampFormat: 'Last update: %m%/%d%/%y% %h%:%i%:%s%',
-        refreshButton: true,
-        refreshButtonClass: 'fa fa-refresh',
-        labelError: 'Sorry but there was a error:',
-        labelUpdated: 'Last Update:',
-        labelRefresh: 'Refresh',
-        labelDelete: 'Delete widget:',
-        afterLoad: function () {
-        },
-        rtl: false, // best not to toggle this!
-        onChange: function () {
-
-        },
-        onSave: function () {
-
-        },
-        ajaxnav: true
-
-    }
-
-    var dispatchedWidgetIds = [];
-    var setupWaiting = false;
-
-    var debug = 1;
-
-    var setupWidgets = function (element, widgetIds) {
-
-        if (!setupWaiting) {
-
-            if(_.intersection(widgetIds, dispatchedWidgetIds).length != widgetIds.length){
-
-                dispatchedWidgetIds = _.union(widgetIds, dispatchedWidgetIds);
-
-//                    console.log('setupWidgets', debug++);
-
-                element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
-                element.jarvisWidgets(jarvisWidgetsDefaults);
-                initDropdowns(widgetIds);
-            }
-
-        } else {
-            if (!setupWaiting) {
-                setupWaiting = true;
-                $timeout(function () {
-                    setupWaiting = false;
-                    setupWidgets(element, widgetIds)
-                }, 200);
-            }
-        }
-
-    };
-
-    var destroyWidgets = function(element, widgetIds){
-        element.data('jarvisWidgets') && element.data('jarvisWidgets').destroy();
-        dispatchedWidgetIds = _.xor(dispatchedWidgetIds, widgetIds);
-    };
-
-    var initDropdowns = function (widgetIds) {
-        angular.forEach(widgetIds, function (wid) {
-            $('#' + wid + ' [data-toggle="dropdown"]').each(function () {
-                var $parent = $(this).parent();
-                // $(this).removeAttr('data-toggle');
-                if (!$parent.attr('dropdown')) {
-                    $(this).removeAttr('href');
-                    $parent.attr('dropdown', '');
-                    var compiled = $compile($parent)($parent.scope())
-                    $parent.replaceWith(compiled);
-                }
-            })
-        });
-    };
-
-    var jarvisWidgetAddedOff,
-        $viewContentLoadedOff,
-        $stateChangeStartOff;
-
-    return {
-        restrict: 'A',
-        compile: function(element){
-
-            element.removeAttr('widget-grid data-widget-grid');
-
-            var widgetIds = [];
-
-            $viewContentLoadedOff = $rootScope.$on('$viewContentLoaded', function (event, data) {
-                $timeout(function () {
-                    setupWidgets(element, widgetIds)
-                }, 100);
-            });
-
-
-            $stateChangeStartOff = $rootScope.$on('$stateChangeStart',
-                function(event, toState, toParams, fromState, fromParams){
-                    jarvisWidgetAddedOff();
-                    $viewContentLoadedOff();
-                    $stateChangeStartOff();
-                    destroyWidgets(element, widgetIds)
-                });
-
-            jarvisWidgetAddedOff = $rootScope.$on('jarvisWidgetAdded', function (event, widget) {
-                if (widgetIds.indexOf(widget.attr('id')) == -1) {
-                    widgetIds.push(widget.attr('id'));
-                    $timeout(function () {
-                        setupWidgets(element, widgetIds)
-                    }, 100);
-                }
-//                    console.log('jarvisWidgetAdded', widget.attr('id'));
-            });
 
         }
     }
